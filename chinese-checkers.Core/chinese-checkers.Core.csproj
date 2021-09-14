@@ -5,7 +5,8 @@
     <RootNamespace>chinese_checkers.Core</RootNamespace>
   </PropertyGroup>
 
-   <ItemGroup>
-    <Folder Include="Models\" />
+  <ItemGroup>
+    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <PackageReference Include="Win2D.uwp" Version="1.26.0" />
   </ItemGroup>
 </Project>
