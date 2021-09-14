@@ -1,4 +1,5 @@
-﻿using System;
+﻿using chinese_checkers.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,8 @@ namespace chinese_checkers.Core.Models
     {
         public int Id { get; set; }
         public bool IsAI { get; set; }
-        public ICharacter Character { get; set; } 
+        public ICharacter Character { get; set; }
+        public NestColor ColorId { get; set; }
 
         public Player(int id, ICharacter character)
         {
