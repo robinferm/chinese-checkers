@@ -4,7 +4,7 @@ using System.Text;
 
 namespace chinese_checkers.Core.Models
 {
-    class Piece
+    public class Piece
     {
     }
 }

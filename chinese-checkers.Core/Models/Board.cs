@@ -7,13 +7,13 @@ using System.Text;
 
 namespace chinese_checkers.Core.Models
 {
-    class Board
+    public class Board
     {
         public CanvasBitmap Image { get; private set; }
         public List<Location> Locations { get; private set; }
         public List<Piece> Pieces { get; private set; }
 
-        public Board(CanvasBitmap image, List<int[]> locations, int numberOfPlayers)
+        public Board(CanvasBitmap image, List<int[]> locations, List<Player> players)
         {
             this.Image = image;
             this.Locations = new List<Location>();
