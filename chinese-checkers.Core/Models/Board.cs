@@ -9,20 +9,22 @@ namespace chinese_checkers.Core.Models
 {
     public class Board
     {
-        public CanvasBitmap Image { get; private set; }
         public List<Location> Locations { get; private set; }
         public List<Piece> Pieces { get; private set; }
 
-        public Board(CanvasBitmap image, List<int[]> locations, List<Player> players)
+        public Board(int[,] locations, List<Player> players)
         {
-            this.Image = image;
             this.Locations = new List<Location>();
-            PopulateLocations(locations);
+            //PopulateLocations(locations);
         }
 
-        public void PopulateLocations(List<int[]> locations)
-        {
-            locations.ForEach(x => Locations.Add(new Location(x)));
-        }
+        //public void PopulateLocations(int[,] locations)
+        //{
+
+        //    for (int i = 0; i < locations.GetLength(0); i++)
+        //    {
+        //        Locations.Add(new Location(locations));
+        //    }
+        //}
     }
 }
