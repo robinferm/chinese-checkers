@@ -4,7 +4,7 @@ using System.Text;
 
 namespace chinese_checkers.Core.Enums
 {
-    enum NestColor
+    public enum NestColor
     {
         Blue,
         Green,

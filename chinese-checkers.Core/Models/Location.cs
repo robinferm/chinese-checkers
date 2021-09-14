@@ -7,7 +7,7 @@ using System.Text;
 
 namespace chinese_checkers.Core.Models
 {
-    class Location
+    public class Location
     {
         public Point Point { get; set; }
         public int? PieceId { get; set; }
