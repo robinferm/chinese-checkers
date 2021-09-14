@@ -42,7 +42,9 @@ namespace chinese_checkers.Views
             {
 
                 //args.DrawingSession.DrawCircle(new System.Numerics.Vector2((test[i, 0] + 4) * 50, (test[i, 1] + 4) * 50), 10, Colors.Red);
-                args.DrawingSession.DrawText(test[i,0].ToString() + ',' + test[i,1].ToString(), new System.Numerics.Vector2((test[i, 0] + 4) * 50, (test[i, 1] + 4) * 50), Colors.Red);
+                args.DrawingSession.DrawCircle(new System.Numerics.Vector2((test[i, 0] + 4) * 40 +(test[i,1]*20), (test[i, 1] + 4) * 40),15 , Colors.Red);
+                args.DrawingSession.DrawLine(new System.Numerics.Vector2(200,0), new System.Numerics.Vector2(200,500), Colors.Red);
+                //args.DrawingSession.DrawText(test[i, 0].ToString() + ',' + test[i, 1].ToString(), new System.Numerics.Vector2((test[i, 0] + 4) * 40 + (test[i, 1] * 17), (test[i, 1] + 4) * 40), Colors.Red);
 
             }
         }
