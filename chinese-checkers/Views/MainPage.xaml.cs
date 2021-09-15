@@ -13,6 +13,9 @@ using Microsoft.Graphics.Canvas.UI;
 using System.Threading.Tasks;
 using chinese_checkers.Core.Helpers;
 using chinese_checkers.Helpers;
+using System.Diagnostics;
+using Windows.UI.Xaml;
+using Windows.UI.Core;
 
 namespace chinese_checkers.Views
 {
@@ -28,6 +31,7 @@ namespace chinese_checkers.Views
         CanvasBitmap locationImageBlack;
         CanvasBitmap locationImageWhite;
         CanvasBitmap locationImageYellow;
+        CanvasBitmap pieceImage;
 
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
@@ -37,12 +41,20 @@ namespace chinese_checkers.Views
         public MainPage()
         {
             InitializeComponent();
+            ScalingHelper.SetScale();
+            Window.Current.SizeChanged += Current_SizeChanged;
             gs = new GameSession(locations, numberOfAI, playerCharacter);
         }
+
+        private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e)
+        {
+            ScalingHelper.SetScale();
+        }
+
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow);
-            DrawHelper.DrawPieces(sender, args, gs.Board);
+            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImage);
         }
 
         private void canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
@@ -60,6 +72,24 @@ namespace chinese_checkers.Views
             locationImageBlack = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/black.png"));
             locationImageWhite = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/white.png"));
             locationImageYellow = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/yellow.png"));
+
+            pieceImage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/button.png"));
+        }
+
+        private void canvas_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            Debug.WriteLine(e.GetCurrentPoint(canvas).Position);
+            var pos = e.GetCurrentPoint(canvas).Position;
+            int scalingValue = 40;
+
+
+            var x = (0 + 4) * scalingValue + (0 * (scalingValue / 2));
+            var y = (0 + 4) * scalingValue;
+
+            if (pos.X >= x && pos.X <= x + 16 && pos.Y >= y && pos.Y <= y + 16)
+            {
+                Debug.WriteLine("Collision");
+            }
         }
     }
 }

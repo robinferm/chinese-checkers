@@ -1,6 +1,7 @@
 ﻿using chinese_checkers.Core.Enums;
 using chinese_checkers.Core.Models;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -32,38 +33,38 @@ namespace chinese_checkers.Helpers
                 switch (L.NestColorId)
                 {
                     case NestColor.Red:
-                        args.DrawingSession.DrawImage(locationImageRed, x, y);
+                        args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageRed), x, y);
                         break;
 
                     case NestColor.Green:
-                        args.DrawingSession.DrawImage(locationImageGreen, x, y);
+                        args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageGreen), x, y);
                         break;
 
                     case NestColor.Blue:
-                        args.DrawingSession.DrawImage(locationImageBlue, x, y);
+                        args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageBlue), x, y);
                         break;
 
                     case NestColor.Black:
-                        args.DrawingSession.DrawImage(locationImageBlack, x, y);
+                        args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageBlack), x, y);
                         break;
 
                     case NestColor.White:
-                        args.DrawingSession.DrawImage(locationImageWhite, x, y);
+                        args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageWhite), x, y);
                         break;
 
                     case NestColor.Yellow:
-                        args.DrawingSession.DrawImage(locationImageYellow, x, y);
+                        args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageYellow), x, y);
                         break;
 
                     default:
-                        args.DrawingSession.DrawImage(locationImage, x, y);
+                        args.DrawingSession.DrawImage(ScalingHelper.Img(locationImage), x, y);
                         break;
 
                 }
             }
         }
 
-        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board)
+        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImage)
         {
             foreach (var P in board.Pieces)
             {
@@ -71,6 +72,7 @@ namespace chinese_checkers.Helpers
                 var y = (P.Point.Y + 4) * scalingValue;
                 //args.DrawingSession.DrawImage(P.Image, x+4, y+4);
                 args.DrawingSession.DrawText(P.Id.ToString(), x, y, Colors.Black);
+                args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImage), x + 1.5f, y + 1.5f);
             }
         }
 

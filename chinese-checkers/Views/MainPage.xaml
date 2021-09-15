@@ -20,7 +20,7 @@
         <Grid
             Grid.Row="1" 
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <canvas:CanvasAnimatedControl x:Name="canvas" Draw="canvas_Draw" CreateResources="canvas_CreateResources"/>
+            <canvas:CanvasAnimatedControl x:Name="canvas" Draw="canvas_Draw" CreateResources="canvas_CreateResources" PointerPressed="canvas_PointerPressed"/>
         </Grid>
     </Grid>
 </Page>
