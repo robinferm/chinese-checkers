@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
 
 namespace chinese_checkers.Helpers
 {
@@ -68,7 +69,8 @@ namespace chinese_checkers.Helpers
             {
                 var x = (P.Point.X + 4) * scalingValue + (P.Point.Y * (scalingValue / 2));
                 var y = (P.Point.Y + 4) * scalingValue;
-                args.DrawingSession.DrawImage(P.Image, x, y);
+                //args.DrawingSession.DrawImage(P.Image, x+4, y+4);
+                args.DrawingSession.DrawText(P.Id.ToString(), x, y, Colors.Black);
             }
         }
 

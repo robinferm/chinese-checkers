@@ -8,6 +8,9 @@ namespace chinese_checkers.Core.Helpers
 {
     public static class PieceHelper
     {
-        //public static Dictionary<NestColor, List<Location>>
+        //public static List<Piece> CreatePiece()
+        //{
+
+        //}
     }
 }
