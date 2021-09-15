@@ -6,6 +6,9 @@ using System.Text;
 
 namespace chinese_checkers.Core.Models
 {
+    /// <summary>
+    /// This is used when a new game is created
+    /// </summary>
     public class GameSession
     {
         public Board Board { get; set; }

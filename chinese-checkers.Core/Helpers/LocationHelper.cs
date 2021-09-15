@@ -6,6 +6,9 @@ using System.Text;
 
 namespace chinese_checkers.Core.Helpers
 {
+    /// <summary>
+    /// Used to perform tasks related to Locations, e.g. to create logical locations on the board.
+    /// </summary>
     public static class LocationHelper
     {
 

@@ -23,7 +23,7 @@ namespace chinese_checkers.Views
         GameSession gs;
         CanvasBitmap locationImage;
 
-        // Get from main menu
+        // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
         ICharacter playerCharacter = new Mage();
         int numberOfAI = 1;

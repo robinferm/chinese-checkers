@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace chinese_checkers.Helpers
 {
+    /// <summary>
+    /// Helper function that is used to draw everything on the canvas
+    /// </summary>
     public static class DrawHelper
     {
         public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage)
