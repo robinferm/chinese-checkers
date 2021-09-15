@@ -14,9 +14,9 @@ namespace chinese_checkers.Core.Models
         public NestColor? ColorId { get; set; }
         public Item? ItemId { get; set; }
 
-        public Location(int[] location)
+        public Location(int x, int y)
         {
-            this.Point = new Point(location[0], location[1]);
+            this.Point = new Point(x, y);
         }
 
         public bool IsFree()

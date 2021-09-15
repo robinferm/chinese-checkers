@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <PackageReference Include="System.Runtime.WindowsRuntime" Version="4.7.0" />
     <PackageReference Include="Win2D.uwp" Version="1.26.0" />
   </ItemGroup>
 </Project>

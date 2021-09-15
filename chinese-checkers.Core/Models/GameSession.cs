@@ -1,6 +1,7 @@
 ﻿using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace chinese_checkers.Core.Models
@@ -10,7 +11,7 @@ namespace chinese_checkers.Core.Models
         public Board Board { get; set; }
         public List<Player> Players { get; set; }
 
-        public GameSession(int[,] locations, int numberOfAI, ICharacter playerCharacter)
+        public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
         {
             this.Players = new List<Player>();
             this.Players.Add(new Player(0, playerCharacter));

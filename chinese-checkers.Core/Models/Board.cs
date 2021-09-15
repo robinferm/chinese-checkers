@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,9 +13,9 @@ namespace chinese_checkers.Core.Models
         public List<Location> Locations { get; private set; }
         public List<Piece> Pieces { get; private set; }
 
-        public Board(int[,] locations, List<Player> players)
+        public Board(List<Location> locations, List<Player> players)
         {
-            this.Locations = new List<Location>();
+            this.Locations = locations;
             //PopulateLocations(locations);
         }
 
@@ -26,5 +27,7 @@ namespace chinese_checkers.Core.Models
         //        Locations.Add(new Location(locations));
         //    }
         //}
+
+    
     }
 }
