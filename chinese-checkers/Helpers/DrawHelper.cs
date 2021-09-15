@@ -1,4 +1,5 @@
-﻿using chinese_checkers.Core.Models;
+﻿using chinese_checkers.Core.Enums;
+using chinese_checkers.Core.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -14,16 +15,60 @@ namespace chinese_checkers.Helpers
     /// </summary>
     public static class DrawHelper
     {
-        public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage)
+        //temp
+        static int scalingValue = 40;
+        public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage, CanvasBitmap locationImageRed, CanvasBitmap locationImageGreen, CanvasBitmap locationImageBlue, CanvasBitmap locationImageBlack, CanvasBitmap locationImageWhite, CanvasBitmap locationImageYellow)
         {
-            //temp
-            var scalingValue = 40;
             foreach (var L in board.Locations)
             {
                 var x = (L.Point.X + 4) * scalingValue + (L.Point.Y * (scalingValue / 2));
                 var y = (L.Point.Y + 4) * scalingValue;
-                args.DrawingSession.DrawImage(locationImage, x, y);
+                //if (L.NestColorId != null)
+                //{
+                //    args.DrawingSession.DrawImage(locationImage, x, y);
+                //}
 
+                switch (L.NestColorId)
+                {
+                    case NestColor.Red:
+                        args.DrawingSession.DrawImage(locationImageRed, x, y);
+                        break;
+
+                    case NestColor.Green:
+                        args.DrawingSession.DrawImage(locationImageGreen, x, y);
+                        break;
+
+                    case NestColor.Blue:
+                        args.DrawingSession.DrawImage(locationImageBlue, x, y);
+                        break;
+
+                    case NestColor.Black:
+                        args.DrawingSession.DrawImage(locationImageBlack, x, y);
+                        break;
+
+                    case NestColor.White:
+                        args.DrawingSession.DrawImage(locationImageWhite, x, y);
+                        break;
+
+                    case NestColor.Yellow:
+                        args.DrawingSession.DrawImage(locationImageYellow, x, y);
+                        break;
+
+                    default:
+                        args.DrawingSession.DrawImage(locationImage, x, y);
+                        break;
+
+                }
+            }
+        }
+
+        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board)
+        {
+            foreach (var P in board.Pieces)
+            {
+                var x = (P.Point.X + 4) * scalingValue + (P.Point.Y * (scalingValue / 2));
+                var y = (P.Point.Y + 4) * scalingValue;
+                args.DrawingSession.DrawImage(P.Image, x, y);
             }
         }
 

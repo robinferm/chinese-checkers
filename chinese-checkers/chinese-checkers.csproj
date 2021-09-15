@@ -184,6 +184,13 @@
     <Compile Include="Helpers\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\Locations\black.png" />
+    <Content Include="Assets\Images\Locations\blue.png" />
+    <Content Include="Assets\Images\Locations\default.png" />
+    <Content Include="Assets\Images\Locations\green.png" />
+    <Content Include="Assets\Images\Locations\red.png" />
+    <Content Include="Assets\Images\Locations\white.png" />
+    <Content Include="Assets\Images\Locations\yellow.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

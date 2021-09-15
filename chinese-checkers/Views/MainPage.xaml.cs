@@ -22,6 +22,12 @@ namespace chinese_checkers.Views
 
         GameSession gs;
         CanvasBitmap locationImage;
+        CanvasBitmap locationImageRed;
+        CanvasBitmap locationImageGreen;
+        CanvasBitmap locationImageBlue;
+        CanvasBitmap locationImageBlack;
+        CanvasBitmap locationImageWhite;
+        CanvasBitmap locationImageYellow;
 
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
@@ -35,7 +41,7 @@ namespace chinese_checkers.Views
         }
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            DrawHelper.DrawBoard(sender, args, gs.Board, locationImage);
+            DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow);
         }
 
         private void canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
@@ -46,7 +52,13 @@ namespace chinese_checkers.Views
 
         async Task CreateResourcesAsync(CanvasAnimatedControl sender)
         {
-            locationImage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/StoreLogo.png"));
+            locationImage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/default.png"));
+            locationImageRed = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/red.png"));
+            locationImageGreen = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/green.png"));
+            locationImageBlue = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/blue.png"));
+            locationImageBlack = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/black.png"));
+            locationImageWhite = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/white.png"));
+            locationImageYellow = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/yellow.png"));
         }
     }
 }

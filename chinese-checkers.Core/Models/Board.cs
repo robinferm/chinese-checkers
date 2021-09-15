@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using chinese_checkers.Core.Enums;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -19,14 +20,15 @@ namespace chinese_checkers.Core.Models
             //PopulateLocations(locations);
         }
 
-        //public void PopulateLocations(int[,] locations)
-        //{
+        public void PopulateLocations(Piece piece)
+        {
 
-        //    for (int i = 0; i < locations.GetLength(0); i++)
-        //    {
-        //        Locations.Add(new Location(locations));
-        //    }
-        //}
+        }
+
+        public void PopulateLocations(Item item)
+        {
+
+        }
 
     
     }
