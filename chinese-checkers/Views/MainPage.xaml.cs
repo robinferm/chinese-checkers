@@ -78,17 +78,31 @@ namespace chinese_checkers.Views
 
         private void canvas_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            Debug.WriteLine(e.GetCurrentPoint(canvas).Position);
+            //Debug.WriteLine(e.GetCurrentPoint(canvas).Position);
             var pos = e.GetCurrentPoint(canvas).Position;
             int scalingValue = 40;
 
 
-            var x = (0 + 4) * scalingValue + (0 * (scalingValue / 2));
-            var y = (0 + 4) * scalingValue;
+            //float x = (0 + 4) * scalingValue + (0 * (scalingValue / 2));
+            //float y = (0 + 4) * scalingValue;
+            //x = ScalingHelper.Xpos(x);
+            //y = ScalingHelper.Ypos(y);
+            //Debug.WriteLine(x);
 
-            if (pos.X >= x && pos.X <= x + 16 && pos.Y >= y && pos.Y <= y + 16)
+            //if (pos.X >= x && pos.X <= x + 16 && pos.Y >= y && pos.Y <= y + 16)
+            //{
+            //    Debug.WriteLine("Collision");
+            //}
+
+            foreach ( var L in locations)
             {
-                Debug.WriteLine("Collision");
+                var x = (L.Point.X + 4) * scalingValue + (L.Point.Y * (scalingValue / 2));
+                var y = (L.Point.Y + 4) * scalingValue;
+                if (pos.X >= x && pos.X <= x + 16 && pos.Y >= y && pos.Y <= y + 16)
+                {
+                    Debug.WriteLine(L.PieceId);
+                    break;
+                }
             }
         }
     }
