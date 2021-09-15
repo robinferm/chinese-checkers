@@ -16,6 +16,7 @@ using chinese_checkers.Helpers;
 using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Core;
+using System.Linq;
 
 namespace chinese_checkers.Views
 {
@@ -32,6 +33,7 @@ namespace chinese_checkers.Views
         CanvasBitmap locationImageWhite;
         CanvasBitmap locationImageYellow;
         CanvasBitmap pieceImage;
+        Piece selectedPiece;
 
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
@@ -101,7 +103,17 @@ namespace chinese_checkers.Views
                 if (pos.X >= x && pos.X <= x + 16 && pos.Y >= y && pos.Y <= y + 16)
                 {
                     Debug.WriteLine(L.PieceId);
-                    break;
+                    if (selectedPiece != null)
+                    {
+                        selectedPiece.Point = L.Point;
+                        L.PieceId = selectedPiece.Id;
+                        selectedPiece = null;
+                    }
+                    else
+                    {
+                        selectedPiece = gs.Board.Pieces.Find(piece => piece.Id == L.PieceId.Value);
+                        break;
+                    }
                 }
             }
         }

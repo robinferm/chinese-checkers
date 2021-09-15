@@ -22,7 +22,7 @@ namespace chinese_checkers.Core.Models
             this.NestColor = nestColor;
         }
 
-        public void Move()
+        public void Move(Piece piece)
         {
 
         }
