@@ -10,6 +10,7 @@ namespace chinese_checkers.Core.Models
     public class Piece
     {
         public int Id { get; set; }
+        public int Health { get; set; }
         public Point Point { get; set; }
         public NestColor NestColor { get; set; }
         public List<Item> Items { get; set; }
@@ -20,6 +21,7 @@ namespace chinese_checkers.Core.Models
             this.Id = id;
             this.Point = point;
             this.NestColor = nestColor;
+            this.Health = 2;
         }
 
         public void Move(Piece piece)

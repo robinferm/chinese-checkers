@@ -14,21 +14,24 @@ namespace chinese_checkers.Core.Models
         public List<Location> Locations { get; private set; }
         public List<Piece> Pieces { get; private set; }
         public List<Item> Items { get; set; }
-
+        public List<Player> Players { get; set; }
         public Board(List<Location> locations, List<Player> players)
         {
             this.Locations = locations;
             this.Pieces = new List<Piece>();
+            this.Players = players;
             PopulateLocations();
         }
 
-        public void PopulateLocations()
+        private void PopulateLocations()
         {
+
+            //Set amount and location of pieces based of length of Players
             foreach ( var L in Locations)
             {
-                if (L.NestColorId != null) 
+                if (L.NestColor != null) 
                 {
-                    var P = new Piece(Pieces.Count, L.Point, L.NestColorId.Value);
+                    var P = new Piece(Pieces.Count, L.Point, L.NestColor.Value);
                     Pieces.Add(P);
                     L.PieceId = P.Id;
                 }

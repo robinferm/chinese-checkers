@@ -30,7 +30,7 @@ namespace chinese_checkers.Helpers
                 //    args.DrawingSession.DrawImage(locationImage, x, y);
                 //}
 
-                switch (L.NestColorId)
+                switch (L.NestColor)
                 {
                     case NestColor.Red:
                         args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageRed), x, y);
