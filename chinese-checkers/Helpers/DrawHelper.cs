@@ -30,7 +30,7 @@ namespace chinese_checkers.Helpers
                 //    args.DrawingSession.DrawImage(locationImage, x, y);
                 //}
 
-                switch (L.NestColorId)
+                switch (L.NestColor)
                 {
                     case NestColor.Red:
                         args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageRed), x, y);
@@ -73,6 +73,16 @@ namespace chinese_checkers.Helpers
                 //args.DrawingSession.DrawImage(P.Image, x+4, y+4);
                 args.DrawingSession.DrawText(P.Id.ToString(), x, y, Colors.Black);
                 args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImage), x + 1.5f, y + 1.5f);
+            }
+        }
+
+        public static void DrawAvailableMoves(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Location> locations)
+        {
+            foreach (var L in locations)
+            {
+                var x = (L.Point.X + 4) * scalingValue + (L.Point.Y * (scalingValue / 2));
+                var y = (L.Point.Y + 4) * scalingValue;
+                args.DrawingSession.FillRectangle(x, y, 16, 16, Colors.Azure);
             }
         }
 

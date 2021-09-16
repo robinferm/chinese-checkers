@@ -34,6 +34,7 @@ namespace chinese_checkers.Views
         CanvasBitmap locationImageYellow;
         CanvasBitmap pieceImage;
         Piece selectedPiece;
+        Windows.Foundation.Point currentPoint;
 
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
@@ -57,6 +58,15 @@ namespace chinese_checkers.Views
         {
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow);
             DrawHelper.DrawPieces(sender, args, gs.Board, pieceImage);
+            if (selectedPiece != null)
+            {
+                var availableMoves = gs.Board.GetAvailableMoves(selectedPiece);
+                args.DrawingSession.DrawText(selectedPiece.Id.ToString(), 0, 40, Colors.Black);
+                DrawHelper.DrawAvailableMoves(sender, args, availableMoves);
+
+            }
+            args.DrawingSession.DrawText(((int)currentPoint.X).ToString() + ", " + ((int)currentPoint.Y).ToString(), 0, 0, Colors.Black);
+
         }
 
         private void canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
@@ -103,22 +113,45 @@ namespace chinese_checkers.Views
                 if (pos.X >= x && pos.X <= x + 16 && pos.Y >= y && pos.Y <= y + 16)
                 {
                     Debug.WriteLine(L.PieceId);
+                    // If a piece is selected
                     if (selectedPiece != null)
                     {
-                        selectedPiece.Point = L.Point;
-                        L.PieceId = selectedPiece.Id;
-                        selectedPiece = null;
+                        var availableMoves = gs.Board.GetAvailableMoves(selectedPiece);
+                        // If location is free, then move piece
+                        if (availableMoves.Contains(L))
+                        {
+                            // Removes piece(id) from old location
+                            locations.Find(Loc => selectedPiece.Id == Loc.PieceId).PieceId = null;
+                            selectedPiece.Point = L.Point;
+                            L.PieceId = selectedPiece.Id;
+                            selectedPiece = null;
+                        }
+                        else
+                        {
+                            selectedPiece = null;
+                            canvas_PointerPressed(sender, e);
+                        }
                     }
+                    // If a piece is not selected
                     else
                     {
+                        // If clicked location has a piece
                         if (L.PieceId != null)
                         {
                             selectedPiece = gs.Board.Pieces.Find(piece => piece.Id == L.PieceId.Value);
+
+                            // TODO highlight available moves selectedPiece.avalibleMoves(board)
                             break;
                         }
+
                     }
                 }
             }
+        }
+
+        private void canvas_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            currentPoint = e.GetCurrentPoint(canvas).Position;
         }
     }
 }

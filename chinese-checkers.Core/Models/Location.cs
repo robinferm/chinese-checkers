@@ -11,13 +11,13 @@ namespace chinese_checkers.Core.Models
     {
         public Point Point { get; set; }
         public int? PieceId { get; set; }
-        public NestColor? NestColorId { get; set; }
+        public NestColor? NestColor { get; set; }
         public Item? ItemId { get; set; }
 
-        public Location(int x, int y, NestColor? nestColorId = null, int? pieceId = null, Item? itemId = null)
+        public Location(int x, int y, NestColor? nestColor = null, int? pieceId = null, Item? itemId = null)
         {
             this.Point = new Point(x, y);
-            this.NestColorId = nestColorId;
+            this.NestColor = nestColor;
             this.PieceId = pieceId;
             this.ItemId = itemId;
         }
