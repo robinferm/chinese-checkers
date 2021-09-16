@@ -111,8 +111,11 @@ namespace chinese_checkers.Views
                     }
                     else
                     {
-                        selectedPiece = gs.Board.Pieces.Find(piece => piece.Id == L.PieceId.Value);
-                        break;
+                        if (L.PieceId != null)
+                        {
+                            selectedPiece = gs.Board.Pieces.Find(piece => piece.Id == L.PieceId.Value);
+                            break;
+                        }
                     }
                 }
             }
