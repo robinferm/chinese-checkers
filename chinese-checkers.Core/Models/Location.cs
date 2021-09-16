@@ -11,12 +11,15 @@ namespace chinese_checkers.Core.Models
     {
         public Point Point { get; set; }
         public int? PieceId { get; set; }
-        public NestColor? ColorId { get; set; }
+        public NestColor? NestColorId { get; set; }
         public Item? ItemId { get; set; }
 
-        public Location(int[] location)
+        public Location(int x, int y, NestColor? nestColorId = null, int? pieceId = null, Item? itemId = null)
         {
-            this.Point = new Point(location[0], location[1]);
+            this.Point = new Point(x, y);
+            this.NestColorId = nestColorId;
+            this.PieceId = pieceId;
+            this.ItemId = itemId;
         }
 
         public bool IsFree()

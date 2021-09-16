@@ -1,16 +1,20 @@
 ﻿using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace chinese_checkers.Core.Models
 {
-    class GameSession
+    /// <summary>
+    /// This is used when a new game is created
+    /// </summary>
+    public class GameSession
     {
         public Board Board { get; set; }
         public List<Player> Players { get; set; }
 
-        public GameSession(CanvasBitmap image, List<int[]> locations, int numberOfAI, ICharacter playerCharacter)
+        public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
         {
             this.Players = new List<Player>();
             this.Players.Add(new Player(0, playerCharacter));
@@ -20,7 +24,7 @@ namespace chinese_checkers.Core.Models
                 this.Players.Add(new Player(i));
             }
 
-            this.Board = new Board(image, locations, this.Players);
+            this.Board = new Board(locations, this.Players);
         }
     }
 }
