@@ -76,6 +76,16 @@ namespace chinese_checkers.Helpers
             }
         }
 
+        public static void DrawAvailableMoves(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Location> locations)
+        {
+            foreach (var L in locations)
+            {
+                var x = (L.Point.X + 4) * scalingValue + (L.Point.Y * (scalingValue / 2));
+                var y = (L.Point.Y + 4) * scalingValue;
+                args.DrawingSession.FillRectangle(x, y, 16, 16, Colors.Azure);
+            }
+        }
+
         // Debug stuff
         //for (int i = 0; i < test.GetLength(0); i++)
         //{

@@ -30,5 +30,6 @@ namespace chinese_checkers.Core.Models
         {
 
         }
+
     }
 }
