@@ -6,11 +6,11 @@ namespace chinese_checkers.Core.Enums
 {
     public enum NestColor
     {
+        Red,
+        Black,
         Blue,
         Green,
-        Red,
-        Yellow,
-        Black,
-        White
+        White,
+        Yellow
     }
 }
