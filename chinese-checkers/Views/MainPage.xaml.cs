@@ -34,6 +34,7 @@ namespace chinese_checkers.Views
         CanvasBitmap locationImageYellow;
         CanvasBitmap pieceImage;
         Piece selectedPiece;
+        Windows.Foundation.Point currentPoint;
 
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
@@ -57,6 +58,7 @@ namespace chinese_checkers.Views
         {
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow);
             DrawHelper.DrawPieces(sender, args, gs.Board, pieceImage);
+            args.DrawingSession.DrawText(((int)currentPoint.X).ToString() + ", " + ((int)currentPoint.Y).ToString(), 0, 0, Colors.Black);
         }
 
         private void canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
@@ -119,6 +121,11 @@ namespace chinese_checkers.Views
                     }
                 }
             }
+        }
+
+        private void canvas_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            currentPoint = e.GetCurrentPoint(canvas).Position;
         }
     }
 }
