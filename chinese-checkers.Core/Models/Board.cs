@@ -7,10 +7,8 @@ using System.Drawing;
 using System.Numerics;
 using System.Text;
 
-namespace chinese_checkers.Core.Models
-{
-    public class Board
-    {
+namespace chinese_checkers.Core.Models {
+    public class Board {
         public List<Location> Locations { get; private set; }
         public List<Piece> Pieces { get; private set; }
         public List<Item> Items { get; set; }
@@ -27,9 +25,9 @@ namespace chinese_checkers.Core.Models
         {
 
             //Set amount and location of pieces based of length of Players
-            foreach ( var L in Locations)
+            foreach (var L in Locations)
             {
-                if (L.NestColor != null) 
+                if (L.NestColor != null)
                 {
                     var P = new Piece(Pieces.Count, L.Point, L.NestColor.Value);
                     Pieces.Add(P);
@@ -52,31 +50,49 @@ namespace chinese_checkers.Core.Models
                 availableMoves = new List<Location>();
                 availableMoves.Add(Locations.Find(L => L.Point == point));
             }
-            Location location;
+            Location targetLocation;
+            List<(int, int)> moves = new List<(int, int)>()
+            {
+                (1, 0),
+                (-1, 0),
+                (0, 1),
+                (0, -1),
+                (1, -1),
+                (-1, 1)
+            };
 
+            foreach (var m in moves)
+            {
+                targetLocation = Locations.Find(L => L.Point == new Point(point.X + m.Item1, point.Y + m.Item2));
+                // If location does not have a piece (can have buff)
+                if (targetLocation != null && !availableMoves.Contains(targetLocation)) // If targetlocation is on the board and location is not already in availableMoves
+                {
+                    if (targetLocation.PieceId is null)
+                    {
+                        if (!hasJumped)
+                        {
+                            availableMoves.Add(targetLocation);
+                        }
+                    }
+                    // If location have a piece
+                    else
+                    {
+                        targetLocation = Locations.Find(L => L.Point == new Point(point.X + (m.Item1 * 2), point.Y + (m.Item2 * 2)));
+                        if (targetLocation != null && !availableMoves.Contains(targetLocation)) // If targetlocation is on the board and location is not already in availableMoves
+                        {
+                            if (targetLocation.PieceId is null)
+                            {
+                                availableMoves.Add(targetLocation);
+                                availableMoves = CalculateAvailableMoves(targetLocation.Point, availableMoves, true);
+                            }
+                        }
 
+                    }
+                }
 
+            }
             // x + 1, y
-            location = Locations.Find(L => L.Point == new Point(point.X + 1, point.Y));
-            // If location does not have a piece (can have buff)
-            if (location.PieceId is null)
-            {
-                if (!hasJumped)
-                {
-                    availableMoves.Add(location);
-                }
-            }
-            // If location have a piece
-            else
-            {
-                location = Locations.Find(L => L.Point == new Point(point.X + 2, point.Y));
-                if (location.PieceId is null)
-                {
-                    availableMoves.Add(location);
-                    availableMoves = CalculateAvailableMoves(location.Point, availableMoves, true);
-                }
 
-            }
 
 
             // x - 1, y
