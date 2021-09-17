@@ -125,6 +125,7 @@ namespace chinese_checkers.Views
                             selectedPiece.Point = L.Point;
                             L.PieceId = selectedPiece.Id;
                             selectedPiece = null;
+                            gs.CheckForWin();
                         }
                         else
                         {
