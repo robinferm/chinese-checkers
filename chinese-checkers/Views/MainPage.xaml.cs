@@ -126,6 +126,7 @@ namespace chinese_checkers.Views
                             L.PieceId = selectedPiece.Id;
                             selectedPiece = null;
                             gs.CheckForWin();
+                            gs.ChangeTurn();
                         }
                         else
                         {
@@ -139,12 +140,13 @@ namespace chinese_checkers.Views
                         // If clicked location has a piece
                         if (L.PieceId != null)
                         {
-                            selectedPiece = gs.Board.Pieces.Find(piece => piece.Id == L.PieceId.Value);
+                            if (gs.Board.Pieces.Find(P => P.Id == L.PieceId).NestColor == gs.CurrentlyPlaying.NestColor)
+                            {
+                                selectedPiece = gs.Board.Pieces.Find(piece => piece.Id == L.PieceId.Value);
+                                break;
 
-                            // TODO highlight available moves selectedPiece.avalibleMoves(board)
-                            break;
+                            }
                         }
-
                     }
                 }
             }
