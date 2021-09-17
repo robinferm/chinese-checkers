@@ -18,6 +18,7 @@ namespace chinese_checkers.Core.Models
         public List<Player> Players { get; set; }
         public Dictionary<Player, int> PlayerScore { get; set; }
         public Dictionary<NestColor, NestColor> GoalColor { get; set; }
+        public Player CurrentlyPlaying { get; set; }
 
 
         public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
@@ -69,6 +70,7 @@ namespace chinese_checkers.Core.Models
 
             this.Players.ForEach(x => this.PlayerScore.Add(x, 0));
             this.Board = new Board(locations, this.Players);
+            this.CurrentlyPlaying = Players.First();
         }
 
         public void CheckForWin()
@@ -98,6 +100,16 @@ namespace chinese_checkers.Core.Models
                 // TODO end game, last player | show results
                 Debug.WriteLine("Game Ended");
             }
+        }
+
+        public void ChangeTurn()
+        {
+            var nextPlayer = this.Players.FirstOrDefault(x => x.Id == CurrentlyPlaying.Id + 1);
+            if (nextPlayer == null)
+            {
+                nextPlayer = this.Players.First();
+            }
+            this.CurrentlyPlaying = nextPlayer;
         }
     }
 }
