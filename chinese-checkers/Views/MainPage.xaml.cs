@@ -92,24 +92,11 @@ namespace chinese_checkers.Views
         {
             //Debug.WriteLine(e.GetCurrentPoint(canvas).Position);
             var pos = e.GetCurrentPoint(canvas).Position;
-            int scalingValue = 40;
-
-
-            //float x = (0 + 4) * scalingValue + (0 * (scalingValue / 2));
-            //float y = (0 + 4) * scalingValue;
-            //x = ScalingHelper.Xpos(x);
-            //y = ScalingHelper.Ypos(y);
-            //Debug.WriteLine(x);
-
-            //if (pos.X >= x && pos.X <= x + 16 && pos.Y >= y && pos.Y <= y + 16)
-            //{
-            //    Debug.WriteLine("Collision");
-            //}
 
             foreach ( var L in locations)
             {
-                var x = (L.Point.X + 4) * scalingValue + (L.Point.Y * (scalingValue / 2));
-                var y = (L.Point.Y + 4) * scalingValue;
+                var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
+                var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
                 if (pos.X >= x && pos.X <= x + 16 && pos.Y >= y && pos.Y <= y + 16)
                 {
                     Debug.WriteLine(L.PieceId);

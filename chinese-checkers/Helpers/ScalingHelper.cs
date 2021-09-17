@@ -12,24 +12,12 @@ namespace chinese_checkers.Helpers
 {
     static class ScalingHelper
     {
-        //public double bWidth = ApplicationView.GetForCurrentView().VisibleBounds.Width;
-        //public double bHeight = ApplicationView.GetForCurrentView().VisibleBounds.Height;
+        public static int ScalingValue { get; } = 40;
+
         public static float scaleWidth, scaleHeight;
 
         public static int DesginWidth = 1920;
         public static int DesginHeight = 1080;
-
-
-
-
-        //public static void ScalingInit()
-        //{
-        //    SetScale(bWidth, bHeight);
-
-
-        //}
-
-
 
         public static void SetScale()
         {
