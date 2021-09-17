@@ -10,18 +10,21 @@ namespace chinese_checkers.Core.Models
         public int Id { get; set; }
         public bool IsAI { get; set; }
         public ICharacter Character { get; set; }
-        public NestColor ColorId { get; set; }
+        public NestColor NestColor { get; set; }
+        public int? Placement { get; set; }
 
-        public Player(int id, ICharacter character)
+        public Player(int id, ICharacter character, NestColor nestColor)
         {
             this.Id = id;
             this.Character = character;
+            this.NestColor = nestColor;
         }
 
-        public Player(int id)
+        public Player(int id, NestColor nestColor)
         {
             this.Id = id;
             this.IsAI = true;
+            this.NestColor = nestColor;
         }
     }
 }

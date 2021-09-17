@@ -4,6 +4,7 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Numerics;
 using System.Text;
 
@@ -12,22 +13,20 @@ namespace chinese_checkers.Core.Models {
         public List<Location> Locations { get; private set; }
         public List<Piece> Pieces { get; private set; }
         public List<Item> Items { get; set; }
-        public List<Player> Players { get; set; }
         public Board(List<Location> locations, List<Player> players)
         {
             this.Locations = locations;
             this.Pieces = new List<Piece>();
-            this.Players = players;
-            PopulateLocations();
+            PopulateLocations(players);
         }
 
-        private void PopulateLocations()
+        private void PopulateLocations(List<Player> players)
         {
-
             //Set amount and location of pieces based of length of Players
+
             foreach (var L in Locations)
             {
-                if (L.NestColor != null)
+                if (L.NestColor != null && players.Contains(players.Find(x => x.NestColor == L.NestColor)))
                 {
                     var P = new Piece(Pieces.Count, L.Point, L.NestColor.Value);
                     Pieces.Add(P);
@@ -42,6 +41,7 @@ namespace chinese_checkers.Core.Models {
             availableMoves.RemoveAt(0);
             return availableMoves;
         }
+
         private List<Location> CalculateAvailableMoves(Point point, List<Location> availableMoves = null, bool hasJumped = false)
         {
 

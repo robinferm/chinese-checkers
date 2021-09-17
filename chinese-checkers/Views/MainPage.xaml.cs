@@ -39,7 +39,7 @@ namespace chinese_checkers.Views
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
         ICharacter playerCharacter = new Mage();
-        int numberOfAI = 1;
+        int numberOfAI = 2;
 
         public MainPage()
         {
@@ -125,6 +125,7 @@ namespace chinese_checkers.Views
                             selectedPiece.Point = L.Point;
                             L.PieceId = selectedPiece.Id;
                             selectedPiece = null;
+                            gs.CheckForWin();
                         }
                         else
                         {
