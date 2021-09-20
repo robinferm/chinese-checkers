@@ -93,11 +93,27 @@ namespace chinese_checkers.Core.Models {
             }
             return availableMoves;
         }
+
         public void MovePiece(Location L, Piece selectedPiece)
         {
             this.Locations.Find(Loc => selectedPiece.Id == Loc.PieceId).PieceId = null;
             selectedPiece.Point = L.Point;
             L.PieceId = selectedPiece.Id;
+        }
+
+        public Point getRandomNeutralPosition()
+        {
+            List<Point> neutralPoints = new List<Point>();
+            foreach (var L in Locations)
+            {
+                if (L.NestColor == null)
+                {
+                    neutralPoints.Add(L.Point);
+                }
+            }
+            Random rndNeutralPoint = new Random();
+            int rndPoint = rndNeutralPoint.Next(neutralPoints.Count + 1);
+            return neutralPoints[rndPoint]; // Randomized position of neutral positions
         }
     }
 }
