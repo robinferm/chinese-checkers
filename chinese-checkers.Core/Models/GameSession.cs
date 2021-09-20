@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace chinese_checkers.Core.Models
 {
@@ -18,6 +19,7 @@ namespace chinese_checkers.Core.Models
         public List<Player> Players { get; set; }
         public Dictionary<Player, int> PlayerScore { get; set; }
         public Dictionary<NestColor, NestColor> GoalColor { get; set; }
+        public Dictionary<NestColor, Point> GoalLocation { get; set; }
         public Player CurrentlyPlaying { get; set; }
 
 
@@ -34,6 +36,16 @@ namespace chinese_checkers.Core.Models
                 { NestColor.Red, NestColor.Green },
                 { NestColor.Black, NestColor.White },
                 { NestColor.Yellow, NestColor.Blue }
+            };
+
+            this.GoalLocation = new Dictionary<NestColor, Point>()
+            {
+                { NestColor.Green, new Point(8, -4) },
+                { NestColor.White, new Point(12, 0) },
+                { NestColor.Blue, new Point(0, 0) },
+                { NestColor.Red, new Point(0, 12) },
+                { NestColor.Black, new Point(-4, 8) },
+                { NestColor.Yellow, new Point(8, 8) }
             };
 
             switch (numberOfAI)
@@ -110,6 +122,73 @@ namespace chinese_checkers.Core.Models
                 nextPlayer = this.Players.First();
             }
             this.CurrentlyPlaying = nextPlayer;
+
+            if (this.CurrentlyPlaying.IsAI)
+            {
+                MovePieceAI();
+            }
+        }
+
+        private void MovePieceAI()
+        {
+            Thread.Sleep(1000);
+
+            // Make move automatically
+            var pieces = Board.Pieces.Where(x => x.NestColor == this.CurrentlyPlaying.NestColor);
+
+            Dictionary<Piece, List<Location>> availableMoves = new Dictionary<Piece, List<Location>>();
+
+            // Add all available moves from all pieces to a list
+            foreach (var P in pieces)
+            {
+                var moves = Board.GetAvailableMoves(P);
+                if (moves.Count > 0)
+                {
+                    availableMoves.Add(P, moves);
+                }
+            }
+
+            //Random rnd = new Random();
+            //var randomPieceWithAvailableMove = availableMoves.ElementAt(rnd.Next(0, availableMoves.Count));
+            //var piece = randomPieceWithAvailableMove.Key;
+            //var targetLocation = randomPieceWithAvailableMove.Value.ElementAt(rnd.Next(0, randomPieceWithAvailableMove.Value.Count));
+
+            var longestMove = GetLongestMove(availableMoves);
+            Board.MovePiece(longestMove.Value, longestMove.Key);
+            ChangeTurn();
+        }
+
+        private KeyValuePair<Piece, Location> GetLongestMove(Dictionary<Piece, List<Location>> availableMoves)
+        {
+            var longestMove = new KeyValuePair<Piece, Location>();
+            double longestDistance = 0;
+
+            foreach (var piece in availableMoves.Keys)
+            {
+                // Distance between current location and goal location
+                var currentDistance = GetDistance(piece.Point, GoalLocation[piece.NestColor]);
+
+                foreach (var am in availableMoves[piece])
+                {
+                    // Distance between target location and goal location
+                    var targetDistance = GetDistance(am.Point, GoalLocation[piece.NestColor]);
+
+                    if (currentDistance - targetDistance > longestDistance)
+                    {
+                        longestDistance = currentDistance - targetDistance;
+                        longestMove = new KeyValuePair<Piece, Location>(piece, am);
+                    }
+                }
+            }
+            return longestMove;
+        }
+
+        private double GetDistance(Point P1, Point P2)
+        {
+            double xDistance = Math.Abs(P2.X - P1.X);
+            double yDistance = Math.Abs(P2.Y - P1.Y);
+
+            return (xDistance + yDistance) / 2;
         }
     }
 }
