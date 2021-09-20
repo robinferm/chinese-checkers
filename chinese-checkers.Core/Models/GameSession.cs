@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace chinese_checkers.Core.Models
 {
@@ -113,8 +114,36 @@ namespace chinese_checkers.Core.Models
 
             if (this.CurrentlyPlaying.IsAI)
             {
-                // Make move automatically
+                MovePieceAI();
             }
+        }
+
+        private void MovePieceAI()
+        {
+            Thread.Sleep(1000);
+            // Make move automatically
+            // gör get available moves på alla pieces med playerns nestcolor
+            var pieces = Board.Pieces.Where(x => x.NestColor == this.CurrentlyPlaying.NestColor);
+
+            Dictionary<Piece, List<Location>> availableMoves = new Dictionary<Piece, List<Location>>();
+
+            // Add all available moves from all pieces to a list
+
+            foreach (var P in pieces)
+            {
+                var moves = Board.GetAvailableMoves(P);
+                if (moves.Count > 0)
+                {
+                    availableMoves.Add(P, moves);
+                }
+            }
+
+            Random rnd = new Random();
+            var randomPieceWithAvailableMove = availableMoves.ElementAt(rnd.Next(0, availableMoves.Count));
+            var piece = randomPieceWithAvailableMove.Key;
+            var targetLocation = randomPieceWithAvailableMove.Value.ElementAt(rnd.Next(0, randomPieceWithAvailableMove.Value.Count));
+            Board.MovePiece(targetLocation, piece);
+            ChangeTurn();
         }
     }
 }
