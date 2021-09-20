@@ -122,7 +122,6 @@ namespace chinese_checkers.Core.Models {
             {
                 if (L.NestColor == null)
                 {
-                    L.NestColor = NestColor.Green; // Test. To determine the desired places on the board.
                     neutralPoints.Add(L.Point);
                 }
             }
