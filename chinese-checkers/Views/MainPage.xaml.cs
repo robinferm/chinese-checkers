@@ -40,13 +40,18 @@ namespace chinese_checkers.Views
         List<Location> locations = LocationHelper.CreateLocations();
         ICharacter playerCharacter = new Mage();
         int numberOfAI = 2;
-
+        List<Player> players = new List<Player>();
         public MainPage()
         {
             InitializeComponent();
             ScalingHelper.SetScale();
+            Board newGameBoard = new Board(locations,players);
             Window.Current.SizeChanged += Current_SizeChanged;
             gs = new GameSession(locations, numberOfAI, playerCharacter);
+            // Test
+            Debug.WriteLine("Randomized position --------> " + newGameBoard.getRandomNeutralPosition());
+       
+
         }
 
         private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e)

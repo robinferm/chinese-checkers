@@ -11,6 +11,8 @@ namespace chinese_checkers.Core.Enums
         Blue,
         Green,
         White,
-        Yellow
+        Yellow,
+     
+
     }
 }

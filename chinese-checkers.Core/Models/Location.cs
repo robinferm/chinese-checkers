@@ -13,6 +13,7 @@ namespace chinese_checkers.Core.Models
         public int? PieceId { get; set; }
         public NestColor? NestColor { get; set; }
         public Item? ItemId { get; set; }
+     
 
         public Location(int x, int y, NestColor? nestColor = null, int? pieceId = null, Item? itemId = null)
         {
@@ -26,5 +27,9 @@ namespace chinese_checkers.Core.Models
         {
             return PieceId is null && ItemId is null;
         }
+
+       
+
+
     }
 }

@@ -35,6 +35,7 @@ namespace chinese_checkers.Core.Models
                 { NestColor.Black, NestColor.White },
                 { NestColor.Yellow, NestColor.Blue }
             };
+           // Board.getRandomNeutralPosition();
 
             switch (numberOfAI)
             {
@@ -71,6 +72,7 @@ namespace chinese_checkers.Core.Models
             this.Players.ForEach(x => this.PlayerScore.Add(x, 0));
             this.Board = new Board(locations, this.Players);
             this.CurrentlyPlaying = Players.First();
+          
         }
 
         public void CheckForWin()
