@@ -110,6 +110,11 @@ namespace chinese_checkers.Core.Models
                 nextPlayer = this.Players.First();
             }
             this.CurrentlyPlaying = nextPlayer;
+
+            if (this.CurrentlyPlaying.IsAI)
+            {
+                // Make move automatically
+            }
         }
     }
 }

@@ -91,28 +91,13 @@ namespace chinese_checkers.Core.Models {
                 }
 
             }
-            // x + 1, y
-
-
-
-            // x - 1, y
-
-            // x, y + 1
-
-            // x, y - 1
-
-            // x + 1, y - 1
-
-            // x - 1, y + 1
-
-
-            //availableMove = CalculateAvailableMoves(point);
-            //if (Locations.Find(x => x.Point.X == point.X + 1 && x.Point.Y == point.Y))
-            //{
-
-            //    AvailableMoves(piece, )
-            //}
             return availableMoves;
+        }
+        public void MovePiece(Location L, Piece selectedPiece)
+        {
+            this.Locations.Find(Loc => selectedPiece.Id == Loc.PieceId).PieceId = null;
+            selectedPiece.Point = L.Point;
+            L.PieceId = selectedPiece.Id;
         }
     }
 }

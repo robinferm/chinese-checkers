@@ -108,9 +108,7 @@ namespace chinese_checkers.Views
                         if (availableMoves.Contains(L))
                         {
                             // Removes piece(id) from old location
-                            locations.Find(Loc => selectedPiece.Id == Loc.PieceId).PieceId = null;
-                            selectedPiece.Point = L.Point;
-                            L.PieceId = selectedPiece.Id;
+                            gs.Board.MovePiece(L, selectedPiece);
                             selectedPiece = null;
                             gs.CheckForWin();
                             gs.ChangeTurn();
