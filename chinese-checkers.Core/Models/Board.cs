@@ -114,5 +114,22 @@ namespace chinese_checkers.Core.Models {
             //}
             return availableMoves;
         }
+
+         public Point getRandomNeutralPosition()
+        {
+            List<Point> neutralPoints = new List<Point>();
+            foreach (var L in Locations)
+            {
+                if (L.NestColor == null)
+                {
+                    L.NestColor = NestColor.Green; // Test. To determine the desired places on the board.
+                    neutralPoints.Add(L.Point);
+                }
+            }
+            Random rndNeutralPoint = new Random();
+            int rndPoint = rndNeutralPoint.Next(neutralPoints.Count + 1);
+            return neutralPoints[rndPoint]; // Randomized position of neutral positions
+        }
+
     }
 }
