@@ -26,7 +26,8 @@ namespace chinese_checkers.Core.Models
         public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
         {
             this.Players = new List<Player>();
-            this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
+            //this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
+            this.Players.Add(new Player(0, NestColor.Green));
             this.PlayerScore = new Dictionary<Player, int>();
             this.GoalColor = new Dictionary<NestColor, NestColor>()
             {
@@ -96,7 +97,7 @@ namespace chinese_checkers.Core.Models
                 if (pieceLocation.NestColor == goal)
                 {
                     var player = Players.Find(x => x.NestColor == P.NestColor);
-                    PlayerScore[player]++;
+                    this.PlayerScore[player]++;
                 }
 
             }
@@ -110,6 +111,7 @@ namespace chinese_checkers.Core.Models
             if (this.Players.Where(x => x.Placement != null).Count() == Players.Count - 1)
             {
                 // TODO end game, last player | show results
+                
                 Debug.WriteLine("Game Ended");
             }
         }
@@ -123,15 +125,27 @@ namespace chinese_checkers.Core.Models
             }
             this.CurrentlyPlaying = nextPlayer;
 
-            if (this.CurrentlyPlaying.IsAI)
+            if (this.CurrentlyPlaying.Placement == null)
             {
-                MovePieceAI();
+
+                // Debug.WriteLine(nextPlayer.Placement.ToString());
+                CheckForWin();
+            
+                if (this.CurrentlyPlaying.IsAI)
+                {
+                    MovePieceAI();
+                }
+            }
+            else
+            {
+
+                ChangeTurn();
             }
         }
 
         private void MovePieceAI()
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
 
             // Make move automatically
             var pieces = Board.Pieces.Where(x => x.NestColor == this.CurrentlyPlaying.NestColor);
@@ -160,8 +174,14 @@ namespace chinese_checkers.Core.Models
 
         private KeyValuePair<Piece, Location> GetLongestMove(Dictionary<Piece, List<Location>> availableMoves)
         {
-            var longestMove = new KeyValuePair<Piece, Location>();
+            Random rnd = new Random();
+            var rndPiece = availableMoves.Keys.ElementAt(rnd.Next(availableMoves.Count - 1));
+
+            var rndMove = availableMoves[rndPiece].ElementAt(rnd.Next(availableMoves[rndPiece].Count - 1));
+            KeyValuePair<Piece, Location> longestMove = new KeyValuePair<Piece, Location>(rndPiece, rndMove);
+
             double longestDistance = 0;
+            double shortestDistanceLeft = 1000;
 
             foreach (var piece in availableMoves.Keys)
             {
@@ -173,10 +193,37 @@ namespace chinese_checkers.Core.Models
                     // Distance between target location and goal location
                     var targetDistance = GetDistance(am.Point, GoalLocation[piece.NestColor]);
 
-                    if (currentDistance - targetDistance > longestDistance)
+                    //If remaining pieces are 7 or more do (this) instead
+                    if (this.PlayerScore[this.CurrentlyPlaying] > 6)
                     {
-                        longestDistance = currentDistance - targetDistance;
-                        longestMove = new KeyValuePair<Piece, Location>(piece, am);
+                        //List of all empty locations in opposite nest
+                        var emptyGoalLocations = this.Board.Locations.Where(x => x.NestColor == GoalColor[piece.NestColor] && x.PieceId == null);
+
+                        //List of own pieces not in opposite nest
+                        var notFinnishedPieces = this.Board.Pieces.Where(x => GoalColor[x.NestColor] != this.Board.Locations.Find(z => z.Point == x.Point).NestColor);
+
+                        //If current piece is in "notFinnishedPieces"
+                        if (notFinnishedPieces.Any(x => x == piece))
+                        {
+                            foreach (var emptyLocation in emptyGoalLocations)
+                            {
+                                targetDistance = GetDistance(emptyLocation.Point, am.Point);
+                                if (targetDistance < shortestDistanceLeft)
+                                {
+                                    shortestDistanceLeft = targetDistance;
+                                    longestMove = new KeyValuePair<Piece, Location>(piece, am);
+                                }
+                            }
+                        }
+                    }
+                    // If remaning pieces are less than seven do this
+                    else
+                    {
+                        if (currentDistance - targetDistance > longestDistance && (piece.NestColor == am.NestColor || GoalColor[piece.NestColor] == am.NestColor || null == am.NestColor))
+                        {
+                            longestDistance = currentDistance - targetDistance;
+                            longestMove = new KeyValuePair<Piece, Location>(piece, am);
+                        }
                     }
                 }
             }
@@ -188,7 +235,7 @@ namespace chinese_checkers.Core.Models
             double xDistance = Math.Abs(P2.X - P1.X);
             double yDistance = Math.Abs(P2.Y - P1.Y);
 
-            return (xDistance + yDistance) / 2;
+            return Math.Sqrt(Math.Pow(xDistance, 2) + Math.Pow(yDistance, 2));
         }
     }
 }

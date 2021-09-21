@@ -12,7 +12,7 @@ namespace chinese_checkers.Helpers
 {
     static class ScalingHelper
     {
-        public static int ScalingValue { get; } = 40;
+        public static int ScalingValue { get; } = 64;
 
         public static float scaleWidth, scaleHeight;
 

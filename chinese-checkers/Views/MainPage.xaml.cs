@@ -32,14 +32,14 @@ namespace chinese_checkers.Views
         CanvasBitmap locationImageBlack;
         CanvasBitmap locationImageWhite;
         CanvasBitmap locationImageYellow;
-        CanvasBitmap pieceImage;
+        CanvasBitmap pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow;
         Piece selectedPiece;
         Windows.Foundation.Point currentPoint;
 
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
         ICharacter playerCharacter = new Mage();
-        int numberOfAI = 2;
+        int numberOfAI = 5;
 
         public MainPage()
         {
@@ -57,7 +57,7 @@ namespace chinese_checkers.Views
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow);
-            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImage);
+            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow);
             if (selectedPiece != null)
             {
                 var availableMoves = gs.Board.GetAvailableMoves(selectedPiece);
@@ -85,7 +85,12 @@ namespace chinese_checkers.Views
             locationImageWhite = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/white.png"));
             locationImageYellow = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/yellow.png"));
 
-            pieceImage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/button.png"));
+            pieceImageRed = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/red.png"));
+            pieceImageGreen = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/green.png"));
+            pieceImageBlue = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/blue.png"));
+            pieceImageBlack = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/black.png"));
+            pieceImageWhite = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/white.png"));
+            pieceImageYellow = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/yellow.png"));
         }
 
         private void canvas_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -97,7 +102,7 @@ namespace chinese_checkers.Views
             {
                 var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
                 var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
-                if (pos.X >= x && pos.X <= x + 16 && pos.Y >= y && pos.Y <= y + 16)
+                if (pos.X >= x && pos.X <= x + 64 && pos.Y >= y && pos.Y <= y + 64)
                 {
                     Debug.WriteLine(L.PieceId);
                     // If a piece is selected
