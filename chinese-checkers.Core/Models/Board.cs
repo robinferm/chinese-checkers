@@ -101,7 +101,7 @@ namespace chinese_checkers.Core.Models {
             L.PieceId = selectedPiece.Id;
         }
 
-        public Point getRandomNeutralPosition()
+        public Point GetRandomNeutralPosition()
         {
             List<Point> neutralPoints = new List<Point>();
             foreach (var L in Locations)

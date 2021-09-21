@@ -187,13 +187,18 @@
   <ItemGroup>
     <Content Include="Assets\Images\Locations\black.png" />
     <Content Include="Assets\Images\Locations\blue.png" />
-    <Content Include="Assets\Images\Locations\default.png" />
     <Content Include="Assets\Images\Locations\green.png" />
+    <Content Include="Assets\Images\Locations\default.png" />
     <Content Include="Assets\Images\Locations\red.png" />
     <Content Include="Assets\Images\Locations\red2.png" />
     <Content Include="Assets\Images\Locations\white.png" />
     <Content Include="Assets\Images\Locations\yellow.png" />
-    <Content Include="Assets\Images\Pieces\button.png" />
+    <Content Include="Assets\Images\Pieces\black.png" />
+    <Content Include="Assets\Images\Pieces\blue.png" />
+    <Content Include="Assets\Images\Pieces\green.png" />
+    <Content Include="Assets\Images\Pieces\red.png" />
+    <Content Include="Assets\Images\Pieces\white.png" />
+    <Content Include="Assets\Images\Pieces\yellow.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
