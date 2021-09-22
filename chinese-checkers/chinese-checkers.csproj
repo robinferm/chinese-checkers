@@ -125,12 +125,17 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Win2D.uwp">
+      <Version>1.26.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\en-us\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activation\ActivationHandler.cs" />
+    <Compile Include="Helpers\DrawHelper.cs" />
+    <Compile Include="Helpers\ScalingHelper.cs" />
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Activation\DefaultActivationHandler.cs" />
     <Compile Include="Services\NavigationService.cs" />
@@ -180,6 +185,20 @@
     <Compile Include="Helpers\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\Locations\black.png" />
+    <Content Include="Assets\Images\Locations\blue.png" />
+    <Content Include="Assets\Images\Locations\green.png" />
+    <Content Include="Assets\Images\Locations\default.png" />
+    <Content Include="Assets\Images\Locations\red.png" />
+    <Content Include="Assets\Images\Locations\red2.png" />
+    <Content Include="Assets\Images\Locations\white.png" />
+    <Content Include="Assets\Images\Locations\yellow.png" />
+    <Content Include="Assets\Images\Pieces\black.png" />
+    <Content Include="Assets\Images\Pieces\blue.png" />
+    <Content Include="Assets\Images\Pieces\green.png" />
+    <Content Include="Assets\Images\Pieces\red.png" />
+    <Content Include="Assets\Images\Pieces\white.png" />
+    <Content Include="Assets\Images\Pieces\yellow.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

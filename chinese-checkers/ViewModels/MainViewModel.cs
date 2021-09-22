@@ -8,6 +8,7 @@ namespace chinese_checkers.ViewModels
     {
         public MainViewModel()
         {
+
         }
     }
 }
