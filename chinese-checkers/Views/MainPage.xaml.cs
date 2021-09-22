@@ -35,6 +35,10 @@ namespace chinese_checkers.Views
         CanvasBitmap pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow;
         Piece selectedPiece;
         Windows.Foundation.Point currentPoint;
+        Location mouseover = null;
+
+
+        public List<LinkedList<Point>> Paths { get; set; }
 
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
@@ -66,6 +70,11 @@ namespace chinese_checkers.Views
 
             }
             args.DrawingSession.DrawText(((int)currentPoint.X).ToString() + ", " + ((int)currentPoint.Y).ToString(), 0, 0, Colors.Black);
+
+            if (Paths != null)
+            {
+                DrawHelper.DrawPaths(sender, args, Paths, mouseover);
+            }
 
         }
 
@@ -115,12 +124,14 @@ namespace chinese_checkers.Views
                             // Removes piece(id) from old location
                             gs.Board.MovePiece(L, selectedPiece);
                             selectedPiece = null;
+                            Paths = null;
                             gs.CheckForWin();
                             gs.ChangeTurn();
                         }
                         else
                         {
                             selectedPiece = null;
+                            Paths = null;
                             canvas_PointerPressed(sender, e);
                         }
                     }
@@ -133,6 +144,7 @@ namespace chinese_checkers.Views
                             if (gs.Board.Pieces.Find(P => P.Id == L.PieceId).NestColor == gs.CurrentlyPlaying.NestColor)
                             {
                                 selectedPiece = gs.Board.Pieces.Find(piece => piece.Id == L.PieceId.Value);
+                                Paths = gs.Board.GetPaths(selectedPiece.Point, gs.Board.GetAvailableMoves(selectedPiece));
                                 break;
 
                             }
@@ -145,6 +157,22 @@ namespace chinese_checkers.Views
         private void canvas_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             currentPoint = e.GetCurrentPoint(canvas).Position;
+
+            foreach (var L in locations)
+            {
+                var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
+                var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
+                if (currentPoint.X >= x && currentPoint.X <= x + 64 && currentPoint.Y >= y && currentPoint.Y <= y + 64)
+                {
+                    mouseover = L;
+                    break;
+                    //Debug.WriteLine(mouseover.Point);
+                }
+                else
+                {
+                    mouseover = null;
+                }
+            }
         }
     }
 }
