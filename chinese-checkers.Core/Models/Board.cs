@@ -3,13 +3,16 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 
-namespace chinese_checkers.Core.Models {
-    public class Board {
+namespace chinese_checkers.Core.Models
+{
+    public class Board
+    {
         public List<Location> Locations { get; private set; }
         public List<Piece> Pieces { get; private set; }
         public List<Item> Items { get; set; }
@@ -114,6 +117,91 @@ namespace chinese_checkers.Core.Models {
             Random rndNeutralPoint = new Random();
             int rndPoint = rndNeutralPoint.Next(neutralPoints.Count + 1);
             return neutralPoints[rndPoint]; // Randomized position of neutral positions
+        }
+
+        public List<LinkedList<Point>> GetPaths(Point start, List<Location> endLocations)
+        {
+            List<LinkedList<Point>> paths = new List<LinkedList<Point>>();
+
+            endLocations.ForEach(x => paths.Add(CalculatePath(start, x.Point)));
+
+            return paths;
+        }
+
+        public LinkedList<Point> CalculatePath(Point start, Point end, LinkedList<Point> path = null, bool hasJumped = false)
+        {
+            if (path == null)
+            {
+                path = new LinkedList<Point>();
+                path.AddLast(start);
+            }
+
+            List<(int, int)> directions = new List<(int, int)>()
+            {
+                (1, 0),
+                (-1, 0),
+                (0, 1),
+                (0, -1),
+                (1, -1),
+                (-1, 1)
+            };
+
+            foreach (var D in directions)
+            {
+                var targetLocation = new Point(start.X + D.Item1, start.Y + D.Item2);
+
+                if (Locations.Any(x => x.Point == targetLocation)) // If a location exists in the specified direction
+                {
+
+                    bool targetHasPiece = Locations?.Find(x => x.Point == targetLocation).PieceId != null; // If the target location has a piece
+
+                    // One Step without jumping over a piece
+                    if (targetLocation == end && !hasJumped)
+                    {
+                        path.AddLast(targetLocation);
+                        return path;
+                    }
+
+                    // Will try to jump
+                    else if (targetHasPiece)
+                    {
+                        var nextTargetLocation = new Point(start.X + D.Item1 * 2, start.Y + D.Item2 * 2);
+
+                        if (Locations.Any(x => x.Point == nextTargetLocation) && !path.Contains(nextTargetLocation))
+                        {
+                            bool nextTargetHasPiece = Locations?.Find(x => x.Point == nextTargetLocation).PieceId != null;
+                            if (nextTargetLocation == end)
+                            {
+                                path.AddLast(targetLocation);
+                                path.AddLast(nextTargetLocation);
+                                return path;
+                            }
+
+                            //else if (!hasPiece)
+                            //{
+                            if (!nextTargetHasPiece)
+                            {
+                                path.AddLast(targetLocation);
+                                path.AddLast(nextTargetLocation);
+                                
+                                path = CalculatePath(nextTargetLocation, end, path, true);
+                                
+                                if (path.Last.Value == end)
+                                {
+                                    return path;
+                                }
+                                else
+                                {
+                                    path.RemoveLast();
+                                    path.RemoveLast();
+                                }
+                            }
+                        }
+                        //}
+                    }
+                }
+            }
+            return path;
         }
     }
 }
