@@ -71,6 +71,10 @@ namespace chinese_checkers.Helpers
         {
             foreach (var P in board.Pieces)
             {
+                if (P.Hidden)
+                {
+                    continue;
+                }
                 var x = ((P.Point.X + 4) * ScalingHelper.ScalingValue + (P.Point.Y * (ScalingHelper.ScalingValue / 2)));
                 var y = ((P.Point.Y + 4) * ScalingHelper.ScalingValue);
                 //args.DrawingSession.DrawImage(P.Image, x+4, y+4);
@@ -148,6 +152,13 @@ namespace chinese_checkers.Helpers
                     currentNode = currentNode.Next;
                 }
             }
+        }
+
+        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Vector2 vector, CanvasBitmap pieceImageRed)
+        {
+            vector.X = ((vector.X + 4) * ScalingHelper.ScalingValue + (vector.Y * (ScalingHelper.ScalingValue / 2)));
+            vector.Y = ((vector.Y + 4) * ScalingHelper.ScalingValue);
+            args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), vector.X, vector.Y);
         }
 
         // Debug stuff

@@ -17,6 +17,8 @@ using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Core;
 using System.Linq;
+using System.Threading;
+using chinese_checkers.Core.Enums;
 
 namespace chinese_checkers.Views
 {
@@ -34,8 +36,13 @@ namespace chinese_checkers.Views
         CanvasBitmap locationImageYellow;
         CanvasBitmap pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow;
         Piece selectedPiece;
+        LinkedList<Point> path;
         Windows.Foundation.Point currentPoint;
         Location mouseover = null;
+
+        Vector2 current = new Vector2(-5000, -5000);
+        int counter = 0;
+        LinkedListNode<Point> selectedNode;
 
 
         public List<LinkedList<Point>> Paths { get; set; }
@@ -48,6 +55,7 @@ namespace chinese_checkers.Views
         public MainPage()
         {
             InitializeComponent();
+            canvas.IsFixedTimeStep = true;
             ScalingHelper.SetScale();
             Window.Current.SizeChanged += Current_SizeChanged;
             gs = new GameSession(locations, numberOfAI, playerCharacter);
@@ -56,6 +64,34 @@ namespace chinese_checkers.Views
         private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e)
         {
             ScalingHelper.SetScale();
+        }
+
+        private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
+        {
+            if (current != null && path != null)
+            {
+                if (counter < 30)
+                {
+                    // Speed, start, end
+                    current = AnimationHelper.MovePiece(selectedNode.Value, current, selectedNode.Next.Value);
+                    counter++;
+                }
+                else
+                {
+                    Thread.Sleep(250);
+                    counter = 0;
+                    if (selectedNode.Next != path.Last)
+                    {
+                        selectedNode = selectedNode.Next;
+                    }
+                    else
+                    {
+                        current = new Vector2(-5000, -5000);
+                        gs.Board.Pieces.Find(x => x.Point == path.Last.Value).ToggleHidden();
+                        path = null;
+                    }
+                }
+            }
         }
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
@@ -74,6 +110,43 @@ namespace chinese_checkers.Views
             if (Paths != null)
             {
                 DrawHelper.DrawPaths(sender, args, Paths, mouseover);
+            }
+
+            if (current.X != -5000)
+            {
+                var color = gs.Board.Pieces.Find(x => x.Point == path.Last.Value).NestColor;
+                CanvasBitmap img = pieceImageRed;
+                switch (color)
+                {
+                    case NestColor.Red:
+                        img = pieceImageRed;
+                        break;
+
+                    case NestColor.Blue:
+                        img = pieceImageBlue;
+                        break;
+
+                    case NestColor.Green:
+                        img = pieceImageGreen;
+                        break;
+
+                    case NestColor.Yellow:
+                        img = pieceImageYellow;
+                        break;
+
+                    case NestColor.White:
+                        img = pieceImageWhite;
+                        break;
+
+                    case NestColor.Black:
+                        img = pieceImageBlack;
+                        break;
+
+
+
+
+                }
+                DrawHelper.DrawAnimationPiece(sender, args, current, img);
             }
 
         }
@@ -122,11 +195,15 @@ namespace chinese_checkers.Views
                         if (availableMoves.Contains(L))
                         {
                             // Removes piece(id) from old location
+                            current = new Vector2(selectedPiece.Point.X, selectedPiece.Point.Y);
                             gs.Board.MovePiece(L, selectedPiece);
+                            path = Paths.Find(p => p.Last.Value == L.Point);
+                            selectedNode = path.First;
+                            selectedPiece.ToggleHidden();
                             selectedPiece = null;
                             Paths = null;
-                            gs.CheckForWin();
-                            gs.ChangeTurn();
+                            //gs.CheckForWin();
+                            //gs.ChangeTurn();
                         }
                         else
                         {
