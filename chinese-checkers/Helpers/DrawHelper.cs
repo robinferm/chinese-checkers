@@ -5,7 +5,10 @@ using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -117,6 +120,37 @@ namespace chinese_checkers.Helpers
                 var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
                 var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
                 args.DrawingSession.FillCircle(x + (32 * ScalingHelper.scaleWidth), y + (32 * ScalingHelper.scaleHeight), 32*ScalingHelper.scaleWidth, Colors.Azure);
+            }
+        }
+
+
+        public static void DrawPaths(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<LinkedList<Point>> paths, Location mouseover)
+        {
+            foreach (var P in paths)
+            {
+                var currentNode = P.First;
+                while (currentNode != null && currentNode != P.Last)
+                {
+                    var x1 = (currentNode.Value.X + 4) * ScalingHelper.ScalingValue + (currentNode.Value.Y * (ScalingHelper.ScalingValue / 2));
+                    var x2 = (currentNode.Next.Value.X + 4) * ScalingHelper.ScalingValue + (currentNode.Next.Value.Y * (ScalingHelper.ScalingValue / 2));
+                    var y1 = (currentNode.Value.Y + 4) * ScalingHelper.ScalingValue;
+                    var y2 = (currentNode.Next.Value.Y + 4) * ScalingHelper.ScalingValue;
+                    x1 += ScalingHelper.ScalingValue / 2;
+                    x2 += ScalingHelper.ScalingValue / 2;
+                    y1 += ScalingHelper.ScalingValue / 2;
+                    y2 += ScalingHelper.ScalingValue / 2;
+
+                    Debug.Write(mouseover);
+
+                    if (mouseover?.Point != null && currentNode?.Next?.Value != null)
+                    {
+                        if (mouseover.Point == P.Last.Value)
+                        {
+                            args.DrawingSession.DrawLine(new Vector2(x1, y1), new Vector2(x2, y2), Colors.Black);
+                        }
+                    }
+                    currentNode = currentNode.Next;
+                }
             }
         }
 
