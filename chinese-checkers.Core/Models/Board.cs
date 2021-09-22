@@ -21,8 +21,8 @@ namespace chinese_checkers.Core.Models
             this.Locations = locations;
             this.Pieces = new List<Piece>();
             PopulateLocations(players);
+            Buff_Debuff();
         }
-
         private void PopulateLocations(List<Player> players)
         {
             //Set amount and location of pieces based of length of Players
@@ -118,6 +118,36 @@ namespace chinese_checkers.Core.Models
             int rndPoint = rndNeutralPoint.Next(neutralPoints.Count + 1);
             return neutralPoints[rndPoint]; // Randomized position of neutral positions
         }
+      
+        public Point GetRandomFreeNeutralPosition()
+        {
+            var rndPosition = GetRandomNeutralPosition();
+            while (!Locations.Find(x=>x.Point==rndPosition).IsFree())
+            {
+                rndPosition = GetRandomNeutralPosition();
+            }
+            return rndPosition;
+        }
+
+        public void Buff_Debuff() 
+        {
+            List<Point> randomNeutralPoints = new List<Point>();
+
+            for (int i = 0; i < 6; i++)
+            {
+                randomNeutralPoints.Add(GetRandomNeutralPosition());
+
+                // Random Item 
+                Random randomItem = new Random();
+                Type type = typeof(Item);
+                Array values = type.GetEnumValues();
+                int index = randomItem.Next(values.Length);
+                Item ramdomItemId = (Item)values.GetValue(index);
+
+                var randomPosition = GetRandomFreeNeutralPosition();
+                Locations.Find(x => x.Point == randomPosition).ItemId=ramdomItemId;
+            }
+        }
 
         public List<LinkedList<Point>> GetPaths(Point start, List<Location> endLocations)
         {
@@ -205,3 +235,4 @@ namespace chinese_checkers.Core.Models
         }
     }
 }
+ 

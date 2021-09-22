@@ -61,6 +61,10 @@ namespace chinese_checkers.Helpers
                     default:
                         args.DrawingSession.DrawImage(ScalingHelper.Img(locationImage), x, y);
                         args.DrawingSession.DrawText(L.Point.X.ToString() + ", " + L.Point.Y, x, y, Colors.Black);
+                        if (L.ItemId != null)
+                        {
+                            args.DrawingSession.DrawText("? ", x, y, Colors.Green);
+                        }
                         break;
 
                 }
