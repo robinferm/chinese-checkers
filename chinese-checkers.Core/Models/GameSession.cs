@@ -1,10 +1,12 @@
 ﻿using chinese_checkers.Core.Enums;
+using chinese_checkers.Core.Helpers;
 using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 
@@ -21,7 +23,11 @@ namespace chinese_checkers.Core.Models
         public Dictionary<NestColor, NestColor> GoalColor { get; set; }
         public Dictionary<NestColor, Point> GoalLocation { get; set; }
         public Player CurrentlyPlaying { get; set; }
+        public Vector2 AnimatedPiece{ get; set; }
+        public LinkedListNode<Point> selectedNode { get; set; }
+        public LinkedList<Point> Path { get; set; }
 
+        private int counter = 0;
 
         public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
         {
@@ -84,6 +90,7 @@ namespace chinese_checkers.Core.Models
             this.Players.ForEach(x => this.PlayerScore.Add(x, 0));
             this.Board = new Board(locations, this.Players);
             this.CurrentlyPlaying = Players.First();
+            this.AnimatedPiece = new Vector2(-5000, -5000);
         }
 
         public void CheckForWin()
@@ -118,6 +125,7 @@ namespace chinese_checkers.Core.Models
 
         public void ChangeTurn()
         {
+            this.CurrentlyPlaying.selectedPiece = null;
             var nextPlayer = this.Players.FirstOrDefault(x => x.Id == CurrentlyPlaying.Id + 1);
             if (nextPlayer == null)
             {
@@ -130,7 +138,7 @@ namespace chinese_checkers.Core.Models
 
                 // Debug.WriteLine(nextPlayer.Placement.ToString());
                 CheckForWin();
-            
+
                 if (this.CurrentlyPlaying.IsAI)
                 {
                     MovePieceAI();
@@ -143,7 +151,46 @@ namespace chinese_checkers.Core.Models
             }
         }
 
-        private void MovePieceAI()
+        public void AnimateMove()
+        {
+            if (this.AnimatedPiece != null && this.Path != null)
+            {
+                if (counter < AnimationHelper.test)
+                {
+                    // Speed, start, end
+                    this.AnimatedPiece = AnimationHelper.MovePiece(selectedNode.Value, this.AnimatedPiece, selectedNode.Next.Value);
+                    counter++;
+                }
+                else
+                {
+                    Thread.Sleep(100);
+                    counter = 0;
+                    if (selectedNode.Next != this.Path.Last)
+                    {
+                        selectedNode = selectedNode.Next;
+                    }
+                    else
+                    {
+                        this.AnimatedPiece = new Vector2(-5000, -5000);
+                        Board.Pieces.Find(x => x.Point == this.Path.Last.Value).ToggleHidden();
+                        this.Path = null;
+                        ChangeTurn();
+                    }
+                }
+            }
+        }
+
+        public void MovePieceWithAnimation(Location L)
+        {
+            AnimatedPiece = new Vector2(CurrentlyPlaying.selectedPiece.Point.X, CurrentlyPlaying.selectedPiece.Point.Y);
+            Board.MovePiece(L, CurrentlyPlaying.selectedPiece);
+            Path = CurrentlyPlaying.Paths.Find(p => p.Last.Value == L.Point);
+            selectedNode = Path.First;
+            CurrentlyPlaying.selectedPiece.ToggleHidden();
+            CurrentlyPlaying.DeSelectPiece();
+        }
+
+        public void MovePieceAI()
         {
             Thread.Sleep(100);
 
@@ -162,14 +209,10 @@ namespace chinese_checkers.Core.Models
                 }
             }
 
-            //Random rnd = new Random();
-            //var randomPieceWithAvailableMove = availableMoves.ElementAt(rnd.Next(0, availableMoves.Count));
-            //var piece = randomPieceWithAvailableMove.Key;
-            //var targetLocation = randomPieceWithAvailableMove.Value.ElementAt(rnd.Next(0, randomPieceWithAvailableMove.Value.Count));
-
             var longestMove = GetLongestMove(availableMoves);
-            Board.MovePiece(longestMove.Value, longestMove.Key);
-            ChangeTurn();
+            this.CurrentlyPlaying.SelectPiece(Board.Locations.Find(x => longestMove.Key.Id == x.PieceId), this.Board);
+            this.Path = Board.CalculatePath(longestMove.Key.Point, longestMove.Value.Point);
+            MovePieceWithAnimation(longestMove.Value);
         }
 
         private KeyValuePair<Piece, Location> GetLongestMove(Dictionary<Piece, List<Location>> availableMoves)
