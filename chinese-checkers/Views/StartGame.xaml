@@ -8,31 +8,166 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <!-- Change radio button style to button style -->
+        <Style TargetType="RadioButton">
+            <Setter Property="Background" Value="{ThemeResource ButtonBackground}" />
+            <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+            <Setter Property="Padding" Value="8,4,8,4" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
+            <Setter Property="FocusVisualMargin" Value="-3" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                            <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}" />
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundAccentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderThickness">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="4" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked" />
+                                    <VisualState x:Name="Indeterminate" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+
+
     <Viewbox>
         <Grid>
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,50,20,0">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="100">
+                <TextBlock FontSize="30" Margin="0,0,0,10" HorizontalAlignment="Center">Select your character</TextBlock>
                 <StackPanel Orientation="Horizontal" Spacing="5">
-                    <Button x:Name="mageButton" Click="mageButton_Click">
+                    <RadioButton x:Name="mageButton" Click="mageButton_Click">
                         <Image Source="ms-appx:///Assets/Images/Characters/mage.png" Width="100" Height="200"></Image>
-                    </Button>
-                    <Button>Hunter</Button>
-                    <Button>Warlock</Button>
-                    <Button>Priest</Button>
-                    <Button>Warrior</Button>
-                    <Button>Druid</Button>
+                    </RadioButton>
+                    <RadioButton x:Name="druidButton" Click="druidButton_Click">
+                        <Image Source="ms-appx:///Assets/Images/Characters/druid.png" Width="100" Height="200"></Image>
+                    </RadioButton>
+                    <RadioButton x:Name="warriorButton" Click="warriorButton_Click">
+                        <Image Source="ms-appx:///Assets/Images/Characters/warrior.png" Width="100" Height="200"></Image>
+                    </RadioButton>
+                    <RadioButton x:Name="hunterButton" Click="hunterButton_Click">
+                        <Image Source="ms-appx:///Assets/Images/Characters/hunter.png" Width="100" Height="200"></Image>
+                    </RadioButton>
+                    <RadioButton x:Name="priestButton" Click="priestButton_Click">
+                        <Image Source="ms-appx:///Assets/Images/Characters/priest.png" Width="100" Height="200"></Image>
+                    </RadioButton>
+                    <RadioButton x:Name="warlockButton" Click="warlockButton_Click">
+                        <Image Source="ms-appx:///Assets/Images/Characters/warlock.png" Width="100" Height="200"></Image>
+                    </RadioButton>
                 </StackPanel>
-                
-                <ComboBox PlaceholderText="Number of AI" Margin="0,80,0,0" SelectionChanged="ComboBox_SelectionChanged">
+
+                <StackPanel Margin="0,50,0,0">
+                    <TextBlock FontSize="30" Margin="0,0,0,10" HorizontalAlignment="Center">Select number of AI-players</TextBlock>
+                    <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
+                        <RadioButton x:Name="aiButton1" Click="aiButton1_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            1
+                        </RadioButton>
+                        <RadioButton x:Name="aiButton2" Click="aiButton2_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            2
+                        </RadioButton>
+                        <RadioButton x:Name="aiButton3" Click="aiButton3_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            3
+                        </RadioButton>
+                        <RadioButton x:Name="aiButton4" Click="aiButton4_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            4
+                        </RadioButton>
+                        <RadioButton x:Name="aiButton5" Click="aiButton5_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            5
+                        </RadioButton>
+                    </StackPanel>
+                </StackPanel>
+
+                <!--<ComboBox PlaceholderText="Number of AI" Margin="0,80,0,0" SelectionChanged="ComboBox_SelectionChanged">
                     <ComboBoxItem>1</ComboBoxItem>
                     <ComboBoxItem>2</ComboBoxItem>
                     <ComboBoxItem>3</ComboBoxItem>
                     <ComboBoxItem>4</ComboBoxItem>
                     <ComboBoxItem>5</ComboBoxItem>
-                </ComboBox>
+                </ComboBox>-->
 
-                <StackPanel Orientation="Horizontal" Margin="0,100,0,0" Spacing="10">
-                    <Button x:Name="startButton" Click="startButton_Click">Start</Button>
-                    <Button>Back</Button>
+                <StackPanel Orientation="Vertical" Margin="0,100,0,100" Spacing="10" HorizontalAlignment="Center">
+                    <Button x:Name="startButton" Click="startButton_Click" FontSize="40">Start</Button>
+                    <Button x:Name="backButton" Click="backButton_Click" FontSize="20" HorizontalAlignment="Center">Back</Button>
                 </StackPanel>
             </StackPanel>
 

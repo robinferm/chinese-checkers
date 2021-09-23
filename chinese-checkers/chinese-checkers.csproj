@@ -213,7 +213,12 @@
     <Compile Include="Helpers\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\Characters\druid.png" />
+    <Content Include="Assets\Images\Characters\hunter.png" />
     <Content Include="Assets\Images\Characters\mage.png" />
+    <Content Include="Assets\Images\Characters\priest.png" />
+    <Content Include="Assets\Images\Characters\warlock.png" />
+    <Content Include="Assets\Images\Characters\warrior.png" />
     <Content Include="Assets\Images\Locations\black.png" />
     <Content Include="Assets\Images\Locations\blue.png" />
     <Content Include="Assets\Images\Locations\green.png" />

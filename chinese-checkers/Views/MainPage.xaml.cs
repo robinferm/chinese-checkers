@@ -43,8 +43,8 @@ namespace chinese_checkers.Views
 
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
-        ICharacter playerCharacter = new Mage();
-        int numberOfAI;
+        public ICharacter PlayerCharacter { get; set; }
+        public int NumberOfAI { get; set; }
 
         public MainPage()
         {
@@ -58,14 +58,15 @@ namespace chinese_checkers.Views
             ScalingHelper.SetScale();
         }
 
+        // This happens when pressing start game from the start game view
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             var parameters = (GameParams)e.Parameter;
-            this.numberOfAI = parameters.NumberOfAI;
-            this.playerCharacter = parameters.PlayerCharacter;
-            gs = new GameSession(locations, numberOfAI, playerCharacter);
+            this.NumberOfAI = parameters.NumberOfAI;
+            this.PlayerCharacter = parameters.PlayerCharacter;
+            gs = new GameSession(locations, NumberOfAI, PlayerCharacter);
         }
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
@@ -114,6 +115,8 @@ namespace chinese_checkers.Views
 
         private void canvas_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            Debug.WriteLine(NumberOfAI);
+            Debug.WriteLine(PlayerCharacter);
             //Debug.WriteLine(e.GetCurrentPoint(canvas).Position);
             var pos = e.GetCurrentPoint(canvas).Position;
 
