@@ -46,7 +46,7 @@ namespace chinese_checkers
 
         private ActivationService CreateActivationService()
         {
-            return new ActivationService(this, typeof(Views.MainPage));
+            return new ActivationService(this, typeof(Views.MainMenu));
         }
     }
 }
