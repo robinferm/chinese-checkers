@@ -28,7 +28,7 @@ namespace chinese_checkers.Views
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage));
+            this.Frame.Navigate(typeof(StartGame));
         }
 
         private async void optionsButton_Click(object sender, RoutedEventArgs e)

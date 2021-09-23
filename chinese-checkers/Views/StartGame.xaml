@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="chinese_checkers.Views.StartGame"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:chinese_checkers.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Viewbox>
+        <Grid>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,50,20,0">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Button x:Name="mageButton" Click="mageButton_Click">
+                        <Image Source="ms-appx:///Assets/Images/Characters/mage.png" Width="100" Height="200"></Image>
+                    </Button>
+                    <Button>Hunter</Button>
+                    <Button>Warlock</Button>
+                    <Button>Priest</Button>
+                    <Button>Warrior</Button>
+                    <Button>Druid</Button>
+                </StackPanel>
+                
+                <ComboBox PlaceholderText="Number of AI" Margin="0,80,0,0" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                </ComboBox>
+
+                <StackPanel Orientation="Horizontal" Margin="0,100,0,0" Spacing="10">
+                    <Button x:Name="startButton" Click="startButton_Click">Start</Button>
+                    <Button>Back</Button>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </Viewbox>
+</Page>

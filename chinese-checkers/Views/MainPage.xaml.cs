@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Core;
 using System.Linq;
+using Windows.UI.Xaml.Navigation;
 
 namespace chinese_checkers.Views
 {
@@ -43,19 +44,28 @@ namespace chinese_checkers.Views
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
         ICharacter playerCharacter = new Mage();
-        int numberOfAI = 5;
+        int numberOfAI;
 
         public MainPage()
         {
             InitializeComponent();
             ScalingHelper.SetScale();
             Window.Current.SizeChanged += Current_SizeChanged;
-            gs = new GameSession(locations, numberOfAI, playerCharacter);
         }
 
         private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e)
         {
             ScalingHelper.SetScale();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            var parameters = (GameParams)e.Parameter;
+            this.numberOfAI = parameters.NumberOfAI;
+            this.playerCharacter = parameters.PlayerCharacter;
+            gs = new GameSession(locations, numberOfAI, playerCharacter);
         }
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
