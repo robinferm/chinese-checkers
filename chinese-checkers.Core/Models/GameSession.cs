@@ -32,8 +32,8 @@ namespace chinese_checkers.Core.Models
         public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
         {
             this.Players = new List<Player>();
-            this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
-            //this.Players.Add(new Player(0, NestColor.Green));
+            //this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
+            this.Players.Add(new Player(0, NestColor.Green));
             this.PlayerScore = new Dictionary<Player, int>();
             this.GoalColor = new Dictionary<NestColor, NestColor>()
             {
@@ -155,7 +155,7 @@ namespace chinese_checkers.Core.Models
         {
             if (this.AnimatedPiece != null && this.Path != null)
             {
-                if (counter < AnimationHelper.test)
+                if (counter < AnimationHelper.FrameTime)
                 {
                     // Speed, start, end
                     this.AnimatedPiece = AnimationHelper.MovePiece(selectedNode.Value, this.AnimatedPiece, selectedNode.Next.Value);
@@ -163,18 +163,24 @@ namespace chinese_checkers.Core.Models
                 }
                 else
                 {
-                    Thread.Sleep(100);
-                    counter = 0;
-                    if (selectedNode.Next != this.Path.Last)
+                    if (counter > AnimationHelper.FrameTime + 6)
                     {
-                        selectedNode = selectedNode.Next;
+                        counter = 0; 
+                        if (selectedNode.Next != this.Path.Last)
+                        {
+                            selectedNode = selectedNode.Next;
+                        }
+                        else
+                        {
+                            this.AnimatedPiece = new Vector2(-5000, -5000);
+                            Board.Pieces.Find(x => x.Point == this.Path.Last.Value).ToggleHidden();
+                            this.Path = null;
+                            ChangeTurn();
+                        }
                     }
                     else
                     {
-                        this.AnimatedPiece = new Vector2(-5000, -5000);
-                        Board.Pieces.Find(x => x.Point == this.Path.Last.Value).ToggleHidden();
-                        this.Path = null;
-                        ChangeTurn();
+                        counter++;
                     }
                 }
             }
