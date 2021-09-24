@@ -130,7 +130,7 @@ namespace chinese_checkers.Helpers
                 //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
                 var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
                 var y = ScalingHelper.CalculateY(L.Point.Y);
-                args.DrawingSession.FillCircle(x + (32 * ScalingHelper.ScaleWidth), y + (32 * ScalingHelper.ScaleHeight), 32*ScalingHelper.ScaleWidth, Colors.Azure);
+                args.DrawingSession.FillCircle(x + (32 * ScalingHelper.ScaleXY), y + (32 * ScalingHelper.ScaleXY), 32*ScalingHelper.ScaleXY, Colors.Azure);
             }
         }
 
