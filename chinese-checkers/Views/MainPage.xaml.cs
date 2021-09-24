@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Core;
 using System.Linq;
+using Windows.UI.Xaml.Navigation;
 using System.Threading;
 using chinese_checkers.Core.Enums;
 
@@ -40,8 +41,8 @@ namespace chinese_checkers.Views
 
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
-        ICharacter playerCharacter = new Mage();
-        int numberOfAI = 5;
+        public ICharacter PlayerCharacter { get; set; }
+        public int NumberOfAI { get; set; }
 
         public MainPage()
         {
@@ -49,7 +50,6 @@ namespace chinese_checkers.Views
             canvas.IsFixedTimeStep = true;
             ScalingHelper.SetScale();
             Window.Current.SizeChanged += Current_SizeChanged;
-            gs = new GameSession(locations, numberOfAI, playerCharacter);
         }
 
         private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e)
@@ -57,6 +57,17 @@ namespace chinese_checkers.Views
             ScalingHelper.SetScale();
         }
 
+        // This happens when pressing start game from the start game view
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            var parameters = (GameParams)e.Parameter;
+            this.NumberOfAI = parameters.NumberOfAI;
+            this.PlayerCharacter = parameters.PlayerCharacter;
+            gs = new GameSession(locations, NumberOfAI, PlayerCharacter);
+        }
+        
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
             gs.AnimateMove();

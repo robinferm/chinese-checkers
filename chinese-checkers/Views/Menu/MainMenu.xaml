@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="chinese_checkers.Views.MainMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:chinese_checkers.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Viewbox>
+        <Grid>
+            <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0">Game Name</TextBlock>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,80,0,80" Spacing="5">
+                <Button x:Name="startButton" HorizontalAlignment="Stretch" Click="startButton_Click">Start Game</Button>
+                <Button x:Name="optionsButton" HorizontalAlignment="Stretch" Click="optionsButton_Click">Options</Button>
+                <Button x:Name="helpButton" HorizontalAlignment="Stretch" Click="helpButton_Click">Help</Button>
+                <Button x:Name="exitButton" HorizontalAlignment="Stretch" Click="exitButton_Click">Exit</Button>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</Page>
