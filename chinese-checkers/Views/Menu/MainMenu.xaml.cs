@@ -1,4 +1,5 @@
-﻿using chinese_checkers.Views.Menu.Dialogs;
+﻿using chinese_checkers.Views.Menu;
+using chinese_checkers.Views.Menu.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,16 +32,20 @@ namespace chinese_checkers.Views
             this.Frame.Navigate(typeof(StartGame));
         }
 
-        private async void optionsButton_Click(object sender, RoutedEventArgs e)
+        private void optionsButton_Click(object sender, RoutedEventArgs e)
         {
-            OptionsDialog dialog = new OptionsDialog();
-            await dialog.ShowAsync();
+            //OptionsDialog dialog = new OptionsDialog();
+            //await dialog.ShowAsync();
+
+            this.Frame.Navigate(typeof(Options));
         }
 
-        private async void helpButton_Click(object sender, RoutedEventArgs e)
+        private void helpButton_Click(object sender, RoutedEventArgs e)
         {
-            HelpDialog dialog = new HelpDialog();
-            await dialog.ShowAsync();
+            //HelpDialog dialog = new HelpDialog();
+            //await dialog.ShowAsync();
+
+            this.Frame.Navigate(typeof(Help));
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)

@@ -3,18 +3,21 @@ using chinese_checkers.Core.Models.Characters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -28,7 +31,6 @@ namespace chinese_checkers.Views
         {
             this.InitializeComponent();
             this.Parameters = new GameParams();
-            //this.DataContext = Parameters;
         }
 
         private void startButton_Click(object sender, RoutedEventArgs e)
@@ -40,59 +42,38 @@ namespace chinese_checkers.Views
             this.Frame.Navigate(typeof(MainPage), this.Parameters);
         }
 
-        private void mageButton_Click(object sender, RoutedEventArgs e)
+        private void characterButton_Click(object sender, RoutedEventArgs e)
         {
-            Parameters.PlayerCharacter = new Mage();
+            var name = ((RadioButton)e.OriginalSource).Name.ToString().Split("Button")[0];
+
+            switch (name)
+            {
+                case "mage":
+                    Parameters.PlayerCharacter = new Mage();
+                    break;
+                case "warrior":
+                    Parameters.PlayerCharacter = new Warrior();
+                    break;
+                case "warlock":
+                    Parameters.PlayerCharacter = new Warlock();
+                    break;
+                case "priest":
+                    Parameters.PlayerCharacter = new Priest();
+                    break;
+                case "druid":
+                    Parameters.PlayerCharacter = new Druid();
+                    break;
+                case "hunter":
+                    Parameters.PlayerCharacter = new Hunter();
+                    break;
+
+            }
         }
 
-        private void druidButton_Click(object sender, RoutedEventArgs e)
+        private void aiButton_Click(object sender, RoutedEventArgs e)
         {
-            Parameters.PlayerCharacter = new Druid();
-        }
-
-        private void warriorButton_Click(object sender, RoutedEventArgs e)
-        {
-            Parameters.PlayerCharacter = new Warrior();
-        }
-
-        private void hunterButton_Click(object sender, RoutedEventArgs e)
-        {
-            Parameters.PlayerCharacter = new Hunter();
-        }
-
-        private void priestButton_Click(object sender, RoutedEventArgs e)
-        {
-            Parameters.PlayerCharacter = new Priest();
-        }
-
-        private void warlockButton_Click(object sender, RoutedEventArgs e)
-        {
-            Parameters.PlayerCharacter = new Warlock();
-        }
-
-        private void aiButton1_Click(object sender, RoutedEventArgs e)
-        {
-            Parameters.NumberOfAI = 1;
-        }
-
-        private void aiButton2_Click(object sender, RoutedEventArgs e)
-        {
-            Parameters.NumberOfAI = 2;
-        }
-
-        private void aiButton3_Click(object sender, RoutedEventArgs e)
-        {
-            Parameters.NumberOfAI = 3;
-        }
-
-        private void aiButton4_Click(object sender, RoutedEventArgs e)
-        {
-            Parameters.NumberOfAI = 4;
-        }
-
-        private void aiButton5_Click(object sender, RoutedEventArgs e)
-        {
-            Parameters.NumberOfAI = 5;
+            var content = ((RadioButton)e.OriginalSource).Content.ToString();
+            Parameters.NumberOfAI = int.Parse(content);
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -100,22 +81,21 @@ namespace chinese_checkers.Views
             this.Frame.Navigate(typeof(MainMenu));
         }
 
+        private void Button_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            //RadioButton rb = sender as RadioButton;
+            //var test = new CompositeTransform();
+            //test.ScaleY = 1.1;
+            //rb.RenderTransform = test;
+        }
 
-        //private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    var container = sender as ComboBox;
-        //    var selected = container.SelectedItem as ComboBoxItem;
-
-        //    if (selected != null) {
-        //        var data = selected.Content;
-
-        //        if (data != null)
-        //        {
-        //            Parameters.NumberOfAI = int.Parse(data.ToString());
-        //            Debug.WriteLine(data);
-        //        }
-        //    }
-        //}
+        private void Button_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            //RadioButton rb = sender as RadioButton;
+            //var test = new CompositeTransform();
+            //test.ScaleY = 1;
+            //rb.RenderTransform = test;
+        }
     }
 
     public class GameParams

@@ -8,6 +8,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+
+
     <Page.Resources>
         <!-- Change radio button style to button style -->
         <Style TargetType="RadioButton">
@@ -81,9 +83,6 @@
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
-                                            </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -91,10 +90,13 @@
                                     <VisualState x:Name="Checked">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundAccentBrush}" />
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Yellow"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderThickness">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="4" />
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="2" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -110,67 +112,51 @@
     </Page.Resources>
 
 
-
     <Viewbox>
         <Grid>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="100">
+
+                <!--Select your character-->
                 <TextBlock FontSize="30" Margin="0,0,0,10" HorizontalAlignment="Center">Select your character</TextBlock>
                 <StackPanel Orientation="Horizontal" Spacing="5">
-                    <RadioButton x:Name="mageButton" Click="mageButton_Click">
+                    <RadioButton x:Name="mageButton" Click="characterButton_Click" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited">
                         <Image Source="ms-appx:///Assets/Images/Characters/mage.png" Width="100" Height="200"></Image>
                     </RadioButton>
-                    <RadioButton x:Name="druidButton" Click="druidButton_Click">
+                    <RadioButton x:Name="druidButton" Click="characterButton_Click" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited">
                         <Image Source="ms-appx:///Assets/Images/Characters/druid.png" Width="100" Height="200"></Image>
                     </RadioButton>
-                    <RadioButton x:Name="warriorButton" Click="warriorButton_Click">
+                    <RadioButton x:Name="warriorButton" Click="characterButton_Click" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited">
                         <Image Source="ms-appx:///Assets/Images/Characters/warrior.png" Width="100" Height="200"></Image>
                     </RadioButton>
-                    <RadioButton x:Name="hunterButton" Click="hunterButton_Click">
+                    <RadioButton x:Name="hunterButton" Click="characterButton_Click" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited">
                         <Image Source="ms-appx:///Assets/Images/Characters/hunter.png" Width="100" Height="200"></Image>
                     </RadioButton>
-                    <RadioButton x:Name="priestButton" Click="priestButton_Click">
+                    <RadioButton x:Name="priestButton" Click="characterButton_Click" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited">
                         <Image Source="ms-appx:///Assets/Images/Characters/priest.png" Width="100" Height="200"></Image>
                     </RadioButton>
-                    <RadioButton x:Name="warlockButton" Click="warlockButton_Click">
+                    <RadioButton x:Name="warlockButton" Click="characterButton_Click" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited">
                         <Image Source="ms-appx:///Assets/Images/Characters/warlock.png" Width="100" Height="200"></Image>
                     </RadioButton>
                 </StackPanel>
 
+                <!--Select number of AI-players-->
                 <StackPanel Margin="0,50,0,0">
                     <TextBlock FontSize="30" Margin="0,0,0,10" HorizontalAlignment="Center">Select number of AI-players</TextBlock>
                     <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
-                        <RadioButton x:Name="aiButton1" Click="aiButton1_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                            1
-                        </RadioButton>
-                        <RadioButton x:Name="aiButton2" Click="aiButton2_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                            2
-                        </RadioButton>
-                        <RadioButton x:Name="aiButton3" Click="aiButton3_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                            3
-                        </RadioButton>
-                        <RadioButton x:Name="aiButton4" Click="aiButton4_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                            4
-                        </RadioButton>
-                        <RadioButton x:Name="aiButton5" Click="aiButton5_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                            5
-                        </RadioButton>
+                        <RadioButton x:Name="aiButton1" Click="aiButton_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="1" FontSize="30" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited"></RadioButton>
+                        <RadioButton x:Name="aiButton2" Click="aiButton_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="2" FontSize="30" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited"></RadioButton>
+                        <RadioButton x:Name="aiButton3" Click="aiButton_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="3" FontSize="30" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited"></RadioButton>
+                        <RadioButton x:Name="aiButton4" Click="aiButton_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="4" FontSize="30" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited"></RadioButton>
+                        <RadioButton x:Name="aiButton5" Click="aiButton_Click" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="5" FontSize="30" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited"></RadioButton>
                     </StackPanel>
                 </StackPanel>
 
-                <!--<ComboBox PlaceholderText="Number of AI" Margin="0,80,0,0" SelectionChanged="ComboBox_SelectionChanged">
-                    <ComboBoxItem>1</ComboBoxItem>
-                    <ComboBoxItem>2</ComboBoxItem>
-                    <ComboBoxItem>3</ComboBoxItem>
-                    <ComboBoxItem>4</ComboBoxItem>
-                    <ComboBoxItem>5</ComboBoxItem>
-                </ComboBox>-->
-
+                <!--Start and back buttons-->
                 <StackPanel Orientation="Vertical" Margin="0,100,0,100" Spacing="10" HorizontalAlignment="Center">
                     <Button x:Name="startButton" Click="startButton_Click" FontSize="40">Start</Button>
                     <Button x:Name="backButton" Click="backButton_Click" FontSize="20" HorizontalAlignment="Center">Back</Button>
                 </StackPanel>
             </StackPanel>
-
         </Grid>
     </Viewbox>
 </Page>
