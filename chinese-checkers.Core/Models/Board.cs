@@ -115,7 +115,7 @@ namespace chinese_checkers.Core.Models
                 }
             }
             Random rndNeutralPoint = new Random();
-            int rndPoint = rndNeutralPoint.Next(neutralPoints.Count + 1);
+            int rndPoint = rndNeutralPoint.Next(neutralPoints.Count);
             return neutralPoints[rndPoint]; // Randomized position of neutral positions
         }
       
