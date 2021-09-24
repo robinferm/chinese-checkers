@@ -18,6 +18,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Core;
 using System.Linq;
 using Windows.UI.Xaml.Navigation;
+using System.Threading;
+using chinese_checkers.Core.Enums;
 
 namespace chinese_checkers.Views
 {
@@ -34,12 +36,8 @@ namespace chinese_checkers.Views
         CanvasBitmap locationImageWhite;
         CanvasBitmap locationImageYellow;
         CanvasBitmap pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow;
-        Piece selectedPiece;
         Windows.Foundation.Point currentPoint;
         Location mouseover = null;
-
-
-        public List<LinkedList<Point>> Paths { get; set; }
 
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
@@ -49,6 +47,7 @@ namespace chinese_checkers.Views
         public MainPage()
         {
             InitializeComponent();
+            canvas.IsFixedTimeStep = true;
             ScalingHelper.SetScale();
             Window.Current.SizeChanged += Current_SizeChanged;
         }
@@ -68,23 +67,61 @@ namespace chinese_checkers.Views
             this.PlayerCharacter = parameters.PlayerCharacter;
             gs = new GameSession(locations, NumberOfAI, PlayerCharacter);
         }
+        
+        private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
+        {
+            gs.AnimateMove();
+        }
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow);
             DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow);
-            if (selectedPiece != null)
+            if (gs.CurrentlyPlaying.selectedPiece != null)
             {
-                var availableMoves = gs.Board.GetAvailableMoves(selectedPiece);
-                args.DrawingSession.DrawText(selectedPiece.Id.ToString(), 0, 40, Colors.Black);
+                var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
+                args.DrawingSession.DrawText(gs.CurrentlyPlaying.selectedPiece.Id.ToString(), 0, 40, Colors.Black);
                 DrawHelper.DrawAvailableMoves(sender, args, availableMoves);
 
             }
             args.DrawingSession.DrawText(((int)currentPoint.X).ToString() + ", " + ((int)currentPoint.Y).ToString(), 0, 0, Colors.Black);
 
-            if (Paths != null)
+            if (gs.CurrentlyPlaying.Paths != null)
             {
-                DrawHelper.DrawPaths(sender, args, Paths, mouseover);
+                DrawHelper.DrawPaths(sender, args, gs.CurrentlyPlaying.Paths, mouseover);
+            }
+
+            if (gs.AnimatedPiece.X != -5000)
+            {
+                var color = gs.Board.Pieces.Find(x => x.Point == gs.Path.Last.Value).NestColor;
+                CanvasBitmap img = pieceImageRed;
+                switch (color)
+                {
+                    case NestColor.Red:
+                        img = pieceImageRed;
+                        break;
+
+                    case NestColor.Blue:
+                        img = pieceImageBlue;
+                        break;
+
+                    case NestColor.Green:
+                        img = pieceImageGreen;
+                        break;
+
+                    case NestColor.Yellow:
+                        img = pieceImageYellow;
+                        break;
+
+                    case NestColor.White:
+                        img = pieceImageWhite;
+                        break;
+
+                    case NestColor.Black:
+                        img = pieceImageBlack;
+                        break;
+                }
+                DrawHelper.DrawAnimationPiece(sender, args, gs.AnimatedPiece, img);
             }
 
         }
@@ -92,7 +129,6 @@ namespace chinese_checkers.Views
         private void canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
             args.TrackAsyncAction(CreateResourcesAsync(sender).AsAsyncAction());
-
         }
 
         async Task CreateResourcesAsync(CanvasAnimatedControl sender)
@@ -115,36 +151,28 @@ namespace chinese_checkers.Views
 
         private void canvas_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            Debug.WriteLine(NumberOfAI);
-            Debug.WriteLine(PlayerCharacter);
-            //Debug.WriteLine(e.GetCurrentPoint(canvas).Position);
             var pos = e.GetCurrentPoint(canvas).Position;
 
             foreach ( var L in locations)
             {
                 var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
                 var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
+                // If click is on a Location
                 if (pos.X >= x && pos.X <= x + 64 && pos.Y >= y && pos.Y <= y + 64)
                 {
-                    Debug.WriteLine(L.PieceId);
                     // If a piece is selected
-                    if (selectedPiece != null)
+                    if (gs.CurrentlyPlaying.selectedPiece != null)
                     {
-                        var availableMoves = gs.Board.GetAvailableMoves(selectedPiece);
+                        var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
                         // If location is free, then move piece
                         if (availableMoves.Contains(L))
                         {
-                            // Removes piece(id) from old location
-                            gs.Board.MovePiece(L, selectedPiece);
-                            selectedPiece = null;
-                            Paths = null;
-                            gs.CheckForWin();
-                            gs.ChangeTurn();
+                            gs.MovePieceWithAnimation(L);
                         }
+                        // Otherwise deselect piece
                         else
                         {
-                            selectedPiece = null;
-                            Paths = null;
+                            gs.CurrentlyPlaying.DeSelectPiece();
                             canvas_PointerPressed(sender, e);
                         }
                     }
@@ -154,10 +182,10 @@ namespace chinese_checkers.Views
                         // If clicked location has a piece
                         if (L.PieceId != null)
                         {
+                            // If piece have same color as the player
                             if (gs.Board.Pieces.Find(P => P.Id == L.PieceId).NestColor == gs.CurrentlyPlaying.NestColor)
                             {
-                                selectedPiece = gs.Board.Pieces.Find(piece => piece.Id == L.PieceId.Value);
-                                Paths = gs.Board.GetPaths(selectedPiece.Point, gs.Board.GetAvailableMoves(selectedPiece));
+                                gs.CurrentlyPlaying.SelectPiece(L, gs.Board);
                                 break;
 
                             }
