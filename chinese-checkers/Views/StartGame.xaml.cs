@@ -1,5 +1,6 @@
 ﻿using chinese_checkers.Core.Models;
 using chinese_checkers.Core.Models.Characters;
+using chinese_checkers.Views.Menu.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -95,6 +96,13 @@ namespace chinese_checkers.Views
             //var test = new CompositeTransform();
             //test.ScaleY = 1;
             //rb.RenderTransform = test;
+        }
+
+        private async void characterInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            MageInfoDialog dialog = new MageInfoDialog();
+            await dialog.ShowAsync();
         }
     }
 

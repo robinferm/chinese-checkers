@@ -121,6 +121,7 @@
                 <StackPanel Orientation="Horizontal" Spacing="5">
                     <RadioButton x:Name="mageButton" Click="characterButton_Click" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited">
                         <StackPanel>
+                            <Button Click="characterInfoButton_Click">i</Button>
                             <Image Source="ms-appx:///Assets/Images/Characters/mage.png" Width="100" Height="150"></Image>
                             <TextBlock HorizontalAlignment="Center" FontSize="20" Foreground="LightBlue">Mage</TextBlock>
                         </StackPanel>

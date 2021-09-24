@@ -9,7 +9,6 @@
     Title="Help"
     PrimaryButtonText="Close"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
-
     <Grid>
     </Grid>
 </ContentDialog>
