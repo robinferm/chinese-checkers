@@ -155,7 +155,7 @@ namespace chinese_checkers.Core.Models
         {
             if (this.AnimatedPiece != null && this.Path != null)
             {
-                if (counter < AnimationHelper.test)
+                if (counter < AnimationHelper.FrameTime)
                 {
                     // Speed, start, end
                     this.AnimatedPiece = AnimationHelper.MovePiece(selectedNode.Value, this.AnimatedPiece, selectedNode.Next.Value);
@@ -163,18 +163,24 @@ namespace chinese_checkers.Core.Models
                 }
                 else
                 {
-                    Thread.Sleep(100);
-                    counter = 0;
-                    if (selectedNode.Next != this.Path.Last)
+                    if (counter > AnimationHelper.FrameTime + 6)
                     {
-                        selectedNode = selectedNode.Next;
+                        counter = 0; 
+                        if (selectedNode.Next != this.Path.Last)
+                        {
+                            selectedNode = selectedNode.Next;
+                        }
+                        else
+                        {
+                            this.AnimatedPiece = new Vector2(-5000, -5000);
+                            Board.Pieces.Find(x => x.Point == this.Path.Last.Value).ToggleHidden();
+                            this.Path = null;
+                            ChangeTurn();
+                        }
                     }
                     else
                     {
-                        this.AnimatedPiece = new Vector2(-5000, -5000);
-                        Board.Pieces.Find(x => x.Point == this.Path.Last.Value).ToggleHidden();
-                        this.Path = null;
-                        ChangeTurn();
+                        counter++;
                     }
                 }
             }
@@ -182,12 +188,15 @@ namespace chinese_checkers.Core.Models
 
         public void MovePieceWithAnimation(Location L)
         {
-            AnimatedPiece = new Vector2(CurrentlyPlaying.selectedPiece.Point.X, CurrentlyPlaying.selectedPiece.Point.Y);
-            Board.MovePiece(L, CurrentlyPlaying.selectedPiece);
-            Path = CurrentlyPlaying.Paths.Find(p => p.Last.Value == L.Point);
-            selectedNode = Path.First;
-            CurrentlyPlaying.selectedPiece.ToggleHidden();
-            CurrentlyPlaying.DeSelectPiece();
+            if (this.AnimatedPiece.X == -5000)
+            {
+                AnimatedPiece = new Vector2(CurrentlyPlaying.selectedPiece.Point.X, CurrentlyPlaying.selectedPiece.Point.Y);
+                Board.MovePiece(L, CurrentlyPlaying.selectedPiece);
+                Path = CurrentlyPlaying.Paths.Find(p => p.Last.Value == L.Point);
+                selectedNode = Path.First;
+                CurrentlyPlaying.selectedPiece.ToggleHidden();
+                CurrentlyPlaying.DeSelectPiece();
+            }
         }
 
         public void MovePieceAI()

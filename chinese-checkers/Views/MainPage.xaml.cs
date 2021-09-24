@@ -155,10 +155,12 @@ namespace chinese_checkers.Views
 
             foreach ( var L in locations)
             {
-                var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
-                var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
+                //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
+                //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
+                var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
+                var y = ScalingHelper.CalculateY(L.Point.Y);
                 // If click is on a Location
-                if (pos.X >= x && pos.X <= x + 64 && pos.Y >= y && pos.Y <= y + 64)
+                if (pos.X >= x && pos.X <= x + (64*ScalingHelper.ScaleXY) && pos.Y >= y && pos.Y <= y + (64*ScalingHelper.ScaleXY))
                 {
                     // If a piece is selected
                     if (gs.CurrentlyPlaying.selectedPiece != null)
@@ -185,8 +187,11 @@ namespace chinese_checkers.Views
                             // If piece have same color as the player
                             if (gs.Board.Pieces.Find(P => P.Id == L.PieceId).NestColor == gs.CurrentlyPlaying.NestColor)
                             {
-                                gs.CurrentlyPlaying.SelectPiece(L, gs.Board);
-                                break;
+                                if (gs.AnimatedPiece.X == -5000)
+                                {
+                                    gs.CurrentlyPlaying.SelectPiece(L, gs.Board);
+                                    break;
+                                }
 
                             }
                         }
@@ -201,9 +206,11 @@ namespace chinese_checkers.Views
 
             foreach (var L in locations)
             {
-                var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
-                var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
-                if (currentPoint.X >= x && currentPoint.X <= x + 64 && currentPoint.Y >= y && currentPoint.Y <= y + 64)
+                //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
+                //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
+                var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
+                var y = ScalingHelper.CalculateY(L.Point.Y);
+                if (currentPoint.X >= x && currentPoint.X <= x + (64*ScalingHelper.ScaleXY) && currentPoint.Y >= y && currentPoint.Y <= y + (64 * ScalingHelper.ScaleXY))
                 {
                     mouseover = L;
                     break;
