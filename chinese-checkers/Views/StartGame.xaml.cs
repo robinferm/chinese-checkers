@@ -100,8 +100,30 @@ namespace chinese_checkers.Views
 
         private async void characterInfoButton_Click(object sender, RoutedEventArgs e)
         {
+            var name = ((Button)e.OriginalSource).Name.Split("InfoButton")[0];
+            var dialog = new ContentDialog();
+            switch (name)
+            {
+                case "mage":
+                    dialog = new MageInfoDialog();
+                    break;
+                case "priest":
+                    dialog = new PriestInfoDialog();
+                    break;
+                case "druid":
+                    dialog = new DruidInfoDialog();
+                    break;
+                case "warrior":
+                    dialog = new WarriorInfoDialog();
+                    break;
+                case "hunter":
+                    dialog = new HunterInfoDialog();
+                    break;
+                case "warlock":
+                    dialog = new WarlockInfoDialog();
+                    break;
+            }
 
-            MageInfoDialog dialog = new MageInfoDialog();
             await dialog.ShowAsync();
         }
     }
