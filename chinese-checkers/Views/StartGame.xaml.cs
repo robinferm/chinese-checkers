@@ -1,5 +1,6 @@
 ﻿using chinese_checkers.Core.Models;
 using chinese_checkers.Core.Models.Characters;
+using chinese_checkers.Views.Menu.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -95,6 +96,35 @@ namespace chinese_checkers.Views
             //var test = new CompositeTransform();
             //test.ScaleY = 1;
             //rb.RenderTransform = test;
+        }
+
+        private async void characterInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            var name = ((Button)e.OriginalSource).Name.Split("InfoButton")[0];
+            var dialog = new ContentDialog();
+            switch (name)
+            {
+                case "mage":
+                    dialog = new MageInfoDialog();
+                    break;
+                case "priest":
+                    dialog = new PriestInfoDialog();
+                    break;
+                case "druid":
+                    dialog = new DruidInfoDialog();
+                    break;
+                case "warrior":
+                    dialog = new WarriorInfoDialog();
+                    break;
+                case "hunter":
+                    dialog = new HunterInfoDialog();
+                    break;
+                case "warlock":
+                    dialog = new WarlockInfoDialog();
+                    break;
+            }
+
+            await dialog.ShowAsync();
         }
     }
 

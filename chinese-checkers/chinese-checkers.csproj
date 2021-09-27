@@ -140,11 +140,29 @@
     <Compile Include="Activation\DefaultActivationHandler.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\Menu\Dialogs\DruidInfoDialog.xaml.cs">
+      <DependentUpon>DruidInfoDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Menu\Dialogs\HelpDialog.xaml.cs">
       <DependentUpon>HelpDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Menu\Dialogs\HunterInfoDialog.xaml.cs">
+      <DependentUpon>HunterInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menu\Dialogs\MageInfoDialog.xaml.cs">
+      <DependentUpon>MageInfoDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Menu\Dialogs\OptionsDialog.xaml.cs">
       <DependentUpon>OptionsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menu\Dialogs\PriestInfoDialog.xaml.cs">
+      <DependentUpon>PriestInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menu\Dialogs\WarlockInfoDialog.xaml.cs">
+      <DependentUpon>WarlockInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menu\Dialogs\WarriorInfoDialog.xaml.cs">
+      <DependentUpon>WarriorInfoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Menu\Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
@@ -189,11 +207,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Menu\Dialogs\DruidInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Menu\Dialogs\HelpDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Menu\Dialogs\HunterInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\Dialogs\MageInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Menu\Dialogs\OptionsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\Dialogs\PriestInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\Dialogs\WarlockInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\Dialogs\WarriorInfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -227,6 +269,12 @@
     <Compile Include="Helpers\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\Abilities\battleshout.png" />
+    <Content Include="Assets\Images\Abilities\curse.png" />
+    <Content Include="Assets\Images\Abilities\druidability.png" />
+    <Content Include="Assets\Images\Abilities\fireball.png" />
+    <Content Include="Assets\Images\Abilities\heal.png" />
+    <Content Include="Assets\Images\Abilities\volley.png" />
     <Content Include="Assets\Images\Characters\druid.png" />
     <Content Include="Assets\Images\Characters\hunter.png" />
     <Content Include="Assets\Images\Characters\mage.png" />
