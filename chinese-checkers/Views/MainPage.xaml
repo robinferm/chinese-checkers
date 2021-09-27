@@ -7,7 +7,7 @@
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
-    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
+    <!--<Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
@@ -16,11 +16,11 @@
         <TextBlock
             Grid.Row="0"
             x:Uid="Main_Title"
-            Style="{StaticResource PageTitleStyle}" />
+            Style="{StaticResource PageTitleStyle}" />-->
         <Grid
             Grid.Row="1" 
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <canvas:CanvasAnimatedControl x:Name="canvas" Draw="canvas_Draw" CreateResources="canvas_CreateResources" PointerPressed="canvas_PointerPressed" PointerMoved="canvas_PointerMoved"/>
+            <canvas:CanvasAnimatedControl x:Name="canvas" Draw="canvas_Draw" CreateResources="canvas_CreateResources" PointerPressed="canvas_PointerPressed" PointerMoved="canvas_PointerMoved" Update="canvas_Update"/>
         </Grid>
-    </Grid>
+    <!--</Grid>-->
 </Page>

@@ -17,6 +17,8 @@ namespace chinese_checkers.Core.Models
         public List<Item> Items { get; set; }
         public CanvasBitmap Image { get; set; }
 
+        public bool Hidden { get; private set; }
+
         public Piece(int id, Point point, NestColor nestColor)
         {
             this.Id = id;
@@ -24,11 +26,17 @@ namespace chinese_checkers.Core.Models
             this.NestColor = nestColor;
             this.Health = 2;
             this.Damage = 1;
+            this.Hidden = false;
         }
 
         public void Move(Piece piece)
         {
 
+        }
+
+        public void ToggleHidden()
+        {
+            this.Hidden = !this.Hidden;
         }
 
     }

@@ -25,8 +25,11 @@ namespace chinese_checkers.Helpers
         {
             foreach (var L in board.Locations)
             {
-                var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
-                var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
+                //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
+                //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
+                var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
+                var y = ScalingHelper.CalculateY(L.Point.Y);
+
                 //if (L.NestColorId != null)
                 //{
                 //    args.DrawingSession.DrawImage(locationImage, x, y);
@@ -75,8 +78,14 @@ namespace chinese_checkers.Helpers
         {
             foreach (var P in board.Pieces)
             {
-                var x = ((P.Point.X + 4) * ScalingHelper.ScalingValue + (P.Point.Y * (ScalingHelper.ScalingValue / 2)));
-                var y = ((P.Point.Y + 4) * ScalingHelper.ScalingValue);
+                if (P.Hidden)
+                {
+                    continue;
+                }
+                //var x = ((P.Point.X + 4) * ScalingHelper.ScalingValue + (P.Point.Y * (ScalingHelper.ScalingValue / 2)));
+                //var y = ((P.Point.Y + 4) * ScalingHelper.ScalingValue);
+                var x = ScalingHelper.CalculateX(P.Point.X, P.Point.Y);
+                var y = ScalingHelper.CalculateY(P.Point.Y);
                 //args.DrawingSession.DrawImage(P.Image, x+4, y+4);
                 //args.DrawingSession.DrawText(P.Id.ToString(), x, y, Colors.Black);
                 switch (P.NestColor)
@@ -117,9 +126,11 @@ namespace chinese_checkers.Helpers
         {
             foreach (var L in locations)
             {
-                var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
-                var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
-                args.DrawingSession.FillCircle(x + (32 * ScalingHelper.scaleWidth), y + (32 * ScalingHelper.scaleHeight), 32*ScalingHelper.scaleWidth, Colors.Azure);
+                //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
+                //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
+                var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
+                var y = ScalingHelper.CalculateY(L.Point.Y);
+                args.DrawingSession.FillCircle(x + (32 * ScalingHelper.ScaleXY), y + (32 * ScalingHelper.ScaleXY), 32*ScalingHelper.ScaleXY, Colors.Azure);
             }
         }
 
@@ -131,14 +142,16 @@ namespace chinese_checkers.Helpers
                 var currentNode = P.First;
                 while (currentNode != null && currentNode != P.Last)
                 {
-                    var x1 = (currentNode.Value.X + 4) * ScalingHelper.ScalingValue + (currentNode.Value.Y * (ScalingHelper.ScalingValue / 2));
-                    var x2 = (currentNode.Next.Value.X + 4) * ScalingHelper.ScalingValue + (currentNode.Next.Value.Y * (ScalingHelper.ScalingValue / 2));
-                    var y1 = (currentNode.Value.Y + 4) * ScalingHelper.ScalingValue;
-                    var y2 = (currentNode.Next.Value.Y + 4) * ScalingHelper.ScalingValue;
-                    x1 += ScalingHelper.ScalingValue / 2;
-                    x2 += ScalingHelper.ScalingValue / 2;
-                    y1 += ScalingHelper.ScalingValue / 2;
-                    y2 += ScalingHelper.ScalingValue / 2;
+                    Vector2 p1 = new Vector2(ScalingHelper.CalculateX(currentNode.Value.X, currentNode.Value.Y) + (ScalingHelper.ScalingValue / 2), ScalingHelper.CalculateY(currentNode.Value.Y) + (ScalingHelper.ScalingValue / 2));
+                    Vector2 p2 = new Vector2(ScalingHelper.CalculateX(currentNode.Next.Value.X, currentNode.Next.Value.Y) + (ScalingHelper.ScalingValue / 2), ScalingHelper.CalculateY(currentNode.Next.Value.Y) + (ScalingHelper.ScalingValue / 2));
+                    //var x1 = (currentNode.Value.X + 4) * ScalingHelper.ScalingValue + (currentNode.Value.Y * (ScalingHelper.ScalingValue / 2));
+                    //var x2 = (currentNode.Next.Value.X + 4) * ScalingHelper.ScalingValue + (currentNode.Next.Value.Y * (ScalingHelper.ScalingValue / 2));
+                    //var y1 = (currentNode.Value.Y + 4) * ScalingHelper.ScalingValue;
+                    //var y2 = (currentNode.Next.Value.Y + 4) * ScalingHelper.ScalingValue;
+                    //x1 += ScalingHelper.ScalingValue / 2;
+                    //x2 += ScalingHelper.ScalingValue / 2;
+                    //y1 += ScalingHelper.ScalingValue / 2;
+                    //y2 += ScalingHelper.ScalingValue / 2;
 
                     Debug.Write(mouseover);
 
@@ -146,12 +159,22 @@ namespace chinese_checkers.Helpers
                     {
                         if (mouseover.Point == P.Last.Value)
                         {
-                            args.DrawingSession.DrawLine(new Vector2(x1, y1), new Vector2(x2, y2), Colors.Black);
+                            args.DrawingSession.DrawLine(p1, p2, Colors.Black);
                         }
                     }
                     currentNode = currentNode.Next;
                 }
             }
+        }
+
+        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Vector2 vector, CanvasBitmap pieceImageRed)
+        {
+            //vector.X = ((vector.X + 4) * ScalingHelper.ScalingValue + (vector.Y * (ScalingHelper.ScalingValue / 2)));
+            //vector.Y = ((vector.Y + 4) * ScalingHelper.ScalingValue);
+            vector.X = ScalingHelper.CalculateX(vector.X, vector.Y);
+            vector.Y = ScalingHelper.CalculateY(vector.Y);
+
+            args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), vector.X, vector.Y);
         }
 
         // Debug stuff
