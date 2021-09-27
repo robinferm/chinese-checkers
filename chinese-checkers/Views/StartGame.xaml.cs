@@ -82,22 +82,6 @@ namespace chinese_checkers.Views
             this.Frame.Navigate(typeof(MainMenu));
         }
 
-        private void Button_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            //RadioButton rb = sender as RadioButton;
-            //var test = new CompositeTransform();
-            //test.ScaleY = 1.1;
-            //rb.RenderTransform = test;
-        }
-
-        private void Button_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            //RadioButton rb = sender as RadioButton;
-            //var test = new CompositeTransform();
-            //test.ScaleY = 1;
-            //rb.RenderTransform = test;
-        }
-
         private async void characterInfoButton_Click(object sender, RoutedEventArgs e)
         {
             var name = ((Button)e.OriginalSource).Name.Split("InfoButton")[0];
