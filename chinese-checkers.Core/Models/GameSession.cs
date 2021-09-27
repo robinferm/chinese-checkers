@@ -165,6 +165,7 @@ namespace chinese_checkers.Core.Models
                 {
                     if (counter > AnimationHelper.FrameTime + 6)
                     {
+                        SoundHelper.Play();
                         counter = 0; 
                         if (selectedNode.Next != this.Path.Last)
                         {
