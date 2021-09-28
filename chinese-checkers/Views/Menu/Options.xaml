@@ -5,8 +5,10 @@
     xmlns:local="using:chinese_checkers.Views.Menu"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
+    <Page.Background>
+        <ImageBrush ImageSource="ms-appx:///Assets/Images/splash.png"></ImageBrush>
+    </Page.Background>
 
     <Viewbox>
         <Grid>
