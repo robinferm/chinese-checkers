@@ -1,4 +1,5 @@
 ﻿using chinese_checkers.Core.Enums;
+using chinese_checkers.Core.Models.Characters;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -54,15 +55,15 @@ namespace chinese_checkers.Core.Models
                 case 0:
                     return new Mage();
                 case 1:
-                    return new Mage();
+                    return new Druid();
                 case 2:
-                    return new Mage();
+                    return new Hunter();
                 case 3:
-                    return new Mage();
+                    return new Priest();
                 case 4:
-                    return new Mage();
+                    return new Warlock();
                 case 5:
-                    return new Mage();
+                    return new Warrior();
                 default:
                     return null;
             }

@@ -7,7 +7,7 @@ namespace chinese_checkers.Core.Models.Characters
 {
     public class Druid : ICharacter
     {
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Name { get; set; } = "Druid";
         public CanvasBitmap Image { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void UseAbility()

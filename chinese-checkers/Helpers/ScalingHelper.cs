@@ -40,11 +40,11 @@ namespace chinese_checkers.Helpers
             ScalingValue = 64 * ScaleXY;
         }
 
-        public static Transform2DEffect Img(CanvasBitmap source)
+        public static Transform2DEffect Img(CanvasBitmap source, float multiplier = 1)
         {
             Transform2DEffect image;
             image = new Transform2DEffect() { Source = source };
-            image.TransformMatrix = Matrix3x2.CreateScale(ScaleXY, ScaleXY);
+            image.TransformMatrix = Matrix3x2.CreateScale(ScaleXY * multiplier, ScaleXY * multiplier);
             return image;
         }
 
@@ -63,7 +63,7 @@ namespace chinese_checkers.Helpers
             float positioning = (x + 4) * ScalingValue + (y - 8) * (ScalingValue / 2);
             float centering = ((DesginWidth * ScaleWidth) - ((8 + 4) * ScalingValue + ((8 - 8) * (ScalingValue / 2))) - ScalingValue) / 2;
 
-            return positioning + centering;
+            return positioning + 200 * ScaleXY;
         }
 
         public static float CalculateY(float y)
