@@ -17,10 +17,11 @@
             Grid.Row="0"
             x:Uid="Main_Title"
             Style="{StaticResource PageTitleStyle}" />-->
-        <Grid
-            Grid.Row="1" 
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <canvas:CanvasAnimatedControl x:Name="canvas" Draw="canvas_Draw" CreateResources="canvas_CreateResources" PointerPressed="canvas_PointerPressed" PointerMoved="canvas_PointerMoved" Update="canvas_Update"/>
-        </Grid>
+    <Grid Grid.Row="1">
+        <Grid.Background>
+            <ImageBrush ImageSource="ms-appx:///Assets/Images/bg1.png"></ImageBrush>
+        </Grid.Background>
+        <canvas:CanvasAnimatedControl x:Name="canvas" Draw="canvas_Draw" CreateResources="canvas_CreateResources" PointerPressed="canvas_PointerPressed" PointerMoved="canvas_PointerMoved" Update="canvas_Update"/>
+    </Grid>
     <!--</Grid>-->
 </Page>

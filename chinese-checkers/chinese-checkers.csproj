@@ -275,6 +275,7 @@
     <Content Include="Assets\Images\Abilities\fireball.png" />
     <Content Include="Assets\Images\Abilities\heal.png" />
     <Content Include="Assets\Images\Abilities\volley.png" />
+    <Content Include="Assets\Images\bg1.png" />
     <Content Include="Assets\Images\Characters\druid.png" />
     <Content Include="Assets\Images\Characters\hunter.png" />
     <Content Include="Assets\Images\Characters\mage.png" />
@@ -296,7 +297,6 @@
     <Content Include="Assets\Images\Pieces\white.png" />
     <Content Include="Assets\Images\Pieces\yellow.png" />
     <Content Include="Assets\Sounds\PieceMove.wav" />
-    <Content Include="Assets\Sounds\PieceMove2.wav" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
