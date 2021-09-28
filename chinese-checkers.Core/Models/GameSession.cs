@@ -3,12 +3,16 @@ using chinese_checkers.Core.Helpers;
 using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 
 namespace chinese_checkers.Core.Models
 {
@@ -19,11 +23,11 @@ namespace chinese_checkers.Core.Models
     {
         public Board Board { get; set; }
         public List<Player> Players { get; set; }
-        public Dictionary<Player, int> PlayerScore { get; set; }
+        //public Dictionary<Player, int> PlayerScore { get; set; }
         public Dictionary<NestColor, NestColor> GoalColor { get; set; }
         public Dictionary<NestColor, Point> GoalLocation { get; set; }
         public Player CurrentlyPlaying { get; set; }
-        public Vector2 AnimatedPiece{ get; set; }
+        public Vector2 AnimatedPiece { get; set; }
         public LinkedListNode<Point> selectedNode { get; set; }
         public LinkedList<Point> Path { get; set; }
 
@@ -32,9 +36,9 @@ namespace chinese_checkers.Core.Models
         public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
         {
             this.Players = new List<Player>();
-            this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
-            //this.Players.Add(new Player(0, NestColor.Green));
-            this.PlayerScore = new Dictionary<Player, int>();
+            //this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
+            this.Players.Add(new Player(0, NestColor.Green));
+            //this.PlayerScore = new Dictionary<Player, int>();
             this.GoalColor = new Dictionary<NestColor, NestColor>()
             {
                 { NestColor.Green, NestColor.Red },
@@ -87,16 +91,17 @@ namespace chinese_checkers.Core.Models
                     break;
             }
 
-            this.Players.ForEach(x => this.PlayerScore.Add(x, 0));
+            //this.Players.ForEach(x => this.PlayerScore.Add(x, 0));
             this.Board = new Board(locations, this.Players);
             this.CurrentlyPlaying = Players.First();
             this.AnimatedPiece = new Vector2(-5000, -5000);
         }
 
+
         public void CheckForWin()
         {
             // Clears score in dictionary
-            this.Players.ForEach(x => this.PlayerScore[x] = 0);
+            this.Players.ForEach(x => x.Score = 0);
             foreach (var P in Board.Pieces)
             {
                 var pieceLocation = Board.Locations.Find(x => x.Point == P.Point);
@@ -104,21 +109,21 @@ namespace chinese_checkers.Core.Models
                 if (pieceLocation.NestColor == goal)
                 {
                     var player = Players.Find(x => x.NestColor == P.NestColor);
-                    this.PlayerScore[player]++;
+                    player.Score++;
                 }
 
             }
-            foreach (KeyValuePair<Player, int> kvp in this.PlayerScore)
+            foreach (Player player in Players)
             {
-                if (kvp.Value == 10)
+                if (player.Score == 10)
                 {
-                    kvp.Key.Placement = this.Players.Where(x => x.Placement != null).Count() + 1;
+                    player.Placement = this.Players.Where(x => x.Placement != null).Count() + 1;
                 }
             }
             if (this.Players.Where(x => x.Placement != null).Count() == Players.Count - 1)
             {
                 // TODO end game, last player | show results
-                
+
                 Debug.WriteLine("Game Ended");
             }
         }
@@ -136,8 +141,8 @@ namespace chinese_checkers.Core.Models
             if (this.CurrentlyPlaying.Placement == null)
             {
 
-                // Debug.WriteLine(nextPlayer.Placement.ToString());
-                CheckForWin();
+                Debug.WriteLine(nextPlayer.Placement.ToString());
+                //CheckForWin();
 
                 if (this.CurrentlyPlaying.IsAI)
                 {
@@ -166,7 +171,7 @@ namespace chinese_checkers.Core.Models
                     if (counter > AnimationHelper.FrameTime + 6)
                     {
                         SoundHelper.Play();
-                        counter = 0; 
+                        counter = 0;
                         if (selectedNode.Next != this.Path.Last)
                         {
                             selectedNode = selectedNode.Next;
@@ -176,6 +181,7 @@ namespace chinese_checkers.Core.Models
                             this.AnimatedPiece = new Vector2(-5000, -5000);
                             Board.Pieces.Find(x => x.Point == this.Path.Last.Value).ToggleHidden();
                             this.Path = null;
+
                             ChangeTurn();
                         }
                     }
@@ -247,7 +253,7 @@ namespace chinese_checkers.Core.Models
                     var targetDistance = GetDistance(am.Point, GoalLocation[piece.NestColor]);
 
                     //If remaining pieces are 7 or more do (this) instead
-                    if (this.PlayerScore[this.CurrentlyPlaying] > 6)
+                    if (CurrentlyPlaying.Score > 6)
                     {
                         //List of all empty locations in opposite nest
                         var emptyGoalLocations = this.Board.Locations.Where(x => x.NestColor == GoalColor[piece.NestColor] && x.PieceId == null);

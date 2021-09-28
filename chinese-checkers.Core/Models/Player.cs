@@ -1,12 +1,16 @@
 ﻿using chinese_checkers.Core.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
+using System.Threading.Tasks;
+using Windows.UI.Core;
 
 namespace chinese_checkers.Core.Models
 {
-    public class Player
+    public class Player : INotifyPropertyChanged
     {
         public int Id { get; set; }
         public bool IsAI { get; set; }
@@ -16,6 +20,20 @@ namespace chinese_checkers.Core.Models
         public List<Location> AvailableMoves { get; set; }
         public Piece selectedPiece { get; set; }
         public List<LinkedList<Point>> Paths { get; set; }
+
+        private int _score;
+        public int Score
+        {
+            get
+            {
+                return _score;
+            }
+            set
+            {
+                _score = value;
+                OnPropertyChanged("Score");
+            }
+        }
 
         // Player
         public Player(int id, ICharacter character, NestColor nestColor)
@@ -34,7 +52,17 @@ namespace chinese_checkers.Core.Models
             this.Character = GetRandomCharacter();
         }
 
-        public void SelectPiece (Location L , Board board)
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
+        public void SelectPiece(Location L, Board board)
         {
             selectedPiece = board.Pieces.Find(piece => piece.Id == L.PieceId.Value);
             Paths = board.GetPaths(selectedPiece.Point, board.GetAvailableMoves(selectedPiece));
