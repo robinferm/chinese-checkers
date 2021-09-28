@@ -21,7 +21,8 @@ namespace chinese_checkers.Helpers
     public static class DrawHelper
     {
         //temp
-        public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage, CanvasBitmap locationImageRed, CanvasBitmap locationImageGreen, CanvasBitmap locationImageBlue, CanvasBitmap locationImageBlack, CanvasBitmap locationImageWhite, CanvasBitmap locationImageYellow)
+        public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage, CanvasBitmap locationImageRed, CanvasBitmap locationImageGreen,
+            CanvasBitmap locationImageBlue, CanvasBitmap locationImageBlack, CanvasBitmap locationImageWhite, CanvasBitmap locationImageYellow,CanvasBitmap damageIcon, CanvasBitmap healIcon, CanvasBitmap trapIcon)
         {
             foreach (var L in board.Locations)
             {
@@ -66,7 +67,21 @@ namespace chinese_checkers.Helpers
                         args.DrawingSession.DrawText(L.Point.X.ToString() + ", " + L.Point.Y, x, y, Colors.Black);
                         if (L.ItemId != null)
                         {
-                            args.DrawingSession.DrawText("? ", x, y, Colors.Green);
+                            if (L.ItemId == Item.Damage)
+                            {
+                                args.DrawingSession.DrawImage(ScalingHelper.Img(damageIcon), x+2, y-2);
+                            }
+                            else
+                            if (L.ItemId == Item.Heal)
+                            {
+                                args.DrawingSession.DrawImage(ScalingHelper.Img(healIcon), x+2, y-2);
+                            }
+                            else
+                            {
+                                args.DrawingSession.DrawImage(ScalingHelper.Img(trapIcon), x+2, y-2);
+                            }
+
+                           // args.DrawingSession.DrawText("? ", x, y, Colors.Green);
                         }
                         break;
 

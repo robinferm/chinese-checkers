@@ -36,6 +36,7 @@ namespace chinese_checkers.Views
         CanvasBitmap locationImageWhite;
         CanvasBitmap locationImageYellow;
         CanvasBitmap pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow;
+        CanvasBitmap damageIcon,healIcon,trapIcon;
         Windows.Foundation.Point currentPoint;
         Location mouseover = null;
 
@@ -75,7 +76,7 @@ namespace chinese_checkers.Views
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow);
+            DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow,damageIcon,healIcon,trapIcon);
             DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow);
             if (gs.CurrentlyPlaying.selectedPiece != null)
             {
@@ -147,6 +148,9 @@ namespace chinese_checkers.Views
             pieceImageBlack = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/black.png"));
             pieceImageWhite = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/white.png"));
             pieceImageYellow = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/yellow.png"));
+            damageIcon = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/icon/itemdamage.png"));
+            healIcon = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/icon/itemHeal.png"));
+            trapIcon = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/icon/itemTrap.png"));
         }
 
         private void canvas_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
