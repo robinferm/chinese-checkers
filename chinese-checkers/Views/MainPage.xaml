@@ -41,9 +41,9 @@
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" FontSize="10" Text="{x:Bind NestColor}"></TextBlock>
-                            <TextBlock Grid.Column="1" FontSize="10" Text="5"></TextBlock>
-                            <TextBlock Grid.Column="2" FontSize="10" Text="{x:Bind Placement}"></TextBlock>
+                            <TextBlock Grid.Column="0" FontSize="10" Text="{Binding NestColor}"></TextBlock>
+                            <TextBlock Grid.Column="1" FontSize="10" Text="{Binding Score, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                            <TextBlock Grid.Column="2" FontSize="10" Text="{Binding Placement, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                         </Grid>
 
                     </DataTemplate>

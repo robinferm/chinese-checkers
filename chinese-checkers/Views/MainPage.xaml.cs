@@ -20,6 +20,8 @@ using System.Linq;
 using Windows.UI.Xaml.Navigation;
 using System.Threading;
 using chinese_checkers.Core.Enums;
+using System.ComponentModel;
+using Windows.ApplicationModel.Core;
 
 namespace chinese_checkers.Views
 {
@@ -70,7 +72,19 @@ namespace chinese_checkers.Views
         
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
+            //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            //{
+            UpdateScore();
             gs.AnimateMove();
+            //});
+        }
+
+        public async void UpdateScore()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                gs.CheckForWin();
+            });
         }
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
