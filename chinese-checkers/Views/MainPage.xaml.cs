@@ -41,6 +41,8 @@ namespace chinese_checkers.Views
         Windows.Foundation.Point currentPoint;
         Location mouseover = null;
 
+        List<Location> test1 = new List<Location>(); 
+
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
         public ICharacter PlayerCharacter { get; set; }
@@ -75,6 +77,7 @@ namespace chinese_checkers.Views
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
             gs.AnimateMove();
+            gs.AnimateAbility();
         }
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
@@ -83,11 +86,11 @@ namespace chinese_checkers.Views
             {
                 var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
                 args.DrawingSession.DrawText(gs.CurrentlyPlaying.selectedPiece.Id.ToString(), 0, 40, Colors.Black);
-                DrawHelper.DrawAvailableMoves(sender, args, availableMoves);
 
             }
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow);
             DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow);
+            DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
             args.DrawingSession.DrawText(((int)currentPoint.X).ToString() + ", " + ((int)currentPoint.Y).ToString(), 0, 0, Colors.Black);
 
             if (gs.CurrentlyPlaying.Paths != null)
@@ -128,6 +131,7 @@ namespace chinese_checkers.Views
                 DrawHelper.DrawAnimationPiece(sender, args, gs.AnimatedPiece, img);
             }
             DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility);
+            //DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
 
         }
 
@@ -188,9 +192,9 @@ namespace chinese_checkers.Views
                     // If a piece is selected
                     if (gs.CurrentlyPlaying.selectedPiece != null)
                     {
-                        var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
+                        //var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
                         // If location is free, then move piece
-                        if (availableMoves.Contains(L))
+                        if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
                         {
                             gs.MovePieceWithAnimation(L);
                         }
@@ -219,12 +223,27 @@ namespace chinese_checkers.Views
                             }
                         }
                     }
+                    // If ability is seleceted
+                    if (gs.CurrentlyPlaying.AbilitySelected)
+                    {
+                        if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
+                        {
+                            gs.UseCharacterAbilityWithAnimation(L);
+                        }
+                    }
                 }
             }
             Vector2 ownAbility = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
             if (pos.X > ownAbility.X && pos.X <  ownAbility.X + (128 * .5f * ScalingHelper.ScaleXY) && pos.Y > ownAbility.Y && pos.Y < ownAbility.Y + (128 * .5f * ScalingHelper.ScaleXY))
             {
-                Debug.WriteLine("test");
+                if (!gs.CurrentlyPlaying.IsAI && gs.AnimatedPiece.X == -5000)
+                {
+                    gs.CurrentlyPlaying.SelectAbility(gs.Board);
+                    if (gs.CurrentlyPlaying.Character.GetType().Name == "Hunter")
+                    {
+                        gs.UseCharacterAbilityWithAnimation();
+                    }
+                }
             }
         }
 

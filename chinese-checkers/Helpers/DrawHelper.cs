@@ -176,7 +176,6 @@ namespace chinese_checkers.Helpers
             }
         }
 
-
         public static void DrawPaths(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<LinkedList<Point>> paths, Location mouseover)
         {
             foreach (var P in paths)

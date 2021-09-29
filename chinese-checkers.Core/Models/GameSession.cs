@@ -24,6 +24,7 @@ namespace chinese_checkers.Core.Models
         public Dictionary<NestColor, Point> GoalLocation { get; set; }
         public Player CurrentlyPlaying { get; set; }
         public Vector2 AnimatedPiece{ get; set; }
+        public List<Vector2> AnimatedAbility { get; set; }
         public LinkedListNode<Point> selectedNode { get; set; }
         public LinkedList<Point> Path { get; set; }
 
@@ -91,6 +92,7 @@ namespace chinese_checkers.Core.Models
             this.Board = new Board(locations, this.Players);
             this.CurrentlyPlaying = Players.First();
             this.AnimatedPiece = new Vector2(-5000, -5000);
+            this.AnimatedAbility = new List<Vector2>();
         }
 
         public void CheckForWin()
@@ -125,7 +127,9 @@ namespace chinese_checkers.Core.Models
 
         public void ChangeTurn()
         {
-            this.CurrentlyPlaying.selectedPiece = null;
+            this.CurrentlyPlaying.DeSelectAbility();
+            this.CurrentlyPlaying.DeSelectPiece();
+
             var nextPlayer = this.Players.FirstOrDefault(x => x.Id == CurrentlyPlaying.Id + 1);
             if (nextPlayer == null)
             {
@@ -186,6 +190,11 @@ namespace chinese_checkers.Core.Models
             }
         }
 
+        public void AnimateAbility()
+        {
+
+        }
+
         public void MovePieceWithAnimation(Location L)
         {
             if (this.AnimatedPiece.X == -5000)
@@ -197,6 +206,12 @@ namespace chinese_checkers.Core.Models
                 CurrentlyPlaying.selectedPiece.ToggleHidden();
                 CurrentlyPlaying.DeSelectPiece();
             }
+        }
+
+        public void UseCharacterAbilityWithAnimation(Location location = null)
+        {
+            CurrentlyPlaying.UseCharaterAbility(this.Board, location);
+            ChangeTurn();
         }
 
         public void MovePieceAI()

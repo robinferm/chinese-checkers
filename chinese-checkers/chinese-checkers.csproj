@@ -293,7 +293,6 @@
     <Content Include="Assets\Images\Locations\default.png" />
     <Content Include="Assets\Images\Locations\red.png" />
     <Content Include="Assets\Images\Locations\red2.png" />
-    <Content Include="Assets\Images\Locations\testimg.png" />
     <Content Include="Assets\Images\Locations\white.png" />
     <Content Include="Assets\Images\Locations\yellow.png" />
     <Content Include="Assets\Images\Pieces\black.png" />

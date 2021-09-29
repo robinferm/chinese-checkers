@@ -10,6 +10,8 @@ namespace chinese_checkers.Core.Models
         string Name { get; set; }
         CanvasBitmap Image { get; set; }
 
-        void UseAbility();
+        List<Location> UsableLocations(Board board, Player currentlyPlaying);
+
+        void UseAbility(Board board, Location location = null);
     }
 }
