@@ -58,7 +58,9 @@
                 </GridView.ItemTemplate>
             </GridView>
         </StackPanel>
-
+        <Button x:Name="optionsButtonGame" VerticalAlignment="Bottom" Width="50" Height="50" Click="optionsButtonGame_Click">
+            <Image Source="ms-appx:///Assets/Images/splash.png"/>
+        </Button>
     </Grid>
     <!--</Grid>-->
 </Page>
