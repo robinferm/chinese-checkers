@@ -4,9 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml" xmlns:data="using:chinese_checkers.Core.Models"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
+
     <!--<Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
@@ -17,10 +18,49 @@
             Grid.Row="0"
             x:Uid="Main_Title"
             Style="{StaticResource PageTitleStyle}" />-->
-        <Grid
-            Grid.Row="1" 
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <canvas:CanvasAnimatedControl x:Name="canvas" Draw="canvas_Draw" CreateResources="canvas_CreateResources" PointerPressed="canvas_PointerPressed" PointerMoved="canvas_PointerMoved" Update="canvas_Update"/>
-        </Grid>
+    <Grid Grid.Row="1">
+        <Grid.Background>
+            <ImageBrush ImageSource="ms-appx:///Assets/Images/splash.png"></ImageBrush>
+        </Grid.Background>
+        <canvas:CanvasAnimatedControl x:Name="canvas" Draw="canvas_Draw" CreateResources="canvas_CreateResources" PointerPressed="canvas_PointerPressed" PointerMoved="canvas_PointerMoved" Update="canvas_Update"/>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Vertical">
+            <!--<TextBlock DataContext="{x:Bind gs.Players}" Text="{Binding Path=Placement, Mode=TwoWay}"/>-->
+            <!--<GridView x:Name="gridView" ItemsSource="{x:Bind gs.Players}" DisplayMemberPath="Id"/>-->
+
+            <StackPanel Orientation="Horizontal" Spacing="25">
+                <TextBlock FontSize="25">Player</TextBlock>
+                <TextBlock FontSize="25">Score</TextBlock>
+                <TextBlock FontSize="25">Placement</TextBlock>
+            </StackPanel>
+
+
+            
+            <GridView ItemsSource="{x:Bind gs.Players}">
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapGrid Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Player">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="125"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" FontSize="17" Text="{Binding NestColor}"></TextBlock>
+                            <TextBlock Grid.Column="1" FontSize="17" Text="{Binding Score, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                            <TextBlock Grid.Column="2" FontSize="17" Text="{Binding Placement, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                        </Grid>
+
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </StackPanel>
+        <Button x:Name="optionsButtonGame" VerticalAlignment="Bottom" Width="50" Height="50" Click="optionsButtonGame_Click">
+            <Image Source="ms-appx:///Assets/Images/splash.png"/>
+        </Button>
+    </Grid>
     <!--</Grid>-->
 </Page>

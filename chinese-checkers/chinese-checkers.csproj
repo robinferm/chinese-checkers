@@ -269,6 +269,7 @@
     <Compile Include="Helpers\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+
     <Content Include="Assets\Images\Abilities\curse-ability.png" />
     <Content Include="Assets\Images\Abilities\fireball-ability.png" />
     <Content Include="Assets\Images\Abilities\druid-ability.png" />
@@ -281,6 +282,9 @@
     <Content Include="Assets\Images\CharacterFrame\Priest-Frame.png" />
     <Content Include="Assets\Images\CharacterFrame\Warlock-Frame.png" />
     <Content Include="Assets\Images\CharacterFrame\Warrior-Frame.png" />
+
+    <Content Include="Assets\Images\bg1.png" />
+    
     <Content Include="Assets\Images\Characters\druid.png" />
     <Content Include="Assets\Images\Characters\hunter.png" />
     <Content Include="Assets\Images\Characters\mage.png" />
@@ -301,6 +305,8 @@
     <Content Include="Assets\Images\Pieces\red.png" />
     <Content Include="Assets\Images\Pieces\white.png" />
     <Content Include="Assets\Images\Pieces\yellow.png" />
+    <Content Include="Assets\Images\splash.png" />
+    <Content Include="Assets\Sounds\PieceMove.wav" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -326,6 +332,7 @@
       <Name>chinese-checkers.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

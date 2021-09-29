@@ -20,6 +20,10 @@ using System.Linq;
 using Windows.UI.Xaml.Navigation;
 using System.Threading;
 using chinese_checkers.Core.Enums;
+using System.ComponentModel;
+using Windows.ApplicationModel.Core;
+using chinese_checkers.Views.Menu;
+using Windows.ApplicationModel.Activation;
 
 namespace chinese_checkers.Views
 {
@@ -41,7 +45,7 @@ namespace chinese_checkers.Views
         Windows.Foundation.Point currentPoint;
         Location mouseover = null;
 
-        List<Location> test1 = new List<Location>(); 
+        public bool IsPaused { get; set; } = false;
 
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
@@ -53,6 +57,7 @@ namespace chinese_checkers.Views
             characterFrames = new Dictionary<string, CanvasBitmap>();
             characterAbility = new Dictionary<string, CanvasBitmap>();
             InitializeComponent();
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             canvas.IsFixedTimeStep = true;
             ScalingHelper.SetScale();
             Window.Current.SizeChanged += Current_SizeChanged;
@@ -71,14 +76,48 @@ namespace chinese_checkers.Views
             var parameters = (GameParams)e.Parameter;
             this.NumberOfAI = parameters.NumberOfAI;
             this.PlayerCharacter = parameters.PlayerCharacter;
+            if (gs == null)
+            {
+                CreateGameSession();
+            }
+
+            IsPaused = false;
+            
+
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            IsPaused = true;
+        }
+
+        public void CreateGameSession()
+        {
             gs = new GameSession(locations, NumberOfAI, PlayerCharacter);
         }
-        
+
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
-            gs.AnimateMove();
             gs.AnimateAbility();
+            UpdateScore();
+            gs.AnimateMove();
         }
+
+        public async void UpdateScore()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                gs.CheckForWin();
+            });
+        }
+
+        private void optionsButtonGame_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Options));
+        }
+
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
@@ -180,14 +219,14 @@ namespace chinese_checkers.Views
         {
             var pos = e.GetCurrentPoint(canvas).Position;
 
-            foreach ( var L in locations)
+            foreach (var L in locations)
             {
                 //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
                 //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
                 var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
                 var y = ScalingHelper.CalculateY(L.Point.Y);
                 // If click is on a Location
-                if (pos.X >= x && pos.X <= x + (64*ScalingHelper.ScaleXY) && pos.Y >= y && pos.Y <= y + (64*ScalingHelper.ScaleXY))
+                if (pos.X >= x && pos.X <= x + (64 * ScalingHelper.ScaleXY) && pos.Y >= y && pos.Y <= y + (64 * ScalingHelper.ScaleXY))
                 {
                     // If a piece is selected
                     if (gs.CurrentlyPlaying.selectedPiece != null)
@@ -257,7 +296,7 @@ namespace chinese_checkers.Views
                 //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
                 var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
                 var y = ScalingHelper.CalculateY(L.Point.Y);
-                if (currentPoint.X >= x && currentPoint.X <= x + (64*ScalingHelper.ScaleXY) && currentPoint.Y >= y && currentPoint.Y <= y + (64 * ScalingHelper.ScaleXY))
+                if (currentPoint.X >= x && currentPoint.X <= x + (64 * ScalingHelper.ScaleXY) && currentPoint.Y >= y && currentPoint.Y <= y + (64 * ScalingHelper.ScaleXY))
                 {
                     mouseover = L;
                     break;
