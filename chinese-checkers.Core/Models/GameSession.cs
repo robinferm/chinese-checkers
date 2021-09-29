@@ -115,7 +115,7 @@ namespace chinese_checkers.Core.Models
             }
             foreach (Player player in Players)
             {
-                if (player.Score == 10)
+                if (player.Score == 10 && player.Placement == null)
                 {
                     player.Placement = this.Players.Where(x => x.Placement != null).Count() + 1;
                 }
@@ -123,7 +123,7 @@ namespace chinese_checkers.Core.Models
             if (this.Players.Where(x => x.Placement != null).Count() == Players.Count - 1)
             {
                 // TODO end game, last player | show results
-
+                
                 Debug.WriteLine("Game Ended");
             }
         }

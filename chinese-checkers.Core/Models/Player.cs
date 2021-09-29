@@ -16,7 +16,19 @@ namespace chinese_checkers.Core.Models
         public bool IsAI { get; set; }
         public ICharacter Character { get; set; }
         public NestColor NestColor { get; set; }
-        public int? Placement { get; set; }
+        private int? _placement;
+        public int? Placement
+        {
+            get
+            {
+                return _placement;
+            }
+            set
+            {
+                _placement = value;
+                OnPropertyChanged("Placement");
+            }
+        }
         public List<Location> AvailableMoves { get; set; }
         public Piece selectedPiece { get; set; }
         public List<LinkedList<Point>> Paths { get; set; }

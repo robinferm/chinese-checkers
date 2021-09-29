@@ -10,11 +10,14 @@ namespace chinese_checkers.Core.Helpers
 {
     public static class SoundHelper
     {
+        private static readonly MediaPlayer mediaPlayer = new MediaPlayer();
+        private static MediaSource pieceSound = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Sounds/PieceMove.wav", UriKind.RelativeOrAbsolute));
+        
         public async static void Play()
         {
-            using (var mediaPlayer = new MediaPlayer())
+            using (mediaPlayer)
             {
-                mediaPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Sounds/PieceMove.wav", UriKind.RelativeOrAbsolute));
+                mediaPlayer.Source = pieceSound;
                 await Task.Run(mediaPlayer.Play);
             }
         }
