@@ -193,18 +193,29 @@ namespace chinese_checkers.Core.Models
                     else if (counter == AnimationHelper.FrameTime)
                     {
                         var currentLocation = this.Board.Locations.Find(x => x.Point == selectedNode.Next.Value);
+                        var movingPiece = Board.Pieces.Find(x => x.Point == this.Path.Last.Value);
                         if (currentLocation.PieceId != null)
                         {
-                            var movingPiece = Board.Pieces.Find(x => x.Point == this.Path.Last.Value);
                             var currentLocationPiece = this.Board.Pieces.Find(x => x.Id == currentLocation.PieceId);
                             if (movingPiece.NestColor != currentLocationPiece.NestColor)
                             {
-                                currentLocationPiece.Health -= 1;
+                                currentLocationPiece.Health -= movingPiece.Damage;
                                 if (currentLocationPiece.Health < 1)
                                 {
                                     Board.RespawnPiece(currentLocationPiece);
                                 }
                             }
+                        }
+                        if (currentLocation.ItemId != null)
+                        {
+                            //movingPiece.Items.Add(currentLocation.ItemId.Value);
+                            this.Board.Pieces[movingPiece.Id].PickUpItem(currentLocation.ItemId.Value);
+                            currentLocation.ItemId = null;
+                            if (this.Board.Pieces[movingPiece.Id].Health < 1)
+                            {
+                                Board.RespawnPiece(movingPiece);
+                            }
+                            
                         }
                         counter++;
                     }
