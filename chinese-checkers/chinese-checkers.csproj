@@ -140,11 +140,29 @@
     <Compile Include="Activation\DefaultActivationHandler.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\Menu\Dialogs\DruidInfoDialog.xaml.cs">
+      <DependentUpon>DruidInfoDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Menu\Dialogs\HelpDialog.xaml.cs">
       <DependentUpon>HelpDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Menu\Dialogs\HunterInfoDialog.xaml.cs">
+      <DependentUpon>HunterInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menu\Dialogs\MageInfoDialog.xaml.cs">
+      <DependentUpon>MageInfoDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Menu\Dialogs\OptionsDialog.xaml.cs">
       <DependentUpon>OptionsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menu\Dialogs\PriestInfoDialog.xaml.cs">
+      <DependentUpon>PriestInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menu\Dialogs\WarlockInfoDialog.xaml.cs">
+      <DependentUpon>WarlockInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menu\Dialogs\WarriorInfoDialog.xaml.cs">
+      <DependentUpon>WarriorInfoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Menu\Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
@@ -189,11 +207,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Menu\Dialogs\DruidInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Menu\Dialogs\HelpDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Menu\Dialogs\HunterInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\Dialogs\MageInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Menu\Dialogs\OptionsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\Dialogs\PriestInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\Dialogs\WarlockInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\Dialogs\WarriorInfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -227,6 +269,22 @@
     <Compile Include="Helpers\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+
+    <Content Include="Assets\Images\Abilities\curse-ability.png" />
+    <Content Include="Assets\Images\Abilities\fireball-ability.png" />
+    <Content Include="Assets\Images\Abilities\druid-ability.png" />
+    <Content Include="Assets\Images\Abilities\heal-ability.png" />
+    <Content Include="Assets\Images\Abilities\volly-ability.png" />
+    <Content Include="Assets\Images\Abilities\battleshout-ability.png" />
+    <Content Include="Assets\Images\CharacterFrame\Druid-Frame.png" />
+    <Content Include="Assets\Images\CharacterFrame\Hunter-Frame.png" />
+    <Content Include="Assets\Images\CharacterFrame\Mage-Frame.png" />
+    <Content Include="Assets\Images\CharacterFrame\Priest-Frame.png" />
+    <Content Include="Assets\Images\CharacterFrame\Warlock-Frame.png" />
+    <Content Include="Assets\Images\CharacterFrame\Warrior-Frame.png" />
+
+    <Content Include="Assets\Images\bg1.png" />
+    
     <Content Include="Assets\Images\Characters\druid.png" />
     <Content Include="Assets\Images\Characters\hunter.png" />
     <Content Include="Assets\Images\Characters\mage.png" />
@@ -247,6 +305,8 @@
     <Content Include="Assets\Images\Pieces\red.png" />
     <Content Include="Assets\Images\Pieces\white.png" />
     <Content Include="Assets\Images\Pieces\yellow.png" />
+    <Content Include="Assets\Images\splash.png" />
+    <Content Include="Assets\Sounds\PieceMove.wav" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -272,6 +332,7 @@
       <Name>chinese-checkers.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

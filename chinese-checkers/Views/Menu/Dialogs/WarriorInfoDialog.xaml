@@ -1,0 +1,22 @@
+﻿<ContentDialog
+    x:Class="chinese_checkers.Views.Menu.Dialogs.WarriorInfoDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:chinese_checkers.Views.Menu.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Warrior"
+    PrimaryButtonText="Close"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <Image x:Name="battleshoutImage" Source="ms-appx:///Assets/Images/Abilities/battleshout.png" Width="50" Height="50" Margin="0,0,20,0"></Image>
+            <StackPanel>
+                <TextBlock>Character Ability: Battle Shout</TextBlock>
+                <TextBlock>The warrior shouts, increasing damage by 1 for 3 random friendly pieces</TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</ContentDialog>

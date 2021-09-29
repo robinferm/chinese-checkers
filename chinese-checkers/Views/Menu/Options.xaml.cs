@@ -29,7 +29,12 @@ namespace chinese_checkers.Views.Menu
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainMenu));
+            //this.Frame.Navigate(typeof(MainMenu));
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame.CanGoBack)
+            {
+                rootFrame.GoBack();
+            }
         }
     }
 }

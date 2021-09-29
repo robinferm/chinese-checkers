@@ -63,7 +63,7 @@ namespace chinese_checkers.Helpers
 
                     default:
                         args.DrawingSession.DrawImage(ScalingHelper.Img(locationImage), x, y);
-                        args.DrawingSession.DrawText(L.Point.X.ToString() + ", " + L.Point.Y, x, y, Colors.Black);
+                        //args.DrawingSession.DrawText(L.Point.X.ToString() + ", " + L.Point.Y, x, y, Colors.Black);
                         if (L.ItemId != null)
                         {
                             args.DrawingSession.DrawImage(ScalingHelper.Img(mysteriousPosition), x + 8, y + 8);
@@ -123,6 +123,48 @@ namespace chinese_checkers.Helpers
             }
         }
 
+        public static void DrawCharacterAndAbility(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Player> players, Dictionary<string, CanvasBitmap> frames, Dictionary<string, CanvasBitmap> abilitys)
+        {
+            foreach (var player in players)
+            {
+                Vector2 framePosition = new Vector2();
+                Vector2 abilityPosition = new Vector2();
+                switch (player.NestColor)
+                {
+                    case NestColor.Red:
+                        framePosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-4));
+                        abilityPosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (150 * ScalingHelper.ScaleXY) - (40 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-4) + (128 * .4f * ScalingHelper.ScaleXY));
+                        break;
+                    case NestColor.Black:
+                        framePosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue/2));
+                        abilityPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue/2) + (128 * .4f * ScalingHelper.ScaleXY));
+                        break;
+                    case NestColor.Blue:
+                        framePosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(8));
+                        abilityPosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(8) + (128 * .4f * ScalingHelper.ScaleXY));
+                        break;
+                    case NestColor.Green:
+                        framePosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (160 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue/2));
+                        abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue/2) + (128 * .4f * ScalingHelper.ScaleXY));
+                        break;
+                    case NestColor.White:
+                        framePosition = new Vector2(ScalingHelper.CalculateX(-4, 8) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(8));
+                        abilityPosition = new Vector2(ScalingHelper.CalculateX(-4, 8) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(8) + (128 * .4f * ScalingHelper.ScaleXY));
+                        break;
+                    case NestColor.Yellow:
+                        framePosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue/2));
+                        abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue/2) + (128 * .4f * ScalingHelper.ScaleXY));
+                        break;
+                    default:
+                        framePosition = new Vector2();
+                        abilityPosition = new Vector2();
+                        break;
+                }
+                args.DrawingSession.DrawImage(ScalingHelper.Img(frames[player.Character.GetType().Name], .4f), framePosition);
+                args.DrawingSession.DrawImage(ScalingHelper.Img(abilitys[player.Character.GetType().Name], .5f), abilityPosition);
+            }
+        }
+
         public static void DrawAvailableMoves(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Location> locations)
         {
             foreach (var L in locations)
@@ -131,10 +173,9 @@ namespace chinese_checkers.Helpers
                 //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
                 var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
                 var y = ScalingHelper.CalculateY(L.Point.Y);
-                args.DrawingSession.FillCircle(x + (32 * ScalingHelper.ScaleXY), y + (32 * ScalingHelper.ScaleXY), 32*ScalingHelper.ScaleXY, Colors.Azure);
+                args.DrawingSession.FillCircle(x + (32 * ScalingHelper.ScaleXY), y + (32 * ScalingHelper.ScaleXY), 32 * ScalingHelper.ScaleXY, Colors.Yellow);
             }
         }
-
 
         public static void DrawPaths(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<LinkedList<Point>> paths, Location mouseover)
         {
