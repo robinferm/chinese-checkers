@@ -166,7 +166,7 @@ namespace chinese_checkers.Core.Models
             {
                 if (counter < AnimationHelper.FrameTime)
                 {
-                    // Speed, start, end
+                    // start, current, end
                     this.AnimatedPiece = AnimationHelper.MovePiece(selectedNode.Value, this.AnimatedPiece, selectedNode.Next.Value);
                     counter++;
                 }
@@ -176,6 +176,7 @@ namespace chinese_checkers.Core.Models
                     {
                         SoundHelper.Play();
                         counter = 0;
+                        
                         if (selectedNode.Next != this.Path.Last)
                         {
                             selectedNode = selectedNode.Next;
@@ -188,6 +189,21 @@ namespace chinese_checkers.Core.Models
 
                             ChangeTurn();
                         }
+                    }
+                    else if (counter == AnimationHelper.FrameTime)
+                    {
+                        var currentLocation = this.Board.Locations.Find(x => x.Point == selectedNode.Next.Value);
+                        if (currentLocation.PieceId != null)
+                        {
+                            var movingPiece = Board.Pieces.Find(x => x.Point == this.Path.Last.Value);
+                            var currentLocationPiece = this.Board.Pieces.Find(x => x.Id == currentLocation.PieceId);
+                            if (movingPiece.NestColor != currentLocationPiece.NestColor)
+                            {
+                                currentLocationPiece.Health -= 1;
+                                Debug.WriteLine(currentLocationPiece.NestColor.ToString());
+                            }
+                        }
+                        counter++;
                     }
                     else
                     {
