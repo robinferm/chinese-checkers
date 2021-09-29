@@ -27,15 +27,15 @@
             <!--<TextBlock DataContext="{x:Bind gs.Players}" Text="{Binding Path=Placement, Mode=TwoWay}"/>-->
             <!--<GridView x:Name="gridView" ItemsSource="{x:Bind gs.Players}" DisplayMemberPath="Id"/>-->
 
-            <StackPanel Orientation="Horizontal" Spacing="25">
+            <!--<StackPanel Orientation="Horizontal" Spacing="25">
                 <TextBlock FontSize="25">Player</TextBlock>
                 <TextBlock FontSize="25">Score</TextBlock>
                 <TextBlock FontSize="25">Placement</TextBlock>
-            </StackPanel>
+            </StackPanel>-->
 
 
             
-            <GridView ItemsSource="{x:Bind gs.Players}">
+            <!--<GridView ItemsSource="{x:Bind gs.Players}">
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapGrid Orientation="Vertical"/>
@@ -56,7 +56,7 @@
 
                     </DataTemplate>
                 </GridView.ItemTemplate>
-            </GridView>
+            </GridView>-->
         </StackPanel>
         <Button x:Name="optionsButtonGame" VerticalAlignment="Bottom" Width="50" Height="50" Click="optionsButtonGame_Click">
             <Image Source="ms-appx:///Assets/Images/splash.png"/>

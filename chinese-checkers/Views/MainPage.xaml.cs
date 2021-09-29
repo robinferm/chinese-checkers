@@ -82,7 +82,7 @@ namespace chinese_checkers.Views
             }
 
             IsPaused = false;
-            
+
 
         }
 
@@ -172,6 +172,11 @@ namespace chinese_checkers.Views
             DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility);
             //DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
 
+            if (ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth > 1200)
+            {
+                DrawHelper.DrawScoreBoard(sender, args, gs.Players);
+            }
+
         }
 
         private void canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
@@ -196,22 +201,22 @@ namespace chinese_checkers.Views
             pieceImageWhite = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/white.png"));
             pieceImageYellow = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/yellow.png"));
 
-            characterFrames.Add("Mage" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Mage-Frame.png")));
+            characterFrames.Add("Mage", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Mage-Frame.png")));
             characterAbility.Add("Mage", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/fireball-ability.png")));
 
-            characterFrames.Add("Druid" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Druid-Frame.png")));
+            characterFrames.Add("Druid", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Druid-Frame.png")));
             characterAbility.Add("Druid", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/druid-ability.png")));
 
-            characterFrames.Add("Hunter" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Hunter-Frame.png")));
+            characterFrames.Add("Hunter", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Hunter-Frame.png")));
             characterAbility.Add("Hunter", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/volly-ability.png")));
 
-            characterFrames.Add("Priest" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Priest-Frame.png")));
+            characterFrames.Add("Priest", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Priest-Frame.png")));
             characterAbility.Add("Priest", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/heal-ability.png")));
 
-            characterFrames.Add("Warlock" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warlock-Frame.png")));
+            characterFrames.Add("Warlock", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warlock-Frame.png")));
             characterAbility.Add("Warlock", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/curse-ability.png")));
 
-            characterFrames.Add("Warrior" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warrior-Frame.png")));
+            characterFrames.Add("Warrior", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warrior-Frame.png")));
             characterAbility.Add("Warrior", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/battleshout-ability.png")));
         }
 
@@ -273,7 +278,7 @@ namespace chinese_checkers.Views
                 }
             }
             Vector2 ownAbility = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
-            if (pos.X > ownAbility.X && pos.X <  ownAbility.X + (128 * .5f * ScalingHelper.ScaleXY) && pos.Y > ownAbility.Y && pos.Y < ownAbility.Y + (128 * .5f * ScalingHelper.ScaleXY))
+            if (pos.X > ownAbility.X && pos.X < ownAbility.X + (128 * .5f * ScalingHelper.ScaleXY) && pos.Y > ownAbility.Y && pos.Y < ownAbility.Y + (128 * .5f * ScalingHelper.ScaleXY))
             {
                 if (!gs.CurrentlyPlaying.IsAI && gs.AnimatedPiece.X == -5000)
                 {

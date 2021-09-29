@@ -135,24 +135,24 @@ namespace chinese_checkers.Helpers
                         abilityPosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (150 * ScalingHelper.ScaleXY) - (40 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-4) + (128 * .4f * ScalingHelper.ScaleXY));
                         break;
                     case NestColor.Black:
-                        framePosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue/2));
-                        abilityPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue/2) + (128 * .4f * ScalingHelper.ScaleXY));
+                        framePosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2));
+                        abilityPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
                         break;
                     case NestColor.Blue:
                         framePosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(8));
                         abilityPosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(8) + (128 * .4f * ScalingHelper.ScaleXY));
                         break;
                     case NestColor.Green:
-                        framePosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (160 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue/2));
-                        abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue/2) + (128 * .4f * ScalingHelper.ScaleXY));
+                        framePosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (160 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2));
+                        abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
                         break;
                     case NestColor.White:
                         framePosition = new Vector2(ScalingHelper.CalculateX(-4, 8) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(8));
                         abilityPosition = new Vector2(ScalingHelper.CalculateX(-4, 8) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(8) + (128 * .4f * ScalingHelper.ScaleXY));
                         break;
                     case NestColor.Yellow:
-                        framePosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue/2));
-                        abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue/2) + (128 * .4f * ScalingHelper.ScaleXY));
+                        framePosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2));
+                        abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
                         break;
                     default:
                         framePosition = new Vector2();
@@ -216,6 +216,27 @@ namespace chinese_checkers.Helpers
             vector.Y = ScalingHelper.CalculateY(vector.Y);
 
             args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), vector.X, vector.Y);
+        }
+
+        public static void DrawScoreBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Player> players)
+        {
+            var ordered = players.OrderBy(x => x.Placement).ToList();
+
+            var rowspacing = 0;
+
+            // Headers
+            args.DrawingSession.DrawText("Player", new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600, 300f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 20 });
+            args.DrawingSession.DrawText("Score", new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600 + 100, 300f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 20 });
+            args.DrawingSession.DrawText("Placement", new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600 + 200, 300f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 20 });
+
+            // Values
+            foreach (var p in ordered)
+            {
+                args.DrawingSession.DrawText(p.NestColor.ToString(), new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600, 340f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 15 });
+                args.DrawingSession.DrawText(p.Score.ToString(), new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600 + 100, 340f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 15 });
+                args.DrawingSession.DrawText(p.Placement.ToString(), new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600 + 200, 340f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 15 });
+                rowspacing += 30;
+            }
         }
 
         // Debug stuff
