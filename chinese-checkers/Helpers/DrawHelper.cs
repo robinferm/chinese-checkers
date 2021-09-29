@@ -21,7 +21,7 @@ namespace chinese_checkers.Helpers
     public static class DrawHelper
     {
         //temp
-        public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage, CanvasBitmap locationImageRed, CanvasBitmap locationImageGreen, CanvasBitmap locationImageBlue, CanvasBitmap locationImageBlack, CanvasBitmap locationImageWhite, CanvasBitmap locationImageYellow,CanvasBitmap mysteriousPosition)
+        public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage, CanvasBitmap locationImageRed, CanvasBitmap locationImageGreen, CanvasBitmap locationImageBlue, CanvasBitmap locationImageBlack, CanvasBitmap locationImageWhite, CanvasBitmap locationImageYellow)
         {
             foreach (var L in board.Locations)
             {
@@ -66,8 +66,7 @@ namespace chinese_checkers.Helpers
                         //args.DrawingSession.DrawText(L.Point.X.ToString() + ", " + L.Point.Y, x, y, Colors.Black);
                         if (L.ItemId != null)
                         {
-                            args.DrawingSession.DrawImage(ScalingHelper.Img(mysteriousPosition), x + 8, y + 8);
-
+                            args.DrawingSession.DrawText("? ", x, y, Colors.Green);
                         }
                         break;
 
