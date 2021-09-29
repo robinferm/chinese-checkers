@@ -200,7 +200,10 @@ namespace chinese_checkers.Core.Models
                             if (movingPiece.NestColor != currentLocationPiece.NestColor)
                             {
                                 currentLocationPiece.Health -= 1;
-                                Debug.WriteLine(currentLocationPiece.NestColor.ToString());
+                                if (currentLocationPiece.Health < 1)
+                                {
+                                    Board.RespawnPiece(currentLocationPiece);
+                                }
                             }
                         }
                         counter++;

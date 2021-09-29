@@ -233,6 +233,22 @@ namespace chinese_checkers.Core.Models
             }
             return path;
         }
+
+        public void RespawnPiece(Piece piece)
+        {
+            var freeHomeLocations = Locations.Where(x => x.NestColor == piece.NestColor && x.PieceId == null).ToList();
+            if (freeHomeLocations.Count > 0)
+            {
+                Random rnd = new Random();
+                MovePiece(freeHomeLocations[rnd.Next(freeHomeLocations.Count)], piece);
+                piece = new Piece(piece.Id, piece.Point, piece.NestColor);
+            }
+            else
+            {
+                // If all home locations are occupied
+
+            }
+        }
     }
 }
  
