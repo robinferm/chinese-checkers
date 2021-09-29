@@ -8,10 +8,10 @@ namespace chinese_checkers.Core.Helpers {
     public static class AnimationHelper {
 
         public static double FrameTime { get; set; } = 60 / 2;
-        public static Vector2 MovePiece(Point speed, Vector2 current, Point target)
+        public static Vector2 MovePiece(Point start, Vector2 current, Point target)
         {
-            double xSpeed = (double)(target.X - speed.X) / FrameTime;
-            double ySpeed = (double)(target.Y - speed.Y) / FrameTime;
+            double xSpeed = (double)(target.X - start.X) / FrameTime;
+            double ySpeed = (double)(target.Y - start.Y) / FrameTime;
 
             if (current.X != target.X || current.Y != target.Y)
             {
