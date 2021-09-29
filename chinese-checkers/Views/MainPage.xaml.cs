@@ -40,6 +40,8 @@ namespace chinese_checkers.Views
         CanvasBitmap locationImageWhite;
         CanvasBitmap locationImageYellow;
         CanvasBitmap pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow;
+        Dictionary<string, CanvasBitmap> characterFrames;
+        Dictionary<string, CanvasBitmap> characterAbility;
         Windows.Foundation.Point currentPoint;
         Location mouseover = null;
 
@@ -52,6 +54,8 @@ namespace chinese_checkers.Views
 
         public MainPage()
         {
+            characterFrames = new Dictionary<string, CanvasBitmap>();
+            characterAbility = new Dictionary<string, CanvasBitmap>();
             InitializeComponent();
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             canvas.IsFixedTimeStep = true;
@@ -96,8 +100,9 @@ namespace chinese_checkers.Views
 
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
-                UpdateScore();
-                gs.AnimateMove();
+            gs.AnimateAbility();
+            UpdateScore();
+            gs.AnimateMove();
         }
 
         public async void UpdateScore()
@@ -116,15 +121,15 @@ namespace chinese_checkers.Views
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow);
-            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow);
             if (gs.CurrentlyPlaying.selectedPiece != null)
             {
                 var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
                 args.DrawingSession.DrawText(gs.CurrentlyPlaying.selectedPiece.Id.ToString(), 0, 40, Colors.Black);
-                DrawHelper.DrawAvailableMoves(sender, args, availableMoves);
 
             }
+            DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow);
+            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow);
+            DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
             args.DrawingSession.DrawText(((int)currentPoint.X).ToString() + ", " + ((int)currentPoint.Y).ToString(), 0, 0, Colors.Black);
 
             if (gs.CurrentlyPlaying.Paths != null)
@@ -164,6 +169,8 @@ namespace chinese_checkers.Views
                 }
                 DrawHelper.DrawAnimationPiece(sender, args, gs.AnimatedPiece, img);
             }
+            DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility);
+            //DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
 
         }
 
@@ -188,6 +195,24 @@ namespace chinese_checkers.Views
             pieceImageBlack = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/black.png"));
             pieceImageWhite = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/white.png"));
             pieceImageYellow = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/yellow.png"));
+
+            characterFrames.Add("Mage" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Mage-Frame.png")));
+            characterAbility.Add("Mage", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/fireball-ability.png")));
+
+            characterFrames.Add("Druid" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Druid-Frame.png")));
+            characterAbility.Add("Druid", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/druid-ability.png")));
+
+            characterFrames.Add("Hunter" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Hunter-Frame.png")));
+            characterAbility.Add("Hunter", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/volly-ability.png")));
+
+            characterFrames.Add("Priest" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Priest-Frame.png")));
+            characterAbility.Add("Priest", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/heal-ability.png")));
+
+            characterFrames.Add("Warlock" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warlock-Frame.png")));
+            characterAbility.Add("Warlock", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/curse-ability.png")));
+
+            characterFrames.Add("Warrior" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warrior-Frame.png")));
+            characterAbility.Add("Warrior", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/battleshout-ability.png")));
         }
 
         private void canvas_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -206,9 +231,9 @@ namespace chinese_checkers.Views
                     // If a piece is selected
                     if (gs.CurrentlyPlaying.selectedPiece != null)
                     {
-                        var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
+                        //var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
                         // If location is free, then move piece
-                        if (availableMoves.Contains(L))
+                        if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
                         {
                             gs.MovePieceWithAnimation(L);
                         }
@@ -236,6 +261,26 @@ namespace chinese_checkers.Views
 
                             }
                         }
+                    }
+                    // If ability is seleceted
+                    if (gs.CurrentlyPlaying.AbilitySelected)
+                    {
+                        if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
+                        {
+                            gs.UseCharacterAbilityWithAnimation(L);
+                        }
+                    }
+                }
+            }
+            Vector2 ownAbility = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
+            if (pos.X > ownAbility.X && pos.X <  ownAbility.X + (128 * .5f * ScalingHelper.ScaleXY) && pos.Y > ownAbility.Y && pos.Y < ownAbility.Y + (128 * .5f * ScalingHelper.ScaleXY))
+            {
+                if (!gs.CurrentlyPlaying.IsAI && gs.AnimatedPiece.X == -5000)
+                {
+                    gs.CurrentlyPlaying.SelectAbility(gs.Board);
+                    if (gs.CurrentlyPlaying.Character.GetType().Name == "Hunter")
+                    {
+                        gs.UseCharacterAbilityWithAnimation();
                     }
                 }
             }

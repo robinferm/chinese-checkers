@@ -269,13 +269,22 @@
     <Compile Include="Helpers\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Images\Abilities\battleshout.png" />
-    <Content Include="Assets\Images\Abilities\curse.png" />
-    <Content Include="Assets\Images\Abilities\druidability.png" />
-    <Content Include="Assets\Images\Abilities\fireball.png" />
-    <Content Include="Assets\Images\Abilities\heal.png" />
-    <Content Include="Assets\Images\Abilities\volley.png" />
+
+    <Content Include="Assets\Images\Abilities\curse-ability.png" />
+    <Content Include="Assets\Images\Abilities\fireball-ability.png" />
+    <Content Include="Assets\Images\Abilities\druid-ability.png" />
+    <Content Include="Assets\Images\Abilities\heal-ability.png" />
+    <Content Include="Assets\Images\Abilities\volly-ability.png" />
+    <Content Include="Assets\Images\Abilities\battleshout-ability.png" />
+    <Content Include="Assets\Images\CharacterFrame\Druid-Frame.png" />
+    <Content Include="Assets\Images\CharacterFrame\Hunter-Frame.png" />
+    <Content Include="Assets\Images\CharacterFrame\Mage-Frame.png" />
+    <Content Include="Assets\Images\CharacterFrame\Priest-Frame.png" />
+    <Content Include="Assets\Images\CharacterFrame\Warlock-Frame.png" />
+    <Content Include="Assets\Images\CharacterFrame\Warrior-Frame.png" />
+
     <Content Include="Assets\Images\bg1.png" />
+    
     <Content Include="Assets\Images\Characters\druid.png" />
     <Content Include="Assets\Images\Characters\hunter.png" />
     <Content Include="Assets\Images\Characters\mage.png" />
