@@ -269,7 +269,6 @@
     <Compile Include="Helpers\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-
     <Content Include="Assets\Images\Abilities\curse-ability.png" />
     <Content Include="Assets\Images\Abilities\fireball-ability.png" />
     <Content Include="Assets\Images\Abilities\druid-ability.png" />
@@ -282,15 +281,17 @@
     <Content Include="Assets\Images\CharacterFrame\Priest-Frame.png" />
     <Content Include="Assets\Images\CharacterFrame\Warlock-Frame.png" />
     <Content Include="Assets\Images\CharacterFrame\Warrior-Frame.png" />
-
     <Content Include="Assets\Images\bg1.png" />
-    
     <Content Include="Assets\Images\Characters\druid.png" />
     <Content Include="Assets\Images\Characters\hunter.png" />
     <Content Include="Assets\Images\Characters\mage.png" />
     <Content Include="Assets\Images\Characters\priest.png" />
     <Content Include="Assets\Images\Characters\warlock.png" />
     <Content Include="Assets\Images\Characters\warrior.png" />
+    <Content Include="Assets\Images\Icon\heal.png" />
+    <Content Include="Assets\Images\Icon\ItemDamage.png" />
+    <Content Include="Assets\Images\Icon\mysterious.png" />
+    <Content Include="Assets\Images\Icon\trap.png" />
     <Content Include="Assets\Images\Locations\black.png" />
     <Content Include="Assets\Images\Locations\blue.png" />
     <Content Include="Assets\Images\Locations\green.png" />
