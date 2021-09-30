@@ -139,7 +139,7 @@ namespace chinese_checkers.Views
 
             if (gs.AnimatedPiece.X != -5000)
             {
-                var color = gs.Board.Pieces.Find(x => x.Point == gs.Path.Last.Value).NestColor;
+                var color = gs.CurrentlyPlaying.NestColor;
                 CanvasBitmap img = pieceImageRed;
                 switch (color)
                 {

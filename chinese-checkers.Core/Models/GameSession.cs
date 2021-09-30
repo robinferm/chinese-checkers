@@ -37,8 +37,8 @@ namespace chinese_checkers.Core.Models
         public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
         {
             this.Players = new List<Player>();
-            //this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
-            this.Players.Add(new Player(0, NestColor.Green));
+            this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
+            //this.Players.Add(new Player(0, NestColor.Green));
             //this.PlayerScore = new Dictionary<Player, int>();
             this.GoalColor = new Dictionary<NestColor, NestColor>()
             {
@@ -193,18 +193,37 @@ namespace chinese_checkers.Core.Models
                     else if (counter == AnimationHelper.FrameTime)
                     {
                         var currentLocation = this.Board.Locations.Find(x => x.Point == selectedNode.Next.Value);
+                        var movingPiece = Board.Pieces.Find(x => x.Point == this.Path.Last.Value);
                         if (currentLocation.PieceId != null)
                         {
-                            var movingPiece = Board.Pieces.Find(x => x.Point == this.Path.Last.Value);
                             var currentLocationPiece = this.Board.Pieces.Find(x => x.Id == currentLocation.PieceId);
                             if (movingPiece.NestColor != currentLocationPiece.NestColor)
                             {
-                                currentLocationPiece.Health -= 1;
+                                currentLocationPiece.Health -= movingPiece.Damage;
                                 if (currentLocationPiece.Health < 1)
                                 {
                                     Board.RespawnPiece(currentLocationPiece);
                                 }
                             }
+                        }
+                        if (currentLocation.ItemId != null)
+                        {
+                            //movingPiece.Items.Add(currentLocation.ItemId.Value);
+                            this.Board.Pieces[movingPiece.Id].PickUpItem(currentLocation.ItemId.Value);
+                            if (this.Board.Pieces[movingPiece.Id].Health < 1)
+                            {
+                                Board.RespawnPiece(movingPiece);
+                            }
+                            if (currentLocation.ItemId == Item.FreezeSelf)
+                            {
+                                this.Board.MovePiece(currentLocation, movingPiece);
+                                this.AnimatedPiece = new Vector2(-5000, -5000);
+                                Board.Pieces[movingPiece.Id].ToggleHidden();
+                                this.Path = null;
+
+                                ChangeTurn();
+                            }
+                            currentLocation.ItemId = null;
                         }
                         counter++;
                     }
