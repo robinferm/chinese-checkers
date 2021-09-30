@@ -6,8 +6,11 @@ namespace chinese_checkers.Core.Enums
 {
     public enum Item
     {
-        Damage,
+        DoubleDamage,
+        HalfDamage,
         Heal,
-        Trap
+        TakeDamage,
+        FreezeSelf,
+        FreezeOther
     }
 }

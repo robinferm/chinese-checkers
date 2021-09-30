@@ -40,6 +40,10 @@ namespace chinese_checkers.Core.Models
 
         public List<Location> GetAvailableMoves(Piece piece)
         {
+            if (piece.Items.Contains(Item.FreezeSelf))
+            {
+                return new List<Location>();
+            }
             var availableMoves = CalculateAvailableMoves(piece.Point);
             availableMoves.RemoveAt(0);
             return availableMoves;
@@ -240,8 +244,9 @@ namespace chinese_checkers.Core.Models
             if (freeHomeLocations.Count > 0)
             {
                 Random rnd = new Random();
-                MovePiece(freeHomeLocations[rnd.Next(freeHomeLocations.Count)], piece);
-                piece = new Piece(piece.Id, piece.Point, piece.NestColor);
+                MovePiece(freeHomeLocations[rnd.Next(freeHomeLocations.Count)], Pieces[piece.Id]);
+                Pieces[piece.Id].Reset();
+
             }
             else
             {
