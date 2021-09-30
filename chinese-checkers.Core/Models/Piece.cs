@@ -63,7 +63,7 @@ namespace chinese_checkers.Core.Models
             this.Health += healAmount;
             if (Health > _maxHealth)
             {
-                healAmount = _maxHealth;
+                this.Health = _maxHealth;
             }
         }
 
