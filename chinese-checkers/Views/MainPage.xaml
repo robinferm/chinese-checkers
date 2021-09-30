@@ -3,10 +3,21 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml" xmlns:data="using:chinese_checkers.Core.Models"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml" xmlns:data="using:chinese_checkers.Core.Models" xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core" xmlns:Media="using:Microsoft.Xaml.Interactions.Media"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <Storyboard x:Name="FadeAway">
+            <DoubleAnimation Storyboard.TargetName="Tbk"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
+                             From="0" To="10" Duration="0:0:2">
+
+            </DoubleAnimation>
+        </Storyboard>
+    </Page.Resources>
 
     <!--<Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
         <Grid.RowDefinitions>
@@ -23,10 +34,26 @@
             <ImageBrush ImageSource="ms-appx:///Assets/Images/splash.png"></ImageBrush>
         </Grid.Background>
         <canvas:CanvasAnimatedControl x:Name="canvas" Draw="canvas_Draw" CreateResources="canvas_CreateResources" PointerPressed="canvas_PointerPressed" PointerMoved="canvas_PointerMoved" Update="canvas_Update"/>
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Vertical">
-            <!--<TextBlock DataContext="{x:Bind gs.Players}" Text="{Binding Path=Placement, Mode=TwoWay}"/>-->
-            <!--<GridView x:Name="gridView" ItemsSource="{x:Bind gs.Players}" DisplayMemberPath="Id"/>-->
 
+
+
+        <!--<TextBox x:Name="textBox">
+            <Interactivity:Interaction.Behaviors>
+                <Core:EventTriggerBehavior EventName="TextChanged">
+                    <Media:ControlStoryboardAction Storyboard="{StaticResource FadeAway}"/>
+                </Core:EventTriggerBehavior>
+            </Interactivity:Interaction.Behaviors>
+        </TextBox>-->
+
+
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Vertical">
+            <!--<TextBlock DataContext="{x:Bind gs.Players}" Text="{Binding Path=Placement, Mode=TwoWay}"/>
+            <GridView x:Name="gridView" ItemsSource="{x:Bind gs.Players}" DisplayMemberPath="Id"/>-->
+
+
+
+            <!--<Button x:Name="testbutton1" Click="testbutton1_Click">test</Button>
             <StackPanel Orientation="Horizontal" Spacing="25">
                 <TextBlock FontSize="25">Player</TextBlock>
                 <TextBlock FontSize="25">Score</TextBlock>
@@ -34,29 +61,48 @@
             </StackPanel>
 
 
-            
-            <GridView ItemsSource="{x:Bind gs.Players}">
+
+            <GridView ItemsSource="{x:Bind gs.Players}"> 
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapGrid Orientation="Vertical"/>
+                        <WrapGrid Orientation="Vertical">
+                            <WrapGrid.ChildrenTransitions>
+                                --><!-- Apply a ReorderThemeTransition that will run when child elements are reordered. --><!--
+                                <TransitionCollection>
+                                    <ReorderThemeTransition/>
+                                </TransitionCollection>
+                            </WrapGrid.ChildrenTransitions>
+                        </WrapGrid>
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="data:Player">
-                        <Grid>
+                        <Grid x:Name="scoreGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="125"/>
                                 <ColumnDefinition Width="125"/>
                                 <ColumnDefinition Width="125"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" FontSize="17" Text="{Binding NestColor}"></TextBlock>
-                            <TextBlock Grid.Column="1" FontSize="17" Text="{Binding Score, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                            
+                            <TextBlock x:Name="Tbk" Grid.Column="0" FontSize="17" Text="{Binding NestColor}"></TextBlock>
+                            <TextBlock Grid.Column="1" FontSize="17" Text="{Binding Score, UpdateSourceTrigger=PropertyChanged}" >
+                                <Interactivity:Interaction.Behaviors>
+                                <Core:EventTriggerBehavior EventName="SelectionChanged">
+                                    <Core:CallMethodAction MethodName="test"></Core:CallMethodAction>
+                                    <Media:ControlStoryboardAction Storyboard="{StaticResource FadeAway}"/>
+                                </Core:EventTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                            </TextBlock>
                             <TextBlock Grid.Column="2" FontSize="17" Text="{Binding Placement, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                         </Grid>
 
                     </DataTemplate>
                 </GridView.ItemTemplate>
-            </GridView>
+            </GridView>-->
+
+
+
+
         </StackPanel>
         <Button x:Name="optionsButtonGame" VerticalAlignment="Bottom" Width="50" Height="50" Click="optionsButtonGame_Click">
             <Image Source="ms-appx:///Assets/Images/splash.png"/>
