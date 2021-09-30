@@ -37,8 +37,8 @@ namespace chinese_checkers.Core.Models
         public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
         {
             this.Players = new List<Player>();
-            //this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
-            this.Players.Add(new Player(0, NestColor.Green));
+            this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
+            //this.Players.Add(new Player(0, NestColor.Green));
             //this.PlayerScore = new Dictionary<Player, int>();
             this.GoalColor = new Dictionary<NestColor, NestColor>()
             {
@@ -210,12 +210,20 @@ namespace chinese_checkers.Core.Models
                         {
                             //movingPiece.Items.Add(currentLocation.ItemId.Value);
                             this.Board.Pieces[movingPiece.Id].PickUpItem(currentLocation.ItemId.Value);
-                            currentLocation.ItemId = null;
                             if (this.Board.Pieces[movingPiece.Id].Health < 1)
                             {
                                 Board.RespawnPiece(movingPiece);
                             }
-                            
+                            if (currentLocation.ItemId == Item.FreezeSelf)
+                            {
+                                this.Board.MovePiece(currentLocation, movingPiece);
+                                this.AnimatedPiece = new Vector2(-5000, -5000);
+                                Board.Pieces[movingPiece.Id].ToggleHidden();
+                                this.Path = null;
+
+                                ChangeTurn();
+                            }
+                            currentLocation.ItemId = null;
                         }
                         counter++;
                     }

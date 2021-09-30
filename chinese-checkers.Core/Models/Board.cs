@@ -40,6 +40,10 @@ namespace chinese_checkers.Core.Models
 
         public List<Location> GetAvailableMoves(Piece piece)
         {
+            if (piece.Items.Contains(Item.FreezeSelf))
+            {
+                return new List<Location>();
+            }
             var availableMoves = CalculateAvailableMoves(piece.Point);
             availableMoves.RemoveAt(0);
             return availableMoves;

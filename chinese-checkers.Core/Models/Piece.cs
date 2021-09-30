@@ -22,7 +22,7 @@ namespace chinese_checkers.Core.Models
 
         public Piece(int id, Point point, NestColor nestColor)
         {
-            _maxHealth = 8;
+            _maxHealth = 10;
             this.Id = id;
             this.Point = point;
             this.NestColor = nestColor;
@@ -47,7 +47,7 @@ namespace chinese_checkers.Core.Models
                     Heal(_maxHealth / 2);
                     break;
                 case Item.TakeDamage:
-                    Health -= 1;
+                    Health -= 4;
                     break;
                 case Item.FreezeSelf:
                     break;

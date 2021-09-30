@@ -20,7 +20,12 @@ namespace chinese_checkers.Core.Models
 
         public void UseAbility(Board board, Location location)
         {
-            board.Pieces.Find(x => x.Point == location.Point).Health -= 1;
+            var targetPiece = board.Pieces.Find(x => x.Point == location.Point);
+            targetPiece.Health -= 10;
+            if (targetPiece.Health < 1)
+            {
+                board.RespawnPiece(targetPiece);
+            }
         }
     }
 }
