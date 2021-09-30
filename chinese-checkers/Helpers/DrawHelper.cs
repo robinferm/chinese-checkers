@@ -66,7 +66,7 @@ namespace chinese_checkers.Helpers
                         //args.DrawingSession.DrawText(L.Point.X.ToString() + ", " + L.Point.Y, x, y, Colors.Black);
                         if (L.ItemId != null)
                         {
-                            args.DrawingSession.DrawImage(ScalingHelper.Img(mysteriousPosition), x+5, y+5);
+                            args.DrawingSession.DrawImage(ScalingHelper.Img(mysteriousPosition), x, y);
                         }
                         break;
 
