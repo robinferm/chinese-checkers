@@ -207,7 +207,7 @@ namespace chinese_checkers.Helpers
                 }
             }
         }
-
+            
         public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Vector2 vector, CanvasBitmap pieceImageRed)
         {
             //vector.X = ((vector.X + 4) * ScalingHelper.ScalingValue + (vector.Y * (ScalingHelper.ScalingValue / 2)));
@@ -218,24 +218,13 @@ namespace chinese_checkers.Helpers
             args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), vector.X, vector.Y);
         }
 
-        public static void DrawScoreBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Player> players)
+        public static void DrawScoreBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, ScoreBoard scoreBoard)
         {
-            var ordered = players.OrderBy(x => x.Placement).ToList();
-
-            var rowspacing = 0;
-
-            // Headers
-            args.DrawingSession.DrawText("Player", new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600, 300f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 20 });
-            args.DrawingSession.DrawText("Score", new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600 + 100, 300f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 20 });
-            args.DrawingSession.DrawText("Placement", new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600 + 200, 300f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 20 });
-
-            // Values
-            foreach (var p in ordered)
+            args.DrawingSession.FillRectangle(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 350, ((ScalingHelper.DesginHeight * ScalingHelper.ScaleHeight) / 2 + 30 * scoreBoard.ScoreBoardEntries.First().Position) - 25, 350, scoreBoard.ScoreBoardEntries.Last().Position * 30 + 70, Windows.UI.Color.FromArgb((byte)50, (byte)255, (byte)255, (byte)255));
+            foreach (var item in scoreBoard.ScoreBoardEntries)
             {
-                args.DrawingSession.DrawText(p.NestColor.ToString(), new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600, 340f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 15 });
-                args.DrawingSession.DrawText(p.Score.ToString(), new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600 + 100, 340f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 15 });
-                args.DrawingSession.DrawText(p.Placement.ToString(), new Vector2(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 600 + 200, 340f + rowspacing), Colors.White, new CanvasTextFormat() { FontSize = 15 });
-                rowspacing += 30;
+                var color = Colors.White;
+                args.DrawingSession.DrawText(item.Player.ToString(), ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 320, (ScalingHelper.DesginHeight * ScalingHelper.ScaleHeight) / 2 + 30 * item.Position, color, new CanvasTextFormat() { FontSize = 20, FontFamily = "Bookman Old Style" });
             }
         }
 

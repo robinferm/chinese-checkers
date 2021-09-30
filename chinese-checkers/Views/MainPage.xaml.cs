@@ -24,6 +24,8 @@ using System.ComponentModel;
 using Windows.ApplicationModel.Core;
 using chinese_checkers.Views.Menu;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media;
 
 namespace chinese_checkers.Views
 {
@@ -100,8 +102,9 @@ namespace chinese_checkers.Views
 
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
+            gs.AnimateScoreBoard();
             gs.AnimateAbility();
-            UpdateScore();
+            //UpdateScore();
             gs.AnimateMove();
         }
 
@@ -117,7 +120,6 @@ namespace chinese_checkers.Views
         {
             this.Frame.Navigate(typeof(Options));
         }
-
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
@@ -172,9 +174,11 @@ namespace chinese_checkers.Views
             DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility);
             //DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
 
-            if (ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth > 1200)
+
+            
+            if (ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth > 1200) // Hide scoreboard if window gets too small
             {
-                DrawHelper.DrawScoreBoard(sender, args, gs.Players);
+                DrawHelper.DrawScoreBoard(sender, args, gs.ScoreBoard);
             }
 
         }
@@ -305,7 +309,6 @@ namespace chinese_checkers.Views
                 {
                     mouseover = L;
                     break;
-                    //Debug.WriteLine(mouseover.Point);
                 }
                 else
                 {

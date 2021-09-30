@@ -24,7 +24,7 @@ namespace chinese_checkers.Core.Models
             this.Id = id;
             this.Point = point;
             this.NestColor = nestColor;
-            this.Health = 2;
+            this.Health = 20;
             this.Damage = 1;
             this.Hidden = false;
         }
