@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -25,33 +26,31 @@ namespace chinese_checkers.Views.Menu
     /// </summary>
     public sealed partial class Options : Page, INotifyPropertyChanged
     {
-        private double _test;
-        public double test
+        private double _speed;
+        public double Speed
         {
-            get { return _test; }
+            get { return _speed; }
             set
             {
-                _test = value;
+                _speed = value;
                 OnPropertyChanged();
             }
         }
         public Options()
         {
-            this.DataContext = this;
-            test = AnimationHelper.FrameTime;
-            this.InitializeComponent();
+            Speed = AnimationHelper.FrameTime;
+            InitializeComponent();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        private void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-            //this.Frame.Navigate(typeof(MainMenu));
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame.CanGoBack)
             {
@@ -62,7 +61,12 @@ namespace chinese_checkers.Views.Menu
         private void speedSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             Slider slider = (Slider)sender;
-            AnimationHelper.FrameTime = 60 / slider.Value;
+            AnimationHelper.FrameTime = slider.Value;
+        }
+
+        private void defaultSpeedButton_Click(object sender, RoutedEventArgs e)
+        {
+            Speed = 24;
         }
     }
 }

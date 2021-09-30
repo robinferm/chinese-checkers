@@ -107,6 +107,7 @@ namespace chinese_checkers.Views
             gs.AnimateAbility();
             //UpdateScore();
             gs.AnimateMove();
+            //Debug.WriteLine(AnimationHelper.FrameTime);
         }
 
         public async void UpdateScore()

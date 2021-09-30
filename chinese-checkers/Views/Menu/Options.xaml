@@ -9,13 +9,23 @@
     <Page.Background>
         <ImageBrush ImageSource="ms-appx:///Assets/Images/splash.png"></ImageBrush>
     </Page.Background>
-
     <Viewbox>
-        <Grid>
+        <Grid Margin="10">
             <StackPanel>
-                <TextBlock>Options</TextBlock>
-                <Slider x:Name="speedSlider" Header="Speed" Width="200" ValueChanged="speedSlider_ValueChanged" Value="{x:Bind test, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DataContext="Animation" TickFrequency="2" Minimum="1" Maximum="20" SnapsTo="Ticks"/>
-                <Button x:Name="backButton" Click="backButton_Click" FontSize="20" HorizontalAlignment="Center">Back</Button>
+                <TextBlock FontSize="10">Options</TextBlock>
+                <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="10">Move speed</TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" FontSize="8" Margin="10,0,0,0">Faster</TextBlock>
+                    <TextBlock Grid.Column="2" FontSize="8" Margin="0,0,10,0">Slower</TextBlock>
+                </Grid>
+                <Slider x:Name="speedSlider" Width="170" ValueChanged="speedSlider_ValueChanged" Value="{x:Bind Speed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <Button x:Name="defaultSpeedButton" Click="defaultSpeedButton_Click" HorizontalAlignment="Center" Margin="0,0,0,80" FontSize="8">Default</Button>
+                <Button x:Name="backButton" Click="backButton_Click" FontSize="10" HorizontalAlignment="Center" Margin="0,0,0,10">Back</Button>
             </StackPanel>
         </Grid>
     </Viewbox>
