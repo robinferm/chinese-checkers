@@ -135,7 +135,7 @@ namespace chinese_checkers.Views
             DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
             args.DrawingSession.DrawText(((int)currentPoint.X).ToString() + ", " + ((int)currentPoint.Y).ToString(), 0, 0, Colors.Black);
 
-            if (gs.CurrentlyPlaying.Paths != null)
+            if (gs.CurrentlyPlaying.Paths != null && DebugHelper.DebugEnabled)
             {
                 DrawHelper.DrawPaths(sender, args, gs.CurrentlyPlaying.Paths, mouseover);
             }
