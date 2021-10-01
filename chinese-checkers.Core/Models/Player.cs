@@ -148,5 +148,10 @@ namespace chinese_checkers.Core.Models
                     return null;
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0}\t\t   {1}\t{2}", NestColor, Score, Placement);
+        }
     }
 }

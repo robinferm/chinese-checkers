@@ -33,6 +33,7 @@ namespace chinese_checkers.Core.Models
         public LinkedList<Point> Path { get; set; }
 
         private int counter = 0;
+        public ScoreBoard ScoreBoard { get; set; }
 
         public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
         {
@@ -97,6 +98,7 @@ namespace chinese_checkers.Core.Models
             this.CurrentlyPlaying = Players.First();
             this.AnimatedPiece = new Vector2(-5000, -5000);
             this.AnimatedAbility = new List<Vector2>();
+            ScoreBoard = new ScoreBoard(Players);
         }
 
 
@@ -132,6 +134,8 @@ namespace chinese_checkers.Core.Models
 
         public void ChangeTurn()
         {
+            CheckForWin();
+            ScoreBoard.UpdateDestinations(Players);
             this.CurrentlyPlaying.DeSelectAbility();
             this.CurrentlyPlaying.DeSelectPiece();
 
@@ -145,7 +149,6 @@ namespace chinese_checkers.Core.Models
             if (this.CurrentlyPlaying.Placement == null)
             {
 
-                Debug.WriteLine(nextPlayer.Placement.ToString());
                 //CheckForWin();
 
                 if (this.CurrentlyPlaying.IsAI)
@@ -268,6 +271,17 @@ namespace chinese_checkers.Core.Models
 
         }
 
+        public void AnimateScoreBoard()
+        {
+            if (counter < AnimationHelper.FrameTime)
+            {
+                foreach (var entry in ScoreBoard.ScoreBoardEntries)
+                {
+                    entry.Position = AnimationHelper.MoveScoreEntry(entry.Position, entry.Destination);
+                }
+            }
+        }
+
         public void MovePieceWithAnimation(Location L)
         {
             if (this.AnimatedPiece.X == -5000)
@@ -289,7 +303,7 @@ namespace chinese_checkers.Core.Models
 
         public void MovePieceAI()
         {
-            Thread.Sleep(100);
+            //Thread.Sleep(100);
 
             // Make move automatically
             var pieces = Board.Pieces.Where(x => x.NestColor == this.CurrentlyPlaying.NestColor);
