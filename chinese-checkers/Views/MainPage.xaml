@@ -104,8 +104,9 @@
 
 
         </StackPanel>
-        <Button x:Name="optionsButtonGame" VerticalAlignment="Bottom" Width="50" Height="50" Click="optionsButtonGame_Click">
-            <Image Source="ms-appx:///Assets/Images/splash.png"/>
+        <Button x:Name="optionsButtonGame" VerticalAlignment="Bottom" Width="50" Height="50" Click="optionsButtonGame_Click" Margin="10">
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;"/>
+            <!--<Image Source="ms-appx:///Assets/Images/splash.png"/>-->
         </Button>
     </Grid>
     <!--</Grid>-->
