@@ -9,12 +9,59 @@
     <Page.Background>
         <ImageBrush ImageSource="ms-appx:///Assets/Images/splash.png"></ImageBrush>
     </Page.Background>
-    <Viewbox>
-        <Grid>
-            <StackPanel>
-                <TextBlock>Help</TextBlock>
-                <Button x:Name="backButton" Click="backButton_Click" FontSize="20" HorizontalAlignment="Center">Back</Button>
+    <Grid>
+        <TextBlock FontSize="50" HorizontalAlignment="Center" Margin="0,20,0,0">Help</TextBlock>
+        <StackPanel VerticalAlignment="Center" Spacing="-130" Margin="80,0,0,0" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="100">
+                <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">General</TextBlock>
+                <StackPanel>
+                    <TextBlock TextWrapping="WrapWholeWords" Width="800" FontSize="20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lobortis risus ut congue aliquam. Curabitur ultrices ultrices nisi sit amet blandit. Sed quis est in eros posuere condimentum et et quam. Ut nibh quam, cursus vel vehicula a, iaculis a ligula. Maecenas at nulla in urna suscipit ornare.</TextBlock>
+                </StackPanel>
             </StackPanel>
-        </Grid>
-    </Viewbox>
+            <StackPanel Orientation="Horizontal" Margin="100">
+                <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">Characters</TextBlock>
+                <StackPanel Orientation="Horizontal" Width="800" Spacing="350">
+                    <StackPanel Spacing="10">
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+                            <Image Source="ms-appx:///Assets/Images/Characters/mage.png" Height="50" Width="50"/>
+                            <TextBlock>Mage</TextBlock>
+                            <Image Source="ms-appx:///Assets/Images/Abilities/fireball-ability.png" Height="30"/>
+                            <TextBlock>Fireball</TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+                            <Image Source="ms-appx:///Assets/Images/Characters/druid.png" Height="50" Width="50"/>
+                            <TextBlock>Druid</TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+                            <Image Source="ms-appx:///Assets/Images/Characters/warlock.png" Height="50" Width="50"/>
+                            <TextBlock>Warlock</TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Spacing="10">
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+                            <Image Source="ms-appx:///Assets/Images/Characters/warrior.png" Height="50" Width="50"/>
+                            <TextBlock>Warrior</TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+                            <Image Source="ms-appx:///Assets/Images/Characters/hunter.png" Height="50" Width="50"/>
+                            <TextBlock>Hunter</TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+                            <Image Source="ms-appx:///Assets/Images/Characters/priest.png" Height="50" Width="50"/>
+                            <TextBlock>Priest</TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="100">
+                <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">Items</TextBlock>
+                <StackPanel>
+                    <Image Source="ms-appx:///Assets/Images/Icon/mysterious.png" Height="50" Width="50"/>
+                    <TextBlock TextWrapping="WrapWholeWords" Width="800" FontSize="20">Double damage, half damage, take damage, heal, freeze</TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <Button x:Name="backButton" Click="backButton_Click" FontSize="50" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Bottom">Back</Button>
+    </Grid>
 </Page>
