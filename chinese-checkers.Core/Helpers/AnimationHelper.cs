@@ -7,7 +7,7 @@ using System.Text;
 namespace chinese_checkers.Core.Helpers {
     public static class AnimationHelper {
 
-        public static double FrameTime { get; set; } = 60 / 10;
+        public static double FrameTime { get; set; } = 24;
       
         public static Vector2 MovePiece(Point start, Vector2 current, Point target)
         {
