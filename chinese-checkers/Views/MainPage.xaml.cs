@@ -125,11 +125,10 @@ namespace chinese_checkers.Views
 
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            if (gs.CurrentlyPlaying.selectedPiece != null)
+            var selPiece = gs.CurrentlyPlaying.selectedPiece;
+            if (selPiece != null)
             {
-                var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
-                args.DrawingSession.DrawText(gs.CurrentlyPlaying.selectedPiece.Id.ToString(), 0, 40, Colors.Black);
-
+                args.DrawingSession.DrawText(selPiece.Id.ToString(), 0, 40, Colors.Black);
             }
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow,mysteriousPosition);
             DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow);
@@ -235,17 +234,23 @@ namespace chinese_checkers.Views
 
             foreach (var L in locations)
             {
-                //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
-                //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
+                // Get Locations graphical position
                 var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
                 var y = ScalingHelper.CalculateY(L.Point.Y);
                 // If click is on a Location
                 if (pos.X >= x && pos.X <= x + (64 * ScalingHelper.ScaleXY) && pos.Y >= y && pos.Y <= y + (64 * ScalingHelper.ScaleXY))
                 {
+                    // If ability is seleceted
+                    if (gs.CurrentlyPlaying.AbilitySelected)
+                    {
+                        if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
+                        {
+                            gs.UseCharacterAbilityWithAnimation(L);
+                        }
+                    }
                     // If a piece is selected
                     if (gs.CurrentlyPlaying.selectedPiece != null)
                     {
-                        //var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
                         // If location is free, then move piece
                         if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
                         {
@@ -258,7 +263,7 @@ namespace chinese_checkers.Views
                             canvas_PointerPressed(sender, e);
                         }
                     }
-                    // If a piece is not selected
+                    // If a piece or ability is not selected
                     else
                     {
                         // If clicked location has a piece
@@ -272,21 +277,13 @@ namespace chinese_checkers.Views
                                     gs.CurrentlyPlaying.SelectPiece(L, gs.Board);
                                     break;
                                 }
-
                             }
-                        }
-                    }
-                    // If ability is seleceted
-                    if (gs.CurrentlyPlaying.AbilitySelected)
-                    {
-                        if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
-                        {
-                            gs.UseCharacterAbilityWithAnimation(L);
                         }
                     }
                 }
             }
             Vector2 ownAbility = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
+            // If click is on players ability
             if (pos.X > ownAbility.X && pos.X < ownAbility.X + (128 * .5f * ScalingHelper.ScaleXY) && pos.Y > ownAbility.Y && pos.Y < ownAbility.Y + (128 * .5f * ScalingHelper.ScaleXY))
             {
                 if (!gs.CurrentlyPlaying.IsAI && gs.AnimatedPiece.X == -5000)
@@ -296,6 +293,13 @@ namespace chinese_checkers.Views
                     {
                         gs.UseCharacterAbilityWithAnimation();
                     }
+                }
+            }
+            else
+            {
+                if (gs.CurrentlyPlaying.AbilitySelected)
+                {
+                    gs.CurrentlyPlaying.DeSelectAbility();
                 }
             }
         }
