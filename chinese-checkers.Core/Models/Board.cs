@@ -40,7 +40,7 @@ namespace chinese_checkers.Core.Models
 
         public List<Location> GetAvailableMoves(Piece piece)
         {
-            if (piece.Items.Contains(Item.FreezeSelf))
+            if (piece.Buff == Item.FreezeSelf)
             {
                 return new List<Location>();
             }

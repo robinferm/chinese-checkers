@@ -186,7 +186,8 @@ namespace chinese_checkers.Core.Models
                             this.AnimatedPiece = new Vector2(-5000, -5000);
                             Board.Pieces.Find(x => x.Point == this.Path.Last.Value).ToggleHidden();
                             this.Path = null;
-
+                            CurrentlyPlaying.DeSelectPiece();
+                            CurrentlyPlaying.DeSelectAbility();
                             ChangeTurn();
                         }
                     }
@@ -194,21 +195,36 @@ namespace chinese_checkers.Core.Models
                     {
                         var currentLocation = this.Board.Locations.Find(x => x.Point == selectedNode.Next.Value);
                         var movingPiece = Board.Pieces.Find(x => x.Point == this.Path.Last.Value);
+                        // If there is a piece underneath selected piece during animation
                         if (currentLocation.PieceId != null)
                         {
                             var currentLocationPiece = this.Board.Pieces.Find(x => x.Id == currentLocation.PieceId);
+                            // If piece underneath does not have same nest color
                             if (movingPiece.NestColor != currentLocationPiece.NestColor)
                             {
                                 currentLocationPiece.Health -= movingPiece.Damage;
+                                if (currentLocationPiece.Thorns)
+                                {
+                                    movingPiece.Health -= 8;
+                                    if (movingPiece.Health < 1)
+                                    {
+                                        Board.RespawnPiece(movingPiece);
+                                        this.AnimatedPiece = new Vector2(-5000, -5000);
+                                        this.Path = null;
+
+                                        ChangeTurn();
+                                    }
+                                }
                                 if (currentLocationPiece.Health < 1)
                                 {
                                     Board.RespawnPiece(currentLocationPiece);
                                 }
+                                
                             }
                         }
+                        // If there is an item on the location (pickup)
                         if (currentLocation.ItemId != null)
                         {
-                            //movingPiece.Items.Add(currentLocation.ItemId.Value);
                             this.Board.Pieces[movingPiece.Id].PickUpItem(currentLocation.ItemId.Value);
                             if (this.Board.Pieces[movingPiece.Id].Health < 1)
                             {
@@ -224,6 +240,18 @@ namespace chinese_checkers.Core.Models
                                 ChangeTurn();
                             }
                             currentLocation.ItemId = null;
+                        }
+                        if (movingPiece.Cursed)
+                        {
+                            movingPiece.Health -= 2;
+                            if (movingPiece.Health < 1)
+                            {
+                                Board.RespawnPiece(movingPiece);
+                                this.AnimatedPiece = new Vector2(-5000, -5000);
+                                this.Path = null;
+
+                                ChangeTurn();
+                            }
                         }
                         counter++;
                     }
