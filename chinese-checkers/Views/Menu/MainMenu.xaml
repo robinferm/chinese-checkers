@@ -17,6 +17,7 @@
                 <Button x:Name="startButton" HorizontalAlignment="Stretch" Click="startButton_Click">Start Game</Button>
                 <Button x:Name="optionsButton" HorizontalAlignment="Stretch" Click="optionsButton_Click">Options</Button>
                 <Button x:Name="helpButton" HorizontalAlignment="Stretch" Click="helpButton_Click">Help</Button>
+                <Button x:Name="aboutButton" HorizontalAlignment="Stretch" Click="aboutButton_Click">About</Button>
                 <Button x:Name="exitButton" HorizontalAlignment="Stretch" Click="exitButton_Click">Exit</Button>
             </StackPanel>
         </Grid>

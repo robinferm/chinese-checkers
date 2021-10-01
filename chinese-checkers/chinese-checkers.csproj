@@ -140,6 +140,9 @@
     <Compile Include="Activation\DefaultActivationHandler.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\Menu\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Menu\Dialogs\DruidInfoDialog.xaml.cs">
       <DependentUpon>DruidInfoDialog.xaml</DependentUpon>
     </Compile>
@@ -204,6 +207,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\TextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -288,6 +295,7 @@
     <Content Include="Assets\Images\Characters\priest.png" />
     <Content Include="Assets\Images\Characters\warlock.png" />
     <Content Include="Assets\Images\Characters\warrior.png" />
+    <Content Include="Assets\Images\GitHub-logo.png" />
     <Content Include="Assets\Images\Icon\heal.png" />
     <Content Include="Assets\Images\Icon\ItemDamage.png" />
     <Content Include="Assets\Images\Icon\mysterious.png" />

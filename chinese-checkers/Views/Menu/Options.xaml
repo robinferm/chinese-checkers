@@ -9,24 +9,46 @@
     <Page.Background>
         <ImageBrush ImageSource="ms-appx:///Assets/Images/splash.png"></ImageBrush>
     </Page.Background>
-    <Viewbox>
-        <Grid Margin="10">
-            <StackPanel>
-                <TextBlock FontSize="10">Options</TextBlock>
-                <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="10">Move speed</TextBlock>
-                <Grid>
+
+    <Grid>
+        <TextBlock FontSize="50" HorizontalAlignment="Center" Margin="0,20,0,0">Options</TextBlock>
+        <StackPanel VerticalAlignment="Center" Spacing="-30" Margin="80,0,0,0" HorizontalAlignment="Center" Width="800">
+            <StackPanel Orientation="Horizontal" Margin="100">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="30" Width="200">Sound</TextBlock>
+                <Grid Width="300">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" FontSize="8" Margin="10,0,0,0">Faster</TextBlock>
-                    <TextBlock Grid.Column="2" FontSize="8" Margin="0,0,10,0">Slower</TextBlock>
+
+                    <Slider Margin="0,0,30,0" VerticalAlignment="Center" Grid.ColumnSpan="2" x:Name="soundSlider" ValueChanged="soundSlider_ValueChanged" Value="{x:Bind Volume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Button VerticalAlignment="Center" Grid.Column="2"  x:Name="muteButton" Click="muteButton_Click" HorizontalAlignment="Center" FontSize="30">
+                        <FontIcon x:Name="volumeIcon" FontFamily="Segoe MDL2 Assets" Glyph="&#xe74f;"/>
+                    </Button>
                 </Grid>
-                <Slider x:Name="speedSlider" Width="170" ValueChanged="speedSlider_ValueChanged" Value="{x:Bind Speed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <Button x:Name="defaultSpeedButton" Click="defaultSpeedButton_Click" HorizontalAlignment="Center" Margin="0,0,0,80" FontSize="8">Default</Button>
-                <Button x:Name="backButton" Click="backButton_Click" FontSize="10" HorizontalAlignment="Center" Margin="0,0,0,10">Back</Button>
             </StackPanel>
-        </Grid>
-    </Viewbox>
+            <StackPanel Orientation="Horizontal" Margin="100">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="30" Width="200">Speed</TextBlock>
+                <Grid Width="345">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="12" Margin="0,0,0,0">Faster</TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="2" FontSize="12" Margin="0,0,30,0">Slower</TextBlock>
+                    <Slider Margin="0,0,30,0" VerticalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="3" x:Name="speedSlider" ValueChanged="speedSlider_ValueChanged" Value="{x:Bind Speed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Button VerticalAlignment="Center" Grid.Row="2" Grid.Column="3" x:Name="defaultSpeedButton" Click="defaultSpeedButton_Click" HorizontalAlignment="Center" FontSize="20">Default</Button>
+                </Grid>
+            </StackPanel>
+        <CheckBox x:Name="debugCheckbox" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,50">Debug Mode</CheckBox>
+        <Button x:Name="backButton" Click="backButton_Click" FontSize="30" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Bottom">Back</Button>
+        </StackPanel>
+    </Grid>
 </Page>
