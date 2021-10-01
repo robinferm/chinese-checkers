@@ -47,7 +47,7 @@
                     <Button VerticalAlignment="Center" Grid.Row="2" Grid.Column="3" x:Name="defaultSpeedButton" Click="defaultSpeedButton_Click" HorizontalAlignment="Center" FontSize="20">Default</Button>
                 </Grid>
             </StackPanel>
-        <CheckBox x:Name="debugCheckbox" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,50">Debug Mode</CheckBox>
+        <CheckBox x:Name="debugCheckbox" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,50" IsChecked="{x:Bind DebugEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Checked="debugCheckbox_Checked" Unchecked="debugCheckbox_Unchecked">Debug Mode</CheckBox>
         <Button x:Name="backButton" Click="backButton_Click" FontSize="30" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Bottom">Back</Button>
         </StackPanel>
     </Grid>

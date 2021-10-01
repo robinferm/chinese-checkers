@@ -1,4 +1,5 @@
 ﻿using chinese_checkers.Core.Helpers;
+using chinese_checkers.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,9 +27,20 @@ namespace chinese_checkers.Views.Menu
     /// </summary>
     public sealed partial class Options : Page, INotifyPropertyChanged
     {
+        private bool _debugEnabled;
         private double _speed;
         private double _volume;
         private bool _isMuted;
+
+        public bool DebugEnabled
+        {
+            get { return _debugEnabled; }
+            set
+            {
+                _debugEnabled = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool IsMuted
         {
@@ -63,6 +75,7 @@ namespace chinese_checkers.Views.Menu
             Speed = AnimationHelper.FrameTime;
             Volume = SoundHelper.Volume * 100;
             IsMuted = SoundHelper.mediaPlayer.IsMuted;
+            DebugEnabled = DebugHelper.DebugEnabled;
             InitializeComponent();
 
         }
@@ -145,6 +158,22 @@ namespace chinese_checkers.Views.Menu
                         break;
                 }
             }
+        }
+
+        private void debugCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            DebugHelper.DebugEnabled = true;
+            //Frame contentFrame = Window.Current.Content as Frame;
+            //MainPage mp = contentFrame.Content as MainPage;
+            //mp.DebugEnabled = true;
+        }
+
+        private void debugCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            DebugHelper.DebugEnabled = false;
+            //Frame contentFrame = Window.Current.Content as Frame;
+            //MainPage mp = contentFrame.Content as MainPage;
+            //mp.DebugEnabled = false;
         }
     }
 }
