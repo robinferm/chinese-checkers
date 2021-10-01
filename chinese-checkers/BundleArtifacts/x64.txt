@@ -1,0 +1,2 @@
+MainPackage=C:\Users\robin\source\repos\chinese-checkers\chinese-checkers\bin\x64\Release\chinese-checkers_1.0.1.0_x64.msix
+SymbolPackage=C:\Users\robin\source\repos\chinese-checkers\chinese-checkers\obj\x64\Release\Symbols\chinese-checkers_1.0.1.0_x64.appxsym
