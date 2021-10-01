@@ -8,6 +8,9 @@ using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Core;
+using chinese_checkers.Core.Helpers;
+using chinese_checkers;
+
 
 namespace chinese_checkers.Core.Models
 {
@@ -17,6 +20,15 @@ namespace chinese_checkers.Core.Models
         public bool IsAI { get; set; }
         public ICharacter Character { get; set; }
         public NestColor NestColor { get; set; }
+        public bool Highligh { get; set; }
+        
+        
+      
+        
+        
+         
+     
+        
         public bool AbilitySelected { get; private set; }
         private int? _placement;
         public int? Placement
@@ -29,6 +41,7 @@ namespace chinese_checkers.Core.Models
             {
                 _placement = value;
                 OnPropertyChanged("Placement");
+                
             }
         }
         public List<Location> AvailableMoves { get; set; }
@@ -52,6 +65,7 @@ namespace chinese_checkers.Core.Models
         // Player
         public Player(int id, ICharacter character, NestColor nestColor)
         {
+           // this.Highligh = true;
             this.Id = id;
             this.Character = character;
             this.NestColor = nestColor;
@@ -62,6 +76,8 @@ namespace chinese_checkers.Core.Models
         // AI
         public Player(int id, NestColor nestColor)
         {
+           // this.Highligh = true;
+
             this.Id = id;
             this.IsAI = true;
             this.NestColor = nestColor;
@@ -75,9 +91,14 @@ namespace chinese_checkers.Core.Models
         {
             if (PropertyChanged != null)
             {
+                
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
+
+
+      
+
 
         public void SelectPiece(Location L, Board board)
         {
@@ -89,6 +110,7 @@ namespace chinese_checkers.Core.Models
 
         public void DeSelectPiece()
         {
+            
             selectedPiece = null;
             Paths = null;
             this.AvailableMoves = new List<Location>();
@@ -96,6 +118,7 @@ namespace chinese_checkers.Core.Models
 
         public void SelectAbility(Board board)
         {
+            
             DeSelectPiece();
             this.AbilitySelected = true;
             this.AvailableMoves = this.Character.UsableLocations(board, this);
@@ -118,6 +141,7 @@ namespace chinese_checkers.Core.Models
             //        break;
             //}
             Character.UseAbility(board, location);
+            
             //ChangeTurn();
         }
 

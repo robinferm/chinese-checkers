@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
+using project = chinese_checkers;
+
 namespace chinese_checkers.Core.Models
 {
     /// <summary>
@@ -31,7 +33,9 @@ namespace chinese_checkers.Core.Models
         public List<Vector2> AnimatedAbility { get; set; }
         public LinkedListNode<Point> selectedNode { get; set; }
         public LinkedList<Point> Path { get; set; }
-
+       
+       
+      
         private int counter = 0;
 
         public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
@@ -102,6 +106,7 @@ namespace chinese_checkers.Core.Models
 
         public void CheckForWin()
         {
+           
             // Clears score in dictionary
             this.Players.ForEach(x => x.Score = 0);
             foreach (var P in Board.Pieces)
@@ -111,6 +116,7 @@ namespace chinese_checkers.Core.Models
                 if (pieceLocation.NestColor == goal)
                 {
                     var player = Players.Find(x => x.NestColor == P.NestColor);
+                    
                     player.Score++;
                 }
 
@@ -130,18 +136,24 @@ namespace chinese_checkers.Core.Models
             }
         }
 
+       
+
         public void ChangeTurn()
         {
+            CurrentlyPlaying.Highligh = false;
             this.CurrentlyPlaying.DeSelectAbility();
-            this.CurrentlyPlaying.DeSelectPiece();
+            this.CurrentlyPlaying.DeSelectPiece(); 
 
             var nextPlayer = this.Players.FirstOrDefault(x => x.Id == CurrentlyPlaying.Id + 1);
             if (nextPlayer == null)
             {
                 nextPlayer = this.Players.First();
+               
             }
             this.CurrentlyPlaying = nextPlayer;
-
+           
+            this.CurrentlyPlaying.Highligh = true;
+                        
             if (this.CurrentlyPlaying.Placement == null)
             {
 
@@ -156,7 +168,9 @@ namespace chinese_checkers.Core.Models
             else
             {
 
+               
                 ChangeTurn();
+                
             }
         }
 
@@ -186,8 +200,9 @@ namespace chinese_checkers.Core.Models
                             this.AnimatedPiece = new Vector2(-5000, -5000);
                             Board.Pieces.Find(x => x.Point == this.Path.Last.Value).ToggleHidden();
                             this.Path = null;
-
+                           
                             ChangeTurn();
+                           
                         }
                     }
                     else if (counter == AnimationHelper.FrameTime)
@@ -220,7 +235,7 @@ namespace chinese_checkers.Core.Models
                                 this.AnimatedPiece = new Vector2(-5000, -5000);
                                 Board.Pieces[movingPiece.Id].ToggleHidden();
                                 this.Path = null;
-
+                            
                                 ChangeTurn();
                             }
                             currentLocation.ItemId = null;
@@ -274,7 +289,7 @@ namespace chinese_checkers.Core.Models
                 var moves = Board.GetAvailableMoves(P);
                 if (moves.Count > 0)
                 {
-                    availableMoves.Add(P, moves);
+                    availableMoves.Add(P, moves); 
                 }
             }
 

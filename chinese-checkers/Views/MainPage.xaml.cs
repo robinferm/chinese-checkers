@@ -30,8 +30,10 @@ namespace chinese_checkers.Views
     public sealed partial class MainPage : Page
     {
         public MainViewModel ViewModel { get; } = new MainViewModel();
+      //  public DrawHelper CharacterTurn { get; set; }
 
         GameSession gs;
+        CanvasBitmap highlightCharacter;
         CanvasBitmap locationImage;
         CanvasBitmap locationImageRed;
         CanvasBitmap locationImageGreen;
@@ -51,10 +53,12 @@ namespace chinese_checkers.Views
         // Temp - Get this from main menu
         List<Location> locations = LocationHelper.CreateLocations();
         public ICharacter PlayerCharacter { get; set; }
+        public Player Player { get; set; }
         public int NumberOfAI { get; set; }
 
         public MainPage()
         {
+           
             characterFrames = new Dictionary<string, CanvasBitmap>();
             characterAbility = new Dictionary<string, CanvasBitmap>();
             InitializeComponent();
@@ -62,12 +66,15 @@ namespace chinese_checkers.Views
             canvas.IsFixedTimeStep = true;
             ScalingHelper.SetScale();
             Window.Current.SizeChanged += Current_SizeChanged;
+            
+            
         }
 
         private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e)
         {
             ScalingHelper.SetScale();
         }
+        
 
         // This happens when pressing start game from the start game view
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -80,6 +87,7 @@ namespace chinese_checkers.Views
             if (gs == null)
             {
                 CreateGameSession();
+                
             }
 
             IsPaused = false;
@@ -90,6 +98,7 @@ namespace chinese_checkers.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+            
 
             IsPaused = true;
         }
@@ -97,6 +106,7 @@ namespace chinese_checkers.Views
         public void CreateGameSession()
         {
             gs = new GameSession(locations, NumberOfAI, PlayerCharacter);
+            gs.CurrentlyPlaying.Highligh = true;
         }
 
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
@@ -110,7 +120,7 @@ namespace chinese_checkers.Views
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                gs.CheckForWin();
+                gs.CheckForWin(); 
             });
         }
 
@@ -170,7 +180,15 @@ namespace chinese_checkers.Views
                 }
                 DrawHelper.DrawAnimationPiece(sender, args, gs.AnimatedPiece, img);
             }
-            DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility);
+            if (gs.CurrentlyPlaying.Highligh == true)
+            {
+                DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility, highlightCharacter,true);
+
+            }
+            else
+            {
+                DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility, highlightCharacter,false);
+            }
             //DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
 
         }
@@ -182,6 +200,7 @@ namespace chinese_checkers.Views
 
         async Task CreateResourcesAsync(CanvasAnimatedControl sender)
         {
+            highlightCharacter= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/highlight.png"));
             locationImage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/default.png"));
             locationImageRed = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/red.png"));
             locationImageGreen = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/green.png"));
@@ -244,6 +263,7 @@ namespace chinese_checkers.Views
                         else
                         {
                             gs.CurrentlyPlaying.DeSelectPiece();
+                            
                             canvas_PointerPressed(sender, e);
                         }
                     }
