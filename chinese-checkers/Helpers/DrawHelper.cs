@@ -137,7 +137,7 @@ namespace chinese_checkers.Helpers
                         if (player.Highligh == true)
                         {
                             isHighlighted = true;
-                            highlightPosition = new Vector2(ScalingHelper.CalculateX(12, -24) + (480* ScalingHelper.ScaleXY)+30, ScalingHelper.CalculateY(-4)-5);
+                            highlightPosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (90* ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-5));
                             framePosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-4));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (150 * ScalingHelper.ScaleXY) - (40 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-4) + (128 * .4f * ScalingHelper.ScaleXY));
 
@@ -152,7 +152,7 @@ namespace chinese_checkers.Helpers
                         if (player.Highligh == true)
                         {
                             isHighlighted = true;
-                            highlightPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue)-4, ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2)-4);
+                            highlightPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((120 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(-1) - (ScalingHelper.ScalingValue / 2));
                             framePosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
                         }
@@ -166,7 +166,7 @@ namespace chinese_checkers.Helpers
                         if (player.Highligh == true)
                         {
                             isHighlighted = true;
-                            highlightPosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((178 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue)-3, ScalingHelper.CalculateY(8)-4);
+                            highlightPosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((110 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(7));
                             framePosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(8));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(8) + (128 * .4f * ScalingHelper.ScaleXY));
                         }
@@ -180,7 +180,7 @@ namespace chinese_checkers.Helpers
                         if (player.Highligh == true)
                         {
                             isHighlighted = true;
-                            highlightPosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (163 * ScalingHelper.ScaleXY)-2, ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2)-5);
+                            highlightPosition = new Vector2(ScalingHelper.CalculateX(1, 9) - (190 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(11) - (ScalingHelper.ScalingValue/2));
                             framePosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (160 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
                         }
@@ -195,7 +195,7 @@ namespace chinese_checkers.Helpers
                         if (player.Highligh == true)
                         {
                             isHighlighted = true;
-                            highlightPosition = new Vector2(ScalingHelper.CalculateX(-4, 8) - (150 * ScalingHelper.ScaleXY)-4, ScalingHelper.CalculateY(8)-4);
+                            highlightPosition = new Vector2(ScalingHelper.CalculateX(-5, 8) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(7));
                             framePosition = new Vector2(ScalingHelper.CalculateX(-4, 8) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(8));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(-4, 8) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(8) + (128 * .4f * ScalingHelper.ScaleXY));
                         }
@@ -210,7 +210,7 @@ namespace chinese_checkers.Helpers
                         if (player.Highligh == true)
                         {
                             isHighlighted = true;
-                            highlightPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (150 * ScalingHelper.ScaleXY)-4, ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2)-4);
+                            highlightPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (210 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-1) - (ScalingHelper.ScalingValue / 2));
                             framePosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
                         }

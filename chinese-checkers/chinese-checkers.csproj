@@ -276,7 +276,6 @@
     <Content Include="Assets\Images\Abilities\volly-ability.png" />
     <Content Include="Assets\Images\Abilities\battleshout-ability.png" />
     <Content Include="Assets\Images\CharacterFrame\Druid-Frame.png" />
-    <Content Include="Assets\Images\CharacterFrame\f.png" />
     <Content Include="Assets\Images\CharacterFrame\highlight.png" />
     <Content Include="Assets\Images\CharacterFrame\Hunter-Frame.png" />
     <Content Include="Assets\Images\CharacterFrame\Mage-Frame.png" />

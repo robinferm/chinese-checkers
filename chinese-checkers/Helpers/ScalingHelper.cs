@@ -63,7 +63,7 @@ namespace chinese_checkers.Helpers
             float positioning = (x + 4) * ScalingValue + (y - 8) * (ScalingValue / 2);
             float centering = ((DesginWidth * ScaleWidth) - ((8 + 4) * ScalingValue + ((8 - 8) * (ScalingValue / 2))) - ScalingValue) / 2;
 
-            return positioning + 200 * ScaleXY;
+            return positioning +600 * ScaleXY;
         }
 
         public static float CalculateY(float y)
