@@ -26,6 +26,8 @@ using chinese_checkers.Views.Menu;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media;
+using Windows.UI.ViewManagement;
+using chinese_checkers.Views.Menu.Dialogs;
 
 namespace chinese_checkers.Views
 {
@@ -49,9 +51,6 @@ namespace chinese_checkers.Views
         Location mouseover = null;
 
         public bool IsPaused { get; set; } = false;
-
-        // Temp - Get this from main menu
-        List<Location> locations = LocationHelper.CreateLocations();
         public ICharacter PlayerCharacter { get; set; }
         public int NumberOfAI { get; set; }
 
@@ -98,7 +97,7 @@ namespace chinese_checkers.Views
 
         public void CreateGameSession()
         {
-            gs = new GameSession(locations, NumberOfAI, PlayerCharacter);
+            gs = new GameSession(NumberOfAI, PlayerCharacter);
         }
 
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
@@ -130,7 +129,7 @@ namespace chinese_checkers.Views
             {
                 args.DrawingSession.DrawText(selPiece.Id.ToString(), 0, 40, Colors.Black);
             }
-            DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow,mysteriousPosition);
+            DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow, mysteriousPosition);
             DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow);
             DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
             args.DrawingSession.DrawText(((int)currentPoint.X).ToString() + ", " + ((int)currentPoint.Y).ToString(), 0, 0, Colors.Black);
@@ -176,11 +175,29 @@ namespace chinese_checkers.Views
             //DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
 
 
-            
+
             if (ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth > 1200) // Hide scoreboard if window gets too small
             {
                 DrawHelper.DrawScoreBoard(sender, args, gs.ScoreBoard);
             }
+
+            if (gs.GameEnded)
+            {
+                sender.Paused = true;
+                GameEnded();
+            }
+        }
+
+        private async void GameEnded()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                var lastPlayer = gs.ScoreBoard.ScoreBoardEntries.Find(x => x.Player.Placement == null).Player;
+                lastPlayer.Placement = gs.ScoreBoard.ScoreBoardEntries.Count();
+
+                ContentDialog dialog = new GameEndedDialog(gs.ScoreBoard);
+                await dialog.ShowAsync();
+            });
 
         }
 
@@ -209,7 +226,7 @@ namespace chinese_checkers.Views
 
             mysteriousPosition = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/icon/mysterious.png"));
 
-            characterFrames.Add("Mage" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Mage-Frame.png")));
+            characterFrames.Add("Mage", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Mage-Frame.png")));
             characterAbility.Add("Mage", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/fireball-ability.png")));
 
             characterFrames.Add("Druid", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Druid-Frame.png")));
@@ -232,7 +249,7 @@ namespace chinese_checkers.Views
         {
             var pos = e.GetCurrentPoint(canvas).Position;
 
-            foreach (var L in locations)
+            foreach (var L in gs.locations)
             {
                 // Get Locations graphical position
                 var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
@@ -308,7 +325,7 @@ namespace chinese_checkers.Views
         {
             currentPoint = e.GetCurrentPoint(canvas).Position;
 
-            foreach (var L in locations)
+            foreach (var L in gs.locations)
             {
                 //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
                 //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
