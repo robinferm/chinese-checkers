@@ -14,14 +14,14 @@ namespace chinese_checkers.Core.Models
         public List<Location> UsableLocations(Board board, Player currentlyPlaying)
         {
             List<Piece> enemyPieces = board.Pieces.Where(x => x.NestColor != currentlyPlaying.NestColor).ToList();
-            List<Location> enemyPieceLocations = board.Locations.Where(x => enemyPieces.Find(z => z.Point == x.Point) != null).ToList();
+            List<Location> enemyPieceLocations = board.Locations.Where(x => enemyPieces.Find(z => z.Point == x.Point) != null && x.NestColor == null).ToList();
             return enemyPieceLocations;
         }
 
         public void UseAbility(Board board, Location location)
         {
             var targetPiece = board.Pieces.Find(x => x.Point == location.Point);
-            targetPiece.Health -= 10;
+            targetPiece.Health -= 60;
             if (targetPiece.Health < 1)
             {
                 board.RespawnPiece(targetPiece);

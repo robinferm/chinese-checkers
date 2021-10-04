@@ -1,7 +1,11 @@
-﻿using System;
+﻿using chinese_checkers.Core.Helpers;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -20,21 +24,49 @@ namespace chinese_checkers.Views.Menu
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Options : Page
+    public sealed partial class Options : Page, INotifyPropertyChanged
     {
+        private double _speed;
+        public double Speed
+        {
+            get { return _speed; }
+            set
+            {
+                _speed = value;
+                OnPropertyChanged();
+            }
+        }
         public Options()
         {
-            this.InitializeComponent();
+            Speed = AnimationHelper.FrameTime;
+            InitializeComponent();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-            //this.Frame.Navigate(typeof(MainMenu));
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame.CanGoBack)
             {
                 rootFrame.GoBack();
             }
+        }
+
+        private void speedSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            Slider slider = (Slider)sender;
+            AnimationHelper.FrameTime = slider.Value;
+        }
+
+        private void defaultSpeedButton_Click(object sender, RoutedEventArgs e)
+        {
+            Speed = 24;
         }
     }
 }

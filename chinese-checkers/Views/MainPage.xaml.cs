@@ -24,6 +24,8 @@ using System.ComponentModel;
 using Windows.ApplicationModel.Core;
 using chinese_checkers.Views.Menu;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media;
 
 namespace chinese_checkers.Views
 {
@@ -91,7 +93,7 @@ namespace chinese_checkers.Views
             }
 
             IsPaused = false;
-            
+
 
         }
 
@@ -111,9 +113,11 @@ namespace chinese_checkers.Views
 
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
         {
+            gs.AnimateScoreBoard();
             gs.AnimateAbility();
-            UpdateScore();
+            //UpdateScore();
             gs.AnimateMove();
+            //Debug.WriteLine(AnimationHelper.FrameTime);
         }
 
         public async void UpdateScore()
@@ -129,14 +133,12 @@ namespace chinese_checkers.Views
             this.Frame.Navigate(typeof(Options));
         }
 
-
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            if (gs.CurrentlyPlaying.selectedPiece != null)
+            var selPiece = gs.CurrentlyPlaying.selectedPiece;
+            if (selPiece != null)
             {
-                var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
-                args.DrawingSession.DrawText(gs.CurrentlyPlaying.selectedPiece.Id.ToString(), 0, 40, Colors.Black);
-
+                args.DrawingSession.DrawText(selPiece.Id.ToString(), 0, 40, Colors.Black);
             }
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow,mysteriousPosition);
             DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow);
@@ -191,6 +193,13 @@ namespace chinese_checkers.Views
             }
             //DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
 
+
+            
+            if (ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth > 1200) // Hide scoreboard if window gets too small
+            {
+                DrawHelper.DrawScoreBoard(sender, args, gs.ScoreBoard);
+            }
+
         }
 
         private void canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
@@ -216,24 +225,25 @@ namespace chinese_checkers.Views
             pieceImageWhite = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/white.png"));
             pieceImageYellow = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/yellow.png"));
 
-           mysteriousPosition = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/icon/mysterious.png"));
+
+            mysteriousPosition = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/icon/mysterious.png"));
 
             characterFrames.Add("Mage" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Mage-Frame.png")));
             characterAbility.Add("Mage", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/fireball-ability.png")));
 
-            characterFrames.Add("Druid" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Druid-Frame.png")));
+            characterFrames.Add("Druid", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Druid-Frame.png")));
             characterAbility.Add("Druid", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/druid-ability.png")));
 
-            characterFrames.Add("Hunter" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Hunter-Frame.png")));
+            characterFrames.Add("Hunter", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Hunter-Frame.png")));
             characterAbility.Add("Hunter", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/volly-ability.png")));
 
-            characterFrames.Add("Priest" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Priest-Frame.png")));
+            characterFrames.Add("Priest", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Priest-Frame.png")));
             characterAbility.Add("Priest", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/heal-ability.png")));
 
-            characterFrames.Add("Warlock" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warlock-Frame.png")));
+            characterFrames.Add("Warlock", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warlock-Frame.png")));
             characterAbility.Add("Warlock", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/curse-ability.png")));
 
-            characterFrames.Add("Warrior" ,await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warrior-Frame.png")));
+            characterFrames.Add("Warrior", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warrior-Frame.png")));
             characterAbility.Add("Warrior", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/battleshout-ability.png")));
         }
 
@@ -243,17 +253,23 @@ namespace chinese_checkers.Views
 
             foreach (var L in locations)
             {
-                //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
-                //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
+                // Get Locations graphical position
                 var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
                 var y = ScalingHelper.CalculateY(L.Point.Y);
                 // If click is on a Location
                 if (pos.X >= x && pos.X <= x + (64 * ScalingHelper.ScaleXY) && pos.Y >= y && pos.Y <= y + (64 * ScalingHelper.ScaleXY))
                 {
+                    // If ability is seleceted
+                    if (gs.CurrentlyPlaying.AbilitySelected)
+                    {
+                        if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
+                        {
+                            gs.UseCharacterAbilityWithAnimation(L);
+                        }
+                    }
                     // If a piece is selected
                     if (gs.CurrentlyPlaying.selectedPiece != null)
                     {
-                        //var availableMoves = gs.Board.GetAvailableMoves(gs.CurrentlyPlaying.selectedPiece);
                         // If location is free, then move piece
                         if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
                         {
@@ -267,7 +283,7 @@ namespace chinese_checkers.Views
                             canvas_PointerPressed(sender, e);
                         }
                     }
-                    // If a piece is not selected
+                    // If a piece or ability is not selected
                     else
                     {
                         // If clicked location has a piece
@@ -281,22 +297,14 @@ namespace chinese_checkers.Views
                                     gs.CurrentlyPlaying.SelectPiece(L, gs.Board);
                                     break;
                                 }
-
                             }
-                        }
-                    }
-                    // If ability is seleceted
-                    if (gs.CurrentlyPlaying.AbilitySelected)
-                    {
-                        if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
-                        {
-                            gs.UseCharacterAbilityWithAnimation(L);
                         }
                     }
                 }
             }
             Vector2 ownAbility = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
-            if (pos.X > ownAbility.X && pos.X <  ownAbility.X + (128 * .5f * ScalingHelper.ScaleXY) && pos.Y > ownAbility.Y && pos.Y < ownAbility.Y + (128 * .5f * ScalingHelper.ScaleXY))
+            // If click is on players ability
+            if (pos.X > ownAbility.X && pos.X < ownAbility.X + (128 * .5f * ScalingHelper.ScaleXY) && pos.Y > ownAbility.Y && pos.Y < ownAbility.Y + (128 * .5f * ScalingHelper.ScaleXY))
             {
                 if (!gs.CurrentlyPlaying.IsAI && gs.AnimatedPiece.X == -5000)
                 {
@@ -305,6 +313,13 @@ namespace chinese_checkers.Views
                     {
                         gs.UseCharacterAbilityWithAnimation();
                     }
+                }
+            }
+            else
+            {
+                if (gs.CurrentlyPlaying.AbilitySelected)
+                {
+                    gs.CurrentlyPlaying.DeSelectAbility();
                 }
             }
         }
@@ -323,7 +338,6 @@ namespace chinese_checkers.Views
                 {
                     mouseover = L;
                     break;
-                    //Debug.WriteLine(mouseover.Point);
                 }
                 else
                 {

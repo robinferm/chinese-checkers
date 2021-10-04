@@ -20,7 +20,7 @@ namespace chinese_checkers.Core.Models.Characters
 
         public void UseAbility(Board board, Location location = null)
         {
-
+            board.Pieces.Find(x => x.Point == location.Point).Heal(60);
         }
     }
 }

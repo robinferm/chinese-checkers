@@ -37,6 +37,7 @@ namespace chinese_checkers.Core.Models
        
       
         private int counter = 0;
+        public ScoreBoard ScoreBoard { get; set; }
 
         public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
         {
@@ -101,6 +102,7 @@ namespace chinese_checkers.Core.Models
             this.CurrentlyPlaying = Players.First();
             this.AnimatedPiece = new Vector2(-5000, -5000);
             this.AnimatedAbility = new List<Vector2>();
+            ScoreBoard = new ScoreBoard(Players);
         }
 
 
@@ -140,7 +142,12 @@ namespace chinese_checkers.Core.Models
 
         public void ChangeTurn()
         {
+
             CurrentlyPlaying.Highligh = false;
+
+            CheckForWin();
+            ScoreBoard.UpdateDestinations(Players);
+
             this.CurrentlyPlaying.DeSelectAbility();
             this.CurrentlyPlaying.DeSelectPiece(); 
 
@@ -157,7 +164,6 @@ namespace chinese_checkers.Core.Models
             if (this.CurrentlyPlaying.Placement == null)
             {
 
-                Debug.WriteLine(nextPlayer.Placement.ToString());
                 //CheckForWin();
 
                 if (this.CurrentlyPlaying.IsAI)
@@ -200,7 +206,12 @@ namespace chinese_checkers.Core.Models
                             this.AnimatedPiece = new Vector2(-5000, -5000);
                             Board.Pieces.Find(x => x.Point == this.Path.Last.Value).ToggleHidden();
                             this.Path = null;
+
                            
+
+                            CurrentlyPlaying.DeSelectPiece();
+                            CurrentlyPlaying.DeSelectAbility();
+
                             ChangeTurn();
                            
                         }
@@ -209,21 +220,36 @@ namespace chinese_checkers.Core.Models
                     {
                         var currentLocation = this.Board.Locations.Find(x => x.Point == selectedNode.Next.Value);
                         var movingPiece = Board.Pieces.Find(x => x.Point == this.Path.Last.Value);
+                        // If there is a piece underneath selected piece during animation
                         if (currentLocation.PieceId != null)
                         {
                             var currentLocationPiece = this.Board.Pieces.Find(x => x.Id == currentLocation.PieceId);
+                            // If piece underneath does not have same nest color
                             if (movingPiece.NestColor != currentLocationPiece.NestColor)
                             {
                                 currentLocationPiece.Health -= movingPiece.Damage;
+                                if (currentLocationPiece.Thorns)
+                                {
+                                    movingPiece.Health -= 8;
+                                    if (movingPiece.Health < 1)
+                                    {
+                                        Board.RespawnPiece(movingPiece);
+                                        this.AnimatedPiece = new Vector2(-5000, -5000);
+                                        this.Path = null;
+
+                                        ChangeTurn();
+                                    }
+                                }
                                 if (currentLocationPiece.Health < 1)
                                 {
                                     Board.RespawnPiece(currentLocationPiece);
                                 }
+                                
                             }
                         }
+                        // If there is an item on the location (pickup)
                         if (currentLocation.ItemId != null)
                         {
-                            //movingPiece.Items.Add(currentLocation.ItemId.Value);
                             this.Board.Pieces[movingPiece.Id].PickUpItem(currentLocation.ItemId.Value);
                             if (this.Board.Pieces[movingPiece.Id].Health < 1)
                             {
@@ -240,6 +266,18 @@ namespace chinese_checkers.Core.Models
                             }
                             currentLocation.ItemId = null;
                         }
+                        if (movingPiece.Cursed)
+                        {
+                            movingPiece.Health -= 2;
+                            if (movingPiece.Health < 1)
+                            {
+                                Board.RespawnPiece(movingPiece);
+                                this.AnimatedPiece = new Vector2(-5000, -5000);
+                                this.Path = null;
+
+                                ChangeTurn();
+                            }
+                        }
                         counter++;
                     }
                     else
@@ -253,6 +291,17 @@ namespace chinese_checkers.Core.Models
         public void AnimateAbility()
         {
 
+        }
+
+        public void AnimateScoreBoard()
+        {
+            if (counter < AnimationHelper.FrameTime)
+            {
+                foreach (var entry in ScoreBoard.ScoreBoardEntries)
+                {
+                    entry.Position = AnimationHelper.MoveScoreEntry(entry.Position, entry.Destination);
+                }
+            }
         }
 
         public void MovePieceWithAnimation(Location L)
@@ -276,7 +325,7 @@ namespace chinese_checkers.Core.Models
 
         public void MovePieceAI()
         {
-            Thread.Sleep(100);
+            //Thread.Sleep(100);
 
             // Make move automatically
             var pieces = Board.Pieces.Where(x => x.NestColor == this.CurrentlyPlaying.NestColor);
