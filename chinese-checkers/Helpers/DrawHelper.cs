@@ -128,7 +128,7 @@ namespace chinese_checkers.Helpers
             {
                 bool isHighlighted = false;
                 
-                Vector2 highlightPosition = new Vector2();
+                Vector2 highlightPosition = new Vector2(); 
                 Vector2 framePosition = new Vector2();
                 Vector2 abilityPosition = new Vector2();
                 switch (player.NestColor)
