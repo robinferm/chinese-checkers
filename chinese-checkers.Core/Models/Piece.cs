@@ -25,7 +25,7 @@ namespace chinese_checkers.Core.Models
 
         public Piece(int id, Point point, NestColor nestColor)
         {
-            _maxHealth = 100;
+            _maxHealth = 100000;
             _defaultDamage = 20;
             this.Id = id;
             this.Point = point;

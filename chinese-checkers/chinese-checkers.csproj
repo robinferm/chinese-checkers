@@ -147,6 +147,9 @@
     <Compile Include="Views\Menu\Dialogs\DruidInfoDialog.xaml.cs">
       <DependentUpon>DruidInfoDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Menu\Dialogs\GameEndedDialog.xaml.cs">
+      <DependentUpon>GameEndedDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Menu\Dialogs\HelpDialog.xaml.cs">
       <DependentUpon>HelpDialog.xaml</DependentUpon>
     </Compile>
@@ -216,6 +219,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Menu\Dialogs\DruidInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\Dialogs\GameEndedDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -309,6 +316,9 @@
     <Content Include="Assets\Images\Locations\red2.png" />
     <Content Include="Assets\Images\Locations\white.png" />
     <Content Include="Assets\Images\Locations\yellow.png" />
+    <Content Include="Assets\Images\Medals\medal_04_bronze.png" />
+    <Content Include="Assets\Images\Medals\medal_04_gold.png" />
+    <Content Include="Assets\Images\Medals\medal_04_silver.png" />
     <Content Include="Assets\Images\Pieces\black.png" />
     <Content Include="Assets\Images\Pieces\blue.png" />
     <Content Include="Assets\Images\Pieces\green.png" />
