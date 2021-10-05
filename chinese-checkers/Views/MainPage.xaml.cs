@@ -96,12 +96,10 @@ namespace chinese_checkers.Views
         }
 
         public void CreateGameSession()
-        {
-
-            gs = new GameSession(locations, NumberOfAI, PlayerCharacter);
-            gs.CurrentlyPlaying.Highlight = true; // It highlights the first player when a new game starts.
+        {        
 
             gs = new GameSession(NumberOfAI, PlayerCharacter);
+            gs.CurrentlyPlaying.Highlight = true; // It highlights the first player when a new game starts.
 
         }
 
