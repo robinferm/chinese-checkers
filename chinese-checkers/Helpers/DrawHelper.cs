@@ -18,7 +18,7 @@ namespace chinese_checkers.Helpers
     /// <summary>
     /// Helper function that is used to draw everything on the canvas
     /// </summary>
-    public class DrawHelper
+    public static class DrawHelper
     {
         //temp
         public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage, CanvasBitmap locationImageRed, CanvasBitmap locationImageGreen, CanvasBitmap locationImageBlue, CanvasBitmap locationImageBlack, CanvasBitmap locationImageWhite, CanvasBitmap locationImageYellow, CanvasBitmap mysteriousPosition)
