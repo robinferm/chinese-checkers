@@ -122,7 +122,7 @@ namespace chinese_checkers.Helpers
             }
         }
 
-        public static void DrawCharacterAndAbility(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Player> players, Dictionary<string, CanvasBitmap> frames, Dictionary<string, CanvasBitmap> abilitys,CanvasBitmap highlight,bool isTurn)
+        public static void DrawCharacterAndAbility(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Player> players, Dictionary<string, CanvasBitmap> frames, Dictionary<string, CanvasBitmap> abilitys,CanvasBitmap highlight)
         {
             foreach (var player in players)
             {
@@ -134,110 +134,63 @@ namespace chinese_checkers.Helpers
                 switch (player.NestColor)
                 {
                     case NestColor.Red:
-                        if (player.Highligh == true)
+                        if (player.Highlight == true)
                         {
                             isHighlighted = true;
-                            highlightPosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (90* ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-5));
+                            highlightPosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (90 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-5));
+                        }
                             framePosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-4));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (150 * ScalingHelper.ScaleXY) - (40 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-4) + (128 * .4f * ScalingHelper.ScaleXY));
-
-                        }
-                        else
-                        {
-                            framePosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-4));
-                            abilityPosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (150 * ScalingHelper.ScaleXY) - (40 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-4) + (128 * .4f * ScalingHelper.ScaleXY));
-                        }
                         break;
                     case NestColor.Black:
 
-                        if (player.Highligh == true)
+                        if (player.Highlight == true)
                         {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((120 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(-1) - (ScalingHelper.ScalingValue / 2));
+                        }
                             framePosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
-                        }
-                        else
-                        {
-                            framePosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2));
-                            abilityPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
-                        }
                             break;
-
-                        framePosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2));
-                        abilityPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
-                        break;
-
                     case NestColor.Blue:
-                        if (player.Highligh == true)
+                        if (player.Highlight == true)
                         {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((110 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(7));
+                        }
                             framePosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(8));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(8) + (128 * .4f * ScalingHelper.ScaleXY));
-                        }
-                        else
-                        {
-                            framePosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(8));
-                            abilityPosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((180 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue - (40 * ScalingHelper.ScaleXY)), ScalingHelper.CalculateY(8) + (128 * .4f * ScalingHelper.ScaleXY));
-                        }
                         break;
                     case NestColor.Green:
 
-                        if (player.Highligh == true)
+                        if (player.Highlight == true)
                         {
                             isHighlighted = true;
-                            highlightPosition = new Vector2(ScalingHelper.CalculateX(1, 9) - (190 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(11) - (ScalingHelper.ScalingValue/2));
+                            highlightPosition = new Vector2(ScalingHelper.CalculateX(1, 9) - (190 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(11) - (ScalingHelper.ScalingValue / 2));
+                        }
                             framePosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (160 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
-                        }
-                        else
-                        {
-                            framePosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (160 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2));
-                            abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
-
-                        }
                             break;
-
-                        framePosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (160 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2));
-                        abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 12) - (85 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(12) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
-                        break;
-
                     case NestColor.White:
-                        if (player.Highligh == true)
+                        if (player.Highlight == true)
                         {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(-5, 8) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(7));
+                        }
                             framePosition = new Vector2(ScalingHelper.CalculateX(-4, 8) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(8));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(-4, 8) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(8) + (128 * .4f * ScalingHelper.ScaleXY));
-                        }
-                        else
-                        {
-                            
-                            framePosition = new Vector2(ScalingHelper.CalculateX(-4, 8) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(8));
-                            abilityPosition = new Vector2(ScalingHelper.CalculateX(-4, 8) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(8) + (128 * .4f * ScalingHelper.ScaleXY));
-                        }
                             break;
                     case NestColor.Yellow:
 
-                        if (player.Highligh == true)
+                        if (player.Highlight == true)
                         {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (210 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-1) - (ScalingHelper.ScalingValue / 2));
+                        }
                             framePosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2));
                             abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
-                        }
-                        else
-                        {
-                            framePosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2));
-                            abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
-                        }
                             break;
-
-                        framePosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2));
-                        abilityPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (75 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(0) - (ScalingHelper.ScalingValue / 2) + (128 * .4f * ScalingHelper.ScaleXY));
-
-                    default:
+                        default:
                         framePosition = new Vector2();
                         abilityPosition = new Vector2();
                         break;
@@ -245,15 +198,11 @@ namespace chinese_checkers.Helpers
                 if (isHighlighted)
                 {
                     args.DrawingSession.DrawImage(ScalingHelper.Img(highlight, .4f), highlightPosition);
+                }
                     args.DrawingSession.DrawImage(ScalingHelper.Img(frames[player.Character.GetType().Name], .4f), framePosition);
                     args.DrawingSession.DrawImage(ScalingHelper.Img(abilitys[player.Character.GetType().Name], .5f), abilityPosition);
-                }
-                else
-                {
-                    args.DrawingSession.DrawImage(ScalingHelper.Img(frames[player.Character.GetType().Name], .4f), framePosition);
-                    args.DrawingSession.DrawImage(ScalingHelper.Img(abilitys[player.Character.GetType().Name], .5f), abilityPosition);
-                }
-              
+                
+                   
             }
         }
 

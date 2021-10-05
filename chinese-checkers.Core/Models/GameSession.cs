@@ -33,9 +33,6 @@ namespace chinese_checkers.Core.Models
         public List<Vector2> AnimatedAbility { get; set; }
         public LinkedListNode<Point> selectedNode { get; set; }
         public LinkedList<Point> Path { get; set; }
-       
-       
-      
         private int counter = 0;
         public ScoreBoard ScoreBoard { get; set; }
 
@@ -142,9 +139,7 @@ namespace chinese_checkers.Core.Models
 
         public void ChangeTurn()
         {
-
-            CurrentlyPlaying.Highligh = false;
-
+            CurrentlyPlaying.Highlight = false;
             CheckForWin();
             ScoreBoard.UpdateDestinations(Players);
 
@@ -159,7 +154,7 @@ namespace chinese_checkers.Core.Models
             }
             this.CurrentlyPlaying = nextPlayer;
            
-            this.CurrentlyPlaying.Highligh = true;
+            this.CurrentlyPlaying.Highlight = true;
                         
             if (this.CurrentlyPlaying.Placement == null)
             {
@@ -172,11 +167,8 @@ namespace chinese_checkers.Core.Models
                 }
             }
             else
-            {
-
-               
+            {              
                 ChangeTurn();
-                
             }
         }
 
@@ -206,14 +198,10 @@ namespace chinese_checkers.Core.Models
                             this.AnimatedPiece = new Vector2(-5000, -5000);
                             Board.Pieces.Find(x => x.Point == this.Path.Last.Value).ToggleHidden();
                             this.Path = null;
-
-                           
-
                             CurrentlyPlaying.DeSelectPiece();
                             CurrentlyPlaying.DeSelectAbility();
 
                             ChangeTurn();
-                           
                         }
                     }
                     else if (counter == AnimationHelper.FrameTime)

@@ -60,7 +60,6 @@ namespace chinese_checkers.Views
 
         public MainPage()
         {
-           
             characterFrames = new Dictionary<string, CanvasBitmap>();
             characterAbility = new Dictionary<string, CanvasBitmap>();
             InitializeComponent();
@@ -68,8 +67,6 @@ namespace chinese_checkers.Views
             canvas.IsFixedTimeStep = true;
             ScalingHelper.SetScale();
             Window.Current.SizeChanged += Current_SizeChanged;
-            
-            
         }
 
         private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e)
@@ -89,26 +86,20 @@ namespace chinese_checkers.Views
             if (gs == null)
             {
                 CreateGameSession();
-                
             }
-
             IsPaused = false;
-
-
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            
-
             IsPaused = true;
         }
 
         public void CreateGameSession()
         {
             gs = new GameSession(locations, NumberOfAI, PlayerCharacter);
-            gs.CurrentlyPlaying.Highligh = true;
+            gs.CurrentlyPlaying.Highlight = true; // It highlights the first player when a new game starts.
         }
 
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
@@ -182,19 +173,8 @@ namespace chinese_checkers.Views
                 }
                 DrawHelper.DrawAnimationPiece(sender, args, gs.AnimatedPiece, img);
             }
-            if (gs.CurrentlyPlaying.Highligh == true)
-            {
-                DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility, highlightCharacter,true);
-
-            }
-            else
-            {
-                DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility, highlightCharacter,false);
-            }
+                DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility, highlightCharacter);
             //DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
-
-
-            
             if (ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth > 1200) // Hide scoreboard if window gets too small
             {
                 DrawHelper.DrawScoreBoard(sender, args, gs.ScoreBoard);
@@ -210,6 +190,7 @@ namespace chinese_checkers.Views
         async Task CreateResourcesAsync(CanvasAnimatedControl sender)
         {
             highlightCharacter= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/highlight.png"));
+
             locationImage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/default.png"));
             locationImageRed = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/red.png"));
             locationImageGreen = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/green.png"));

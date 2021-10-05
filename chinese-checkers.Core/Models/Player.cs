@@ -20,15 +20,7 @@ namespace chinese_checkers.Core.Models
         public bool IsAI { get; set; }
         public ICharacter Character { get; set; }
         public NestColor NestColor { get; set; }
-        public bool Highligh { get; set; }
-        
-        
-      
-        
-        
-         
-     
-        
+        public bool Highlight { get; set; }
         public bool AbilitySelected { get; private set; }
         private int? _placement;
         public int? Placement
@@ -95,11 +87,6 @@ namespace chinese_checkers.Core.Models
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
-
-
-      
-
-
         public void SelectPiece(Location L, Board board)
         {
             DeSelectAbility();
