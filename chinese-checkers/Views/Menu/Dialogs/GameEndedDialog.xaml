@@ -1,0 +1,34 @@
+﻿<ContentDialog
+    x:Class="chinese_checkers.Views.Menu.Dialogs.GameEndedDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:chinese_checkers.Views.Menu.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Game Ended"
+    PrimaryButtonText="Main menu"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+
+    <!--<ListView x:Name="test" ItemsSource="{x:Bind ScoreBoard.ScoreBoardEntries}">
+        <ListView.ItemTemplate>
+            <DataTemplate>-->
+                <Grid x:Name="testgrid" Loaded="testgrid_Loaded">
+                    <!--<Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" x:Name="medalCol" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="ms-appx:///Assets/Images/Medals/medal_04_bronze.png" Width="30" Height="30"></Image>
+                    <TextBlock Grid.Row="0" Grid.Column="1"><Run Text="{Binding Player.NestColor}" /></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="2"><Run Text="{Binding Player.Score}" /></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="3"><Run Text="{Binding Player.Placement}" /></TextBlock>-->
+                </Grid>
+            <!--</DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>-->
+</ContentDialog>

@@ -52,5 +52,10 @@ namespace chinese_checkers.Views
         {
             CoreApplication.Exit();
         }
+
+        private void aboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(About));
+        }
     }
 }
