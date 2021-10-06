@@ -33,15 +33,16 @@ namespace chinese_checkers.Core.Models
         public Point AnimatedAbilityEnd { get; set; }
         public LinkedListNode<Point> selectedNode { get; set; }
         public LinkedList<Point> Path { get; set; }
-
         private int counter = 0;
         public ScoreBoard ScoreBoard { get; set; }
+        public bool GameEnded { get; set; }
+        public readonly List<Location> locations = LocationHelper.CreateLocations();
 
-        public GameSession(List<Location> locations, int numberOfAI, ICharacter playerCharacter)
+        public GameSession(int numberOfAI, ICharacter playerCharacter)
         {
             this.Players = new List<Player>();
-            this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
-            //this.Players.Add(new Player(0, NestColor.Green));
+            //this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
+            this.Players.Add(new Player(0, NestColor.Green));
             //this.PlayerScore = new Dictionary<Player, int>();
             this.GoalColor = new Dictionary<NestColor, NestColor>()
             {
@@ -79,6 +80,7 @@ namespace chinese_checkers.Core.Models
                     this.Players.Add(new Player(2, NestColor.Red));
                     this.Players.Add(new Player(3, NestColor.Black));
                     break;
+                    
                 case 4:
                     this.Players.Add(new Player(1, NestColor.White));
                     this.Players.Add(new Player(2, NestColor.Yellow));
@@ -106,6 +108,7 @@ namespace chinese_checkers.Core.Models
 
         public void CheckForWin()
         {
+           
             // Clears score in dictionary
             this.Players.ForEach(x => x.Score = 0);
             foreach (var P in Board.Pieces)
@@ -115,6 +118,7 @@ namespace chinese_checkers.Core.Models
                 if (pieceLocation.NestColor == goal)
                 {
                     var player = Players.Find(x => x.NestColor == P.NestColor);
+                    
                     player.Score++;
                 }
 
@@ -128,26 +132,31 @@ namespace chinese_checkers.Core.Models
             }
             if (this.Players.Where(x => x.Placement != null).Count() == Players.Count - 1)
             {
-                // TODO end game, last player | show results
-                
                 Debug.WriteLine("Game Ended");
+                GameEnded = true;
             }
         }
 
+
         public void ChangeTurn()
         {
+            CurrentlyPlaying.Highlight = false;
             CheckForWin();
             ScoreBoard.UpdateDestinations(Players);
+
             this.CurrentlyPlaying.DeSelectAbility();
-            this.CurrentlyPlaying.DeSelectPiece();
+            this.CurrentlyPlaying.DeSelectPiece(); 
 
             var nextPlayer = this.Players.FirstOrDefault(x => x.Id == CurrentlyPlaying.Id + 1);
             if (nextPlayer == null)
             {
                 nextPlayer = this.Players.First();
+               
             }
             this.CurrentlyPlaying = nextPlayer;
-
+           
+            this.CurrentlyPlaying.Highlight = true;
+                        
             if (this.CurrentlyPlaying.Placement == null)
             {
 
@@ -159,8 +168,7 @@ namespace chinese_checkers.Core.Models
                 }
             }
             else
-            {
-
+            {              
                 ChangeTurn();
             }
         }
@@ -179,7 +187,10 @@ namespace chinese_checkers.Core.Models
                 {
                     if (counter > AnimationHelper.FrameTime + 6)
                     {
-                        SoundHelper.Play();
+                        if (AnimationHelper.FrameTime >= 9)
+                        {
+                            SoundHelper.Play();
+                        }
                         counter = 0;
                         
                         if (selectedNode.Next != this.Path.Last)
@@ -193,6 +204,7 @@ namespace chinese_checkers.Core.Models
                             this.Path = null;
                             CurrentlyPlaying.DeSelectPiece();
                             CurrentlyPlaying.DeSelectAbility();
+
                             ChangeTurn();
                         }
                     }
@@ -241,7 +253,7 @@ namespace chinese_checkers.Core.Models
                                 this.AnimatedPiece = new Vector2(-5000, -5000);
                                 Board.Pieces[movingPiece.Id].ToggleHidden();
                                 this.Path = null;
-
+                            
                                 ChangeTurn();
                             }
                             currentLocation.ItemId = null;
@@ -351,7 +363,7 @@ namespace chinese_checkers.Core.Models
                 var moves = Board.GetAvailableMoves(P);
                 if (moves.Count > 0)
                 {
-                    availableMoves.Add(P, moves);
+                    availableMoves.Add(P, moves); 
                 }
             }
 
@@ -383,7 +395,7 @@ namespace chinese_checkers.Core.Models
                     var targetDistance = GetDistance(am.Point, GoalLocation[piece.NestColor]);
 
                     //If remaining pieces are 7 or more do (this) instead
-                    if (CurrentlyPlaying.Score > 6)
+                    if (CurrentlyPlaying.Score >= 9)
                     {
                         //List of all empty locations in opposite nest
                         var emptyGoalLocations = this.Board.Locations.Where(x => x.NestColor == GoalColor[piece.NestColor] && x.PieceId == null);

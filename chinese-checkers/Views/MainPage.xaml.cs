@@ -26,12 +26,16 @@ using chinese_checkers.Views.Menu;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media;
+using Windows.UI.ViewManagement;
+using chinese_checkers.Views.Menu.Dialogs;
 
 namespace chinese_checkers.Views {
     public sealed partial class MainPage : Page {
         public MainViewModel ViewModel { get; } = new MainViewModel();
+      //  public DrawHelper CharacterTurn { get; set; }
 
         GameSession gs;
+        CanvasBitmap highlightCharacter;
         CanvasBitmap locationImage;
         CanvasBitmap locationImageRed;
         CanvasBitmap locationImageGreen;
@@ -51,9 +55,6 @@ namespace chinese_checkers.Views {
         int abilityAnimtionCounter = 0;
 
         public bool IsPaused { get; set; } = false;
-
-        // Temp - Get this from main menu
-        List<Location> locations = LocationHelper.CreateLocations();
         public ICharacter PlayerCharacter { get; set; }
         public int NumberOfAI { get; set; }
 
@@ -73,6 +74,7 @@ namespace chinese_checkers.Views {
         {
             ScalingHelper.SetScale();
         }
+        
 
         // This happens when pressing start game from the start game view
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -82,26 +84,27 @@ namespace chinese_checkers.Views {
             var parameters = (GameParams)e.Parameter;
             this.NumberOfAI = parameters.NumberOfAI;
             this.PlayerCharacter = parameters.PlayerCharacter;
-            if (gs == null)
+            //if (gs == null)
+            if (parameters.CreateNewGame == true)
             {
                 CreateGameSession();
+                parameters.CreateNewGame = false;
             }
-
             IsPaused = false;
-
-
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-
             IsPaused = true;
         }
 
         public void CreateGameSession()
-        {
-            gs = new GameSession(locations, NumberOfAI, PlayerCharacter);
+        {        
+
+            gs = new GameSession(NumberOfAI, PlayerCharacter);
+            gs.CurrentlyPlaying.Highlight = true; // It highlights the first player when a new game starts.
+
         }
 
         private void canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
@@ -125,7 +128,7 @@ namespace chinese_checkers.Views {
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                gs.CheckForWin();
+                gs.CheckForWin(); 
             });
         }
 
@@ -149,7 +152,7 @@ namespace chinese_checkers.Views {
             }
             args.DrawingSession.DrawText(((int)currentPoint.X).ToString() + ", " + ((int)currentPoint.Y).ToString(), 0, 0, Colors.Black);
 
-            if (gs.CurrentlyPlaying.Paths != null)
+            if (gs.CurrentlyPlaying.Paths != null && DebugHelper.DebugEnabled)
             {
                 DrawHelper.DrawPaths(sender, args, gs.CurrentlyPlaying.Paths, mouseover);
             }
@@ -186,10 +189,8 @@ namespace chinese_checkers.Views {
                 }
                 DrawHelper.DrawAnimationPiece(sender, args, gs.AnimatedPiece, img);
             }
-            DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility);
+                DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility, highlightCharacter);
             //DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
-
-
 
             if (ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth > 1200) // Hide scoreboard if window gets too small
             {
@@ -203,6 +204,24 @@ namespace chinese_checkers.Views {
                 //Debug.WriteLine((AnimationHelper.AbilityCounter / 5).ToString());
             }
 
+            if (gs.GameEnded)
+            {
+                sender.Paused = true;
+                GameEnded();
+            }
+        }
+
+        private async void GameEnded()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                var lastPlayer = gs.ScoreBoard.ScoreBoardEntries.Find(x => x.Player.Placement == null).Player;
+                lastPlayer.Placement = gs.ScoreBoard.ScoreBoardEntries.Count();
+
+                ContentDialog dialog = new GameEndedDialog(gs.ScoreBoard);
+                await dialog.ShowAsync();
+            });
+
         }
 
         private void canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
@@ -212,6 +231,8 @@ namespace chinese_checkers.Views {
 
         async Task CreateResourcesAsync(CanvasAnimatedControl sender)
         {
+            highlightCharacter= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/highlight.png"));
+
             locationImage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/default.png"));
             locationImageRed = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/red.png"));
             locationImageGreen = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/green.png"));
@@ -267,7 +288,7 @@ namespace chinese_checkers.Views {
         {
             var pos = e.GetCurrentPoint(canvas).Position;
 
-            foreach (var L in locations)
+            foreach (var L in gs.locations)
             {
                 // Get Locations graphical position
                 var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
@@ -299,6 +320,7 @@ namespace chinese_checkers.Views {
                         else
                         {
                             gs.CurrentlyPlaying.DeSelectPiece();
+                            
                             canvas_PointerPressed(sender, e);
                         }
                     }
@@ -347,7 +369,7 @@ namespace chinese_checkers.Views {
         {
             currentPoint = e.GetCurrentPoint(canvas).Position;
 
-            foreach (var L in locations)
+            foreach (var L in gs.locations)
             {
                 //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
                 //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;

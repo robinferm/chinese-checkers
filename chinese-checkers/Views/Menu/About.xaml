@@ -1,0 +1,37 @@
+﻿<Page
+    x:Class="chinese_checkers.Views.Menu.About"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:chinese_checkers.Views.Menu"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Background>
+        <ImageBrush ImageSource="ms-appx:///Assets/Images/splash.png"></ImageBrush>
+    </Page.Background>
+
+    <Grid>
+        <TextBlock FontSize="50" HorizontalAlignment="Center" Margin="0,20,0,0">About</TextBlock>
+        <StackPanel VerticalAlignment="Center" Spacing="-130" Margin="80,0,0,0" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="100">
+                <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">Developers</TextBlock>
+                <StackPanel>
+                    <TextBlock TextWrapping="WrapWholeWords" Width="800" FontSize="30">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lobortis risus ut congue aliquam. Curabitur ultrices ultrices nisi sit amet blandit. Sed quis est in eros posuere condimentum et et quam. Ut nibh quam, cursus vel vehicula a, iaculis a ligula. Maecenas at nulla in urna suscipit ornare.</TextBlock>
+                    <HyperlinkButton NavigateUri="https://github.com/robinferm/chinese-checkers">
+                        <HyperlinkButton.Background>
+                            <SolidColorBrush Color="White" Opacity=".2"/>
+                        </HyperlinkButton.Background>
+                        <Image Source="ms-appx:///Assets/Images/GitHub-logo.png" Height="100"/>
+                    </HyperlinkButton>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="100">
+                <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">Credits</TextBlock>
+                <StackPanel>
+                    <TextBlock TextWrapping="WrapWholeWords" Width="800" FontSize="30">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lobortis risus ut congue aliquam. Curabitur ultrices ultrices nisi sit amet blandit. Sed quis est in eros posuere condimentum et et quam. Ut nibh quam, cursus vel vehicula a, iaculis a ligula. Maecenas at nulla in urna suscipit ornare.</TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <Button x:Name="backButton" Click="backButton_Click" FontSize="30" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Bottom" Width="200">Back</Button>
+    </Grid>
+</Page>

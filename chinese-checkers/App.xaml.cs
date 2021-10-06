@@ -3,6 +3,8 @@
 using chinese_checkers.Services;
 
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
 namespace chinese_checkers
@@ -47,6 +49,31 @@ namespace chinese_checkers
         private ActivationService CreateActivationService()
         {
             return new ActivationService(this, typeof(Views.MainMenu));
+        }
+
+        private readonly double minW = 800, minH = 600;
+
+        protected override void OnWindowCreated(WindowCreatedEventArgs args)
+        {
+            SetWindowMinSize(new Size(args.Window.Bounds.Width, args.Window.Bounds.Height));
+            args.Window.CoreWindow.SizeChanged += CoreWindow_SizeChanged;
+            base.OnWindowCreated(args);
+        }
+
+        private void CoreWindow_SizeChanged(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.WindowSizeChangedEventArgs args)
+        {
+            if (SetWindowMinSize(args.Size)) sender.ReleasePointerCapture();
+        }
+
+        private bool SetWindowMinSize(Size size)
+        {
+            if (size.Width < minW || size.Height < minH)
+            {
+                if (size.Width < minW) size.Width = minW;
+                if (size.Height < minH) size.Height = minH;
+                return ApplicationView.GetForCurrentView().TryResizeView(size);
+            }
+            return false;
         }
     }
 }

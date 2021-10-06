@@ -37,7 +37,7 @@ namespace chinese_checkers.Views
             //OptionsDialog dialog = new OptionsDialog();
             //await dialog.ShowAsync();
 
-            this.Frame.Navigate(typeof(Options));
+            this.Frame.Navigate(typeof(Options), "mainmenu");
         }
 
         private void helpButton_Click(object sender, RoutedEventArgs e)
@@ -51,6 +51,11 @@ namespace chinese_checkers.Views
         private void exitButton_Click(object sender, RoutedEventArgs e)
         {
             CoreApplication.Exit();
+        }
+
+        private void aboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(About));
         }
     }
 }

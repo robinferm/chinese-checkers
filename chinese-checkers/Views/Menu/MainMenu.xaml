@@ -13,11 +13,12 @@
     <Viewbox>
         <Grid>
             <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0">Game Name</TextBlock>
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,80,0,80" Spacing="5">
-                <Button x:Name="startButton" HorizontalAlignment="Stretch" Click="startButton_Click">Start Game</Button>
-                <Button x:Name="optionsButton" HorizontalAlignment="Stretch" Click="optionsButton_Click">Options</Button>
-                <Button x:Name="helpButton" HorizontalAlignment="Stretch" Click="helpButton_Click">Help</Button>
-                <Button x:Name="exitButton" HorizontalAlignment="Stretch" Click="exitButton_Click">Exit</Button>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,100" Spacing="5">
+                <Button x:Name="startButton" HorizontalAlignment="Stretch" Click="startButton_Click" FontSize="20">Start Game</Button>
+                <Button x:Name="optionsButton" HorizontalAlignment="Stretch" Click="optionsButton_Click" FontSize="15">Options</Button>
+                <Button x:Name="helpButton" HorizontalAlignment="Stretch" Click="helpButton_Click" FontSize="15">Help</Button>
+                <Button x:Name="aboutButton" HorizontalAlignment="Stretch" Click="aboutButton_Click" FontSize="15">About</Button>
+                <Button x:Name="exitButton" HorizontalAlignment="Stretch" Click="exitButton_Click" FontSize="15">Exit</Button>
             </StackPanel>
         </Grid>
     </Viewbox>
