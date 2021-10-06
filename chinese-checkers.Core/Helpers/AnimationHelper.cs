@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
 using System.Text;
@@ -8,7 +9,7 @@ namespace chinese_checkers.Core.Helpers {
     public static class AnimationHelper {
 
         public static double FrameTime { get; set; } = 24;
-      
+
         public static Vector2 MovePiece(Point start, Vector2 current, Point target)
         {
             double xSpeed = (double)(target.X - start.X) / FrameTime;
@@ -30,6 +31,22 @@ namespace chinese_checkers.Core.Helpers {
             {
                 current += (float)xSpeed;
             }
+            return current;
+        }
+
+        public static Point MoveFireBall(Point start, Point current, Point target)
+        {
+
+            double xSpeed = ((target.X - (start.X)) / FrameTime);
+            double ySpeed = ((target.Y - (start.Y)) / FrameTime);
+        
+            Debug.WriteLine($"x: {xSpeed}, y: {ySpeed}");
+            if (current.X != target.X && current.Y != target.Y)
+            {
+                current.X += (int)xSpeed;
+                current.Y += (int)ySpeed;
+            }
+
             return current;
         }
     }

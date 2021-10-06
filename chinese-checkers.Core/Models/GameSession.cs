@@ -28,7 +28,9 @@ namespace chinese_checkers.Core.Models
         public Dictionary<NestColor, Point> GoalLocation { get; set; }
         public Player CurrentlyPlaying { get; set; }
         public Vector2 AnimatedPiece{ get; set; }
-        public List<Vector2> AnimatedAbility { get; set; }
+        public Point AnimatedAbility { get; set; }
+        public Point AnimatedAbilityStart { get; set; }
+        public Point AnimatedAbilityEnd { get; set; }
         public LinkedListNode<Point> selectedNode { get; set; }
         public LinkedList<Point> Path { get; set; }
 
@@ -97,7 +99,7 @@ namespace chinese_checkers.Core.Models
             this.Board = new Board(locations, this.Players);
             this.CurrentlyPlaying = Players.First();
             this.AnimatedPiece = new Vector2(-5000, -5000);
-            this.AnimatedAbility = new List<Vector2>();
+            this.AnimatedAbility = new Point(-5000, -5000);
             ScoreBoard = new ScoreBoard(Players);
         }
 
@@ -268,7 +270,22 @@ namespace chinese_checkers.Core.Models
 
         public void AnimateAbility()
         {
-
+            if (AnimatedAbility.X != -5000)
+            {
+                if (counter <= AnimationHelper.FrameTime)
+                {
+                    AnimatedAbility = AnimationHelper.MoveFireBall(AnimatedAbilityStart, AnimatedAbility, AnimatedAbilityEnd);
+                    //AnimatedAbility.ForEach(x => AnimationHelper.MoveFireBall(AnimatedAbilityStart, x, AnimatedAbilityEnd));
+                    counter++;
+                }
+                else
+                {
+                    CurrentlyPlaying.UseCharaterAbility(this.Board, this.Board.Locations.Find(x => x.Point == CurrentlyPlaying.selectedPiece.Point));
+                    AnimatedAbility = new Point(-5000, -5000);
+                    ChangeTurn();
+                    counter = 0;
+                }
+            }
         }
 
         public void AnimateScoreBoard()
@@ -284,7 +301,7 @@ namespace chinese_checkers.Core.Models
 
         public void MovePieceWithAnimation(Location L)
         {
-            if (this.AnimatedPiece.X == -5000)
+            if (this.AnimatedPiece.X == -5000 && CurrentlyPlaying.Paths != null)
             {
                 AnimatedPiece = new Vector2(CurrentlyPlaying.selectedPiece.Point.X, CurrentlyPlaying.selectedPiece.Point.Y);
                 Board.MovePiece(L, CurrentlyPlaying.selectedPiece);
@@ -295,10 +312,17 @@ namespace chinese_checkers.Core.Models
             }
         }
 
-        public void UseCharacterAbilityWithAnimation(Location location = null)
+        public void UseCharacterAbilityWithAnimation(Vector2 start, Point end, Location location = null)
         {
-            CurrentlyPlaying.UseCharaterAbility(this.Board, location);
-            ChangeTurn();
+            Point startPoint = new Point((int)start.X, (int)start.Y);
+            if (location != null)
+            {
+                CurrentlyPlaying.selectedPiece = Board.Pieces.Find(x => x.Id == location.PieceId);
+            }
+            AnimatedAbilityStart = startPoint;
+            AnimatedAbility = startPoint;
+            AnimatedAbilityEnd = end;
+            counter = 0;
         }
 
         public void MovePieceAI()
