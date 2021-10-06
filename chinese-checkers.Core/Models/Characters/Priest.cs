@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using chinese_checkers.Core.Helpers;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace chinese_checkers.Core.Models.Characters
 {
@@ -18,8 +21,9 @@ namespace chinese_checkers.Core.Models.Characters
             return friendlyPieceLocations;
         }
 
-        public void UseAbility(Board board, Location location = null)
+        public async void UseAbility(Board board, Location location = null)
         {
+            //await Task.Run(() => SoundHelper.Play(Sound.Priest));
             board.Pieces.Find(x => x.Point == location.Point).Heal(60);
         }
     }

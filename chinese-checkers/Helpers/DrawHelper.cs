@@ -183,7 +183,7 @@ namespace chinese_checkers.Helpers {
                     default:
                         break;
                 }
-
+              
                 if (isHighlighted)
                 {
                     args.DrawingSession.DrawImage(ScalingHelper.Img(highlight, .4f), highlightPosition);
