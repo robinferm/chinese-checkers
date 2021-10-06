@@ -37,7 +37,7 @@ namespace chinese_checkers.Views
             //OptionsDialog dialog = new OptionsDialog();
             //await dialog.ShowAsync();
 
-            this.Frame.Navigate(typeof(Options));
+            this.Frame.Navigate(typeof(Options), "mainmenu");
         }
 
         private void helpButton_Click(object sender, RoutedEventArgs e)
