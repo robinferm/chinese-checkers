@@ -114,21 +114,15 @@ namespace chinese_checkers.Core.Models
             //    UseCharaterAbility(board);
             //}
         }
+
         public void UseCharaterAbility(Board board, Location location = null)
         {
-            //switch (this.Character.GetType().Name)
-            //{
-            //    case "Mage":
-            //        var piece = board.Pieces.Find(x => x.Point == location.Point);
-            //        piece.Health -= 1;
-            //        break;
-            //    case "Hunter":
-            //        break;
-            //    default:
-            //        break;
-            //}
+            if (location != null)
+            {
+                //this.selectedPiece = board.Pieces.Find(x => x.Id == location.PieceId);
+            }
             Character.UseAbility(board, location);
-            
+            DeSelectAbility();
             //ChangeTurn();
         }
 
