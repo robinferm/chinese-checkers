@@ -23,7 +23,7 @@ namespace chinese_checkers.Core.Models.Characters
 
         public async void UseAbility(Board board, Location location = null)
         {
-            await Task.Run(() => SoundHelper.Play(Sound.Priest));
+            //await Task.Run(() => SoundHelper.Play(Sound.Priest));
             board.Pieces.Find(x => x.Point == location.Point).Heal(60);
         }
     }
