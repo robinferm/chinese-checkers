@@ -14,13 +14,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
 
-namespace chinese_checkers.Helpers
-{
+namespace chinese_checkers.Helpers {
     /// <summary>
     /// Helper function that is used to draw everything on the canvas
     /// </summary>
-    public static class DrawHelper
-    {
+    public static class DrawHelper {
         //temp
 
         public static CanvasBitmap currentAbilityFrame { get; set; }
@@ -168,7 +166,7 @@ namespace chinese_checkers.Helpers
                 }
             }
         }
-            
+
         public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Vector2 vector, CanvasBitmap pieceImageRed)
         {
             vector.X = ScalingHelper.CalculateX(vector.X, vector.Y);
@@ -191,7 +189,17 @@ namespace chinese_checkers.Helpers
         {
             var pos = ScalingHelper.CalculateFramePosition(player.NestColor)[1];
             //args.DrawingSession.DrawImage(ScalingHelper.Img(image, .3f), pos.X - 20, pos.Y - 20);
-            args.DrawingSession.DrawImage(ScalingHelper.Img(image, .3f), abilityLocation.X - 30, abilityLocation.Y - 30);
+            switch (player.Character.GetType().Name)
+            {
+                case "Mage":
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(image, .3f), abilityLocation.X - 30, abilityLocation.Y - 30);
+                    break;
+                case "Priest":
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(image), abilityLocation.X - (64 * ScalingHelper.ScaleXY), abilityLocation.Y - (64 * ScalingHelper.ScaleXY));
+                    break;
+                default:
+                    break;
+            }
         }
 
         // Debug stuff

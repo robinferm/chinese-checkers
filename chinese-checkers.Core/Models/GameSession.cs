@@ -272,9 +272,20 @@ namespace chinese_checkers.Core.Models
         {
             if (AnimatedAbility.X != -5000)
             {
-                if (counter <= AnimationHelper.FrameTime)
+                if (counter <= AnimationHelper.FrameTime * 2)
                 {
-                    AnimatedAbility = AnimationHelper.MoveFireBall(AnimatedAbilityStart, AnimatedAbility, AnimatedAbilityEnd);
+                    switch (CurrentlyPlaying.Character.GetType().Name)
+                    {
+                        case "Mage":
+                            AnimatedAbility = AnimationHelper.MoveFireBall(AnimatedAbilityStart, AnimatedAbility, AnimatedAbilityEnd);
+                            break;
+                        case "Priest":
+                            AnimatedAbility = AnimatedAbilityEnd;
+
+                            break;
+                        default:
+                            break;
+                    }
                     //AnimatedAbility.ForEach(x => AnimationHelper.MoveFireBall(AnimatedAbilityStart, x, AnimatedAbilityEnd));
                     counter++;
                 }

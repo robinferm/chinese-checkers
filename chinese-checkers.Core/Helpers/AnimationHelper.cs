@@ -25,7 +25,7 @@ namespace chinese_checkers.Core.Helpers {
 
         public static float MoveScoreEntry(float current, float target)
         {
-            double xSpeed = (double)(target - current)/2;
+            double xSpeed = (double)(target - current) / 2;
 
             if (current != target)
             {
@@ -37,9 +37,9 @@ namespace chinese_checkers.Core.Helpers {
         public static Point MoveFireBall(Point start, Point current, Point target)
         {
 
-            double xSpeed = ((target.X - (start.X)) / FrameTime);
-            double ySpeed = ((target.Y - (start.Y)) / FrameTime);
-        
+            double xSpeed = ((target.X - (start.X)) / (FrameTime * 2));
+            double ySpeed = ((target.Y - (start.Y)) / (FrameTime * 2));
+
             Debug.WriteLine($"x: {xSpeed}, y: {ySpeed}");
             if (current.X != target.X && current.Y != target.Y)
             {
