@@ -132,7 +132,6 @@ namespace chinese_checkers.Helpers {
 
                 args.DrawingSession.DrawImage(ScalingHelper.Img(frames[player.Character.GetType().Name], .4f), pos[0]);
                 args.DrawingSession.DrawImage(ScalingHelper.Img(abilitys[player.Character.GetType().Name], .5f), pos[1]);
-            }
             bool isHighlighted = false;
 
             Vector2 highlightPosition = new Vector2(); 
@@ -202,6 +201,7 @@ namespace chinese_checkers.Helpers {
                     abilityPosition = new Vector2();
                     break;
                 
+            }
                 if (isHighlighted)
                 {
                     args.DrawingSession.DrawImage(ScalingHelper.Img(highlight, .4f), highlightPosition);
