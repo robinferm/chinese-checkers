@@ -54,7 +54,6 @@ namespace chinese_checkers.Views
 
         public bool IsPaused { get; set; } = false;
         public ICharacter PlayerCharacter { get; set; }
-        public Player Player { get; set; }
         public int NumberOfAI { get; set; }
 
         public MainPage()
