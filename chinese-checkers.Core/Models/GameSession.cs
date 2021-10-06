@@ -295,7 +295,7 @@ namespace chinese_checkers.Core.Models
             if (AnimatedAbility.X != -5000)
             {
                 //if (counter <= AnimationHelper.FrameTime * 2)
-                Debug.WriteLine(SoundHelper.mediaPlayer.PlaybackSession.PlaybackState);
+                //Debug.WriteLine(SoundHelper.mediaPlayer.PlaybackSession.PlaybackState);
                 if(SoundHelper.mediaPlayer.PlaybackSession.PlaybackState == Windows.Media.Playback.MediaPlaybackState.Paused)
                 {
                     PausedCount++;
