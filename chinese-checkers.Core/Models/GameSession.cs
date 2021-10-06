@@ -14,8 +14,6 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
-using project = chinese_checkers;
-
 namespace chinese_checkers.Core.Models
 {
     /// <summary>
@@ -80,6 +78,7 @@ namespace chinese_checkers.Core.Models
                     this.Players.Add(new Player(2, NestColor.Red));
                     this.Players.Add(new Player(3, NestColor.Black));
                     break;
+                    
                 case 4:
                     this.Players.Add(new Player(1, NestColor.White));
                     this.Players.Add(new Player(2, NestColor.Yellow));
