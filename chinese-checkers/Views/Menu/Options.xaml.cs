@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -86,6 +87,23 @@ namespace chinese_checkers.Views.Menu
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter != null)
+            {
+                string test = e.Parameter.ToString();
+                if (test == "mainmenu")
+                {
+                    backButton.Content = "Back";
+                    menuButton.Visibility = Visibility.Collapsed;
+                    exitButton.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
@@ -174,6 +192,17 @@ namespace chinese_checkers.Views.Menu
             //Frame contentFrame = Window.Current.Content as Frame;
             //MainPage mp = contentFrame.Content as MainPage;
             //mp.DebugEnabled = false;
+        }
+
+        private void exitButton_Click(object sender, RoutedEventArgs e)
+        {
+            CoreApplication.Exit();
+        }
+
+        private void menuButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            this.Frame.Navigate(typeof(MainMenu));
         }
     }
 }

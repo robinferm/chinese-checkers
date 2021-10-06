@@ -40,6 +40,7 @@ namespace chinese_checkers.Views
             {
                 return;
             }
+            Parameters.CreateNewGame = true;
             this.Frame.Navigate(typeof(MainPage), this.Parameters);
         }
 
@@ -116,5 +117,6 @@ namespace chinese_checkers.Views
     {
         public ICharacter PlayerCharacter { get; set; }
         public int NumberOfAI { get; set; }
+        public bool CreateNewGame { get; set; }
     }
 }

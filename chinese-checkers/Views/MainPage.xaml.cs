@@ -81,9 +81,11 @@ namespace chinese_checkers.Views
             var parameters = (GameParams)e.Parameter;
             this.NumberOfAI = parameters.NumberOfAI;
             this.PlayerCharacter = parameters.PlayerCharacter;
-            if (gs == null)
+            //if (gs == null)
+            if (parameters.CreateNewGame == true)
             {
                 CreateGameSession();
+                parameters.CreateNewGame = false;
             }
             IsPaused = false;
         }

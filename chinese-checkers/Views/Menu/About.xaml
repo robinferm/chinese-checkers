@@ -32,6 +32,6 @@
                 </StackPanel>
             </StackPanel>
         </StackPanel>
-        <Button x:Name="backButton" Click="backButton_Click" FontSize="50" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Bottom">Back</Button>
+        <Button x:Name="backButton" Click="backButton_Click" FontSize="30" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Bottom" Width="200">Back</Button>
     </Grid>
 </Page>
