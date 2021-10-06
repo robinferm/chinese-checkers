@@ -41,8 +41,8 @@ namespace chinese_checkers.Core.Models
         public GameSession(int numberOfAI, ICharacter playerCharacter)
         {
             this.Players = new List<Player>();
-            //this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
-            this.Players.Add(new Player(0, NestColor.Green));
+            this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
+            //this.Players.Add(new Player(0, NestColor.Green));
             //this.PlayerScore = new Dictionary<Player, int>();
             this.GoalColor = new Dictionary<NestColor, NestColor>()
             {
