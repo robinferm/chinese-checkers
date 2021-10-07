@@ -12,10 +12,10 @@
 
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Image x:Name="battleshoutImage" Source="ms-appx:///Assets/Images/Abilities/battleshout.png" Width="50" Height="50" Margin="0,0,20,0"></Image>
+            <Image x:Name="battleshoutImage" Source="ms-appx:///Assets/Images/Abilities/battleshout-ability.png" Width="50" Height="50" Margin="0,0,20,0"></Image>
             <StackPanel>
                 <TextBlock>Character Ability: Battle Shout</TextBlock>
-                <TextBlock>The warrior shouts, increasing damage by 1 for 3 random friendly pieces</TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords" Width="400">The warrior shouts, increasing damage for one friendly piece.</TextBlock>
             </StackPanel>
         </StackPanel>
     </Grid>
