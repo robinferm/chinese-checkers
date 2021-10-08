@@ -10,101 +10,105 @@
         <ImageBrush ImageSource="ms-appx:///Assets/Images/splash.png"></ImageBrush>
     </Page.Background>
     <Grid>
-        <TextBlock FontSize="50" HorizontalAlignment="Center" Margin="0,20,0,0">Help</TextBlock>
-        <StackPanel VerticalAlignment="Center" Spacing="-180" Margin="80,0,0,0" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal" Margin="100">
-                <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">General</TextBlock>
-                <StackPanel>
-                    <TextBlock TextWrapping="WrapWholeWords" Width="800" FontSize="15">The regular chinese checkers rules applies. When a piece jumps over an enemy piece it will deal damage. If a piece loses all health it will respawn in his nest. Every player choses a character with a specific character ability that can be used instead of a move. When a game starts the board will contain six benefical or harming items that is picked up when walked upon.</TextBlock>
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="100">
-                <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">Characters</TextBlock>
-                <StackPanel Orientation="Horizontal" Width="800">
-                    <StackPanel Spacing="3">
-                        <!--Mage-->
-                        <StackPanel Orientation="Horizontal" Spacing="20">
-                            <StackPanel>
-                                <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/mage.png" Height="50" Width="50"/>
-                                <TextBlock HorizontalAlignment="Center" Foreground="LightBlue">Mage</TextBlock>
-                            </StackPanel>
-                            <TextBlock VerticalAlignment="Center" FontSize="15">Choose an enemy piece to cast a fireball</TextBlock>
-                            <Image Source="ms-appx:///Assets/Images/Abilities/fireball-ability.png" Height="20" VerticalAlignment="Center"/>
-                            <TextBlock VerticalAlignment="Center" FontSize="15"> that deals damage.</TextBlock>
+        <Viewbox>
+            <Grid>
+                <TextBlock FontSize="50" HorizontalAlignment="Center" Margin="0,20,0,0">Help</TextBlock>
+                <StackPanel VerticalAlignment="Center" Spacing="-180" Margin="80,0,0,0" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Margin="100">
+                        <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">General</TextBlock>
+                        <StackPanel>
+                            <TextBlock TextWrapping="WrapWholeWords" Width="800" FontSize="15">The regular chinese checkers rules applies. When a piece jumps over an enemy piece it will deal damage. If a piece loses all health it will respawn in his nest. Every player choses a character with a specific character ability that can be used instead of a move. When a game starts the board will contain six benefical or harming items that is picked up when walked upon.</TextBlock>
                         </StackPanel>
-                        <!--Druid-->
-                        <StackPanel Orientation="Horizontal" Spacing="20">
-                            <StackPanel>
-                                <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/druid.png" Height="50" Width="50"/>
-                                <TextBlock HorizontalAlignment="Center" Foreground="LightGreen">Druid</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="100">
+                        <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">Characters</TextBlock>
+                        <StackPanel Orientation="Horizontal" Width="800">
+                            <StackPanel Spacing="3">
+                                <!--Mage-->
+                                <StackPanel Orientation="Horizontal" Spacing="20">
+                                    <StackPanel>
+                                        <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/mage.png" Height="50" Width="50"/>
+                                        <TextBlock HorizontalAlignment="Center" Foreground="LightBlue">Mage</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15">Choose an enemy piece to cast a fireball</TextBlock>
+                                    <Image Source="ms-appx:///Assets/Images/Abilities/fireball-ability.png" Height="20" VerticalAlignment="Center"/>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15"> that deals damage.</TextBlock>
+                                </StackPanel>
+                                <!--Druid-->
+                                <StackPanel Orientation="Horizontal" Spacing="20">
+                                    <StackPanel>
+                                        <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/druid.png" Height="50" Width="50"/>
+                                        <TextBlock HorizontalAlignment="Center" Foreground="LightGreen">Druid</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15">Cast thorns</TextBlock>
+                                    <Image Source="ms-appx:///Assets/Images/Abilities/druid-ability.png" Height="20" VerticalAlignment="Center"/>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15"> on a friendly piece, making it reflect damage when hit.</TextBlock>
+                                </StackPanel>
+                                <!--Warlock-->
+                                <StackPanel Orientation="Horizontal" Spacing="20">
+                                    <StackPanel>
+                                        <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/warlock.png" Height="50" Width="50"/>
+                                        <TextBlock HorizontalAlignment="Center" Foreground="MediumPurple">Warlock</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15">Choose an enemy piece to cast a curse</TextBlock>
+                                    <Image Source="ms-appx:///Assets/Images/Abilities/curse-ability.png" Height="20" VerticalAlignment="Center"/>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15"> that cause the piece to take damage when it moves.</TextBlock>
+                                </StackPanel>
+                                <!--Warrior-->
+                                <StackPanel Orientation="Horizontal" Spacing="20">
+                                    <StackPanel>
+                                        <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/warrior.png" Height="50" Width="50"/>
+                                        <TextBlock HorizontalAlignment="Center" Foreground="LightGray">Warrior</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15">The warrior shouts</TextBlock>
+                                    <Image Source="ms-appx:///Assets/Images/Abilities/battleshout-ability.png" Height="20" VerticalAlignment="Center"/>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15"> increasing damage for one friendly piece.</TextBlock>
+                                </StackPanel>
+                                <!--Hunter-->
+                                <StackPanel Orientation="Horizontal" Spacing="20">
+                                    <StackPanel>
+                                        <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/hunter.png" Height="50" Width="50"/>
+                                        <TextBlock HorizontalAlignment="Center" Foreground="RosyBrown">Hunter</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15">Fire a burst of arrows</TextBlock>
+                                    <Image Source="ms-appx:///Assets/Images/Abilities/volly-ability.png" Height="20" VerticalAlignment="Center"/>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15"> into the air, hitting three random locations for damage.</TextBlock>
+                                </StackPanel>
+                                <!--Priest-->
+                                <StackPanel Orientation="Horizontal" Spacing="20">
+                                    <StackPanel>
+                                        <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/priest.png" Height="50" Width="50"/>
+                                        <TextBlock HorizontalAlignment="Center" Foreground="AliceBlue">Priest</TextBlock>
+                                    </StackPanel>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15">Choose a friendly piece to restore health</TextBlock>
+                                    <Image Source="ms-appx:///Assets/Images/Abilities/heal-ability.png" Height="20" VerticalAlignment="Center"/>
+                                    <TextBlock VerticalAlignment="Center" FontSize="15"></TextBlock>
+                                </StackPanel>
                             </StackPanel>
-                            <TextBlock VerticalAlignment="Center" FontSize="15">Cast thorns</TextBlock>
-                            <Image Source="ms-appx:///Assets/Images/Abilities/druid-ability.png" Height="20" VerticalAlignment="Center"/>
-                            <TextBlock VerticalAlignment="Center" FontSize="15"> on a friendly piece, making it reflect damage when hit.</TextBlock>
                         </StackPanel>
-                        <!--Warlock-->
-                        <StackPanel Orientation="Horizontal" Spacing="20">
-                            <StackPanel>
-                                <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/warlock.png" Height="50" Width="50"/>
-                                <TextBlock HorizontalAlignment="Center" Foreground="MediumPurple">Warlock</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="100">
+                        <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">Items</TextBlock>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBlock TextWrapping="WrapWholeWords" FontSize="15" VerticalAlignment="Center">When a piece steps on the item icon</TextBlock>
+                                <Image Source="ms-appx:///Assets/Images/Icon/mysterious.png" Height="30" VerticalAlignment="Center"/>
+                                <TextBlock FontSize="15" VerticalAlignment="Center">the piece is granted a benefical or harming effect.</TextBlock>
                             </StackPanel>
-                            <TextBlock VerticalAlignment="Center" FontSize="15">Choose an enemy piece to cast a curse</TextBlock>
-                            <Image Source="ms-appx:///Assets/Images/Abilities/curse-ability.png" Height="20" VerticalAlignment="Center"/>
-                            <TextBlock VerticalAlignment="Center" FontSize="15"> that cause the piece to take damage when it moves.</TextBlock>
-                        </StackPanel>
-                        <!--Warrior-->
-                        <StackPanel Orientation="Horizontal" Spacing="20">
-                            <StackPanel>
-                                <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/warrior.png" Height="50" Width="50"/>
-                                <TextBlock HorizontalAlignment="Center" Foreground="LightGray">Warrior</TextBlock>
+                            <TextBlock Margin="10" FontSize="15">The possible effects are:</TextBlock>
+                            <StackPanel Spacing="3" Margin="10,0,0,0">
+                                <TextBlock FontSize="15">Double damage - The piece's damage is doubled.</TextBlock>
+                                <TextBlock FontSize="15">Half damage - The piece's damage is halved.</TextBlock>
+                                <TextBlock FontSize="15">Take damage - The piece takes damage.</TextBlock>
+                                <TextBlock FontSize="15">Heal - The piece is healed.</TextBlock>
+                                <TextBlock FontSize="15">Freeze - The piece is frozen in place.</TextBlock>
                             </StackPanel>
-                            <TextBlock VerticalAlignment="Center" FontSize="15">The warrior shouts</TextBlock>
-                            <Image Source="ms-appx:///Assets/Images/Abilities/battleshout-ability.png" Height="20" VerticalAlignment="Center"/>
-                            <TextBlock VerticalAlignment="Center" FontSize="15"> increasing damage for one friendly piece.</TextBlock>
-                        </StackPanel>
-                        <!--Hunter-->
-                        <StackPanel Orientation="Horizontal" Spacing="20">
-                            <StackPanel>
-                                <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/hunter.png" Height="50" Width="50"/>
-                                <TextBlock HorizontalAlignment="Center" Foreground="RosyBrown">Hunter</TextBlock>
-                            </StackPanel>
-                            <TextBlock VerticalAlignment="Center" FontSize="15">Fire a burst of arrows</TextBlock>
-                            <Image Source="ms-appx:///Assets/Images/Abilities/volly-ability.png" Height="20" VerticalAlignment="Center"/>
-                            <TextBlock VerticalAlignment="Center" FontSize="15"> into the air, hitting three random locations for damage.</TextBlock>
-                        </StackPanel>
-                        <!--Priest-->
-                        <StackPanel Orientation="Horizontal" Spacing="20">
-                            <StackPanel>
-                                <Image HorizontalAlignment="Center" Source="ms-appx:///Assets/Images/Characters/priest.png" Height="50" Width="50"/>
-                                <TextBlock HorizontalAlignment="Center" Foreground="AliceBlue">Priest</TextBlock>
-                            </StackPanel>
-                            <TextBlock VerticalAlignment="Center" FontSize="15">Choose a friendly piece to restore health</TextBlock>
-                            <Image Source="ms-appx:///Assets/Images/Abilities/heal-ability.png" Height="20" VerticalAlignment="Center"/>
-                            <TextBlock VerticalAlignment="Center" FontSize="15"></TextBlock>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="100">
-                <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">Items</TextBlock>
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal" Spacing="10">
-                        <TextBlock TextWrapping="WrapWholeWords" FontSize="15" VerticalAlignment="Center">When a piece steps on the item icon</TextBlock>
-                        <Image Source="ms-appx:///Assets/Images/Icon/mysterious.png" Height="30" VerticalAlignment="Center"/>
-                        <TextBlock FontSize="15" VerticalAlignment="Center">the piece is granted a benefical or harming effect.</TextBlock>
-                    </StackPanel>
-                    <TextBlock Margin="10" FontSize="15">The possible effects are:</TextBlock>
-                    <StackPanel Spacing="3" Margin="10,0,0,0">
-                        <TextBlock FontSize="15">Double damage - The piece's damage is doubled.</TextBlock>
-                        <TextBlock FontSize="15">Half damage - The piece's damage is halved.</TextBlock>
-                        <TextBlock FontSize="15">Take damage - The piece takes damage.</TextBlock>
-                        <TextBlock FontSize="15">Heal - The piece is healed.</TextBlock>
-                        <TextBlock FontSize="15">Freeze - The piece is frozen in place.</TextBlock>
-                    </StackPanel>
-                </StackPanel>
-            </StackPanel>
-        </StackPanel>
 
-        <Button x:Name="backButton" Click="backButton_Click" FontSize="30" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Bottom" Width="200">Back</Button>
+                <Button x:Name="backButton" Click="backButton_Click" FontSize="30" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Bottom" Width="200">Back</Button>
+            </Grid>
+        </Viewbox>
     </Grid>
 </Page>

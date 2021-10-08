@@ -12,29 +12,33 @@
 
     <Grid>
         <TextBlock FontSize="50" HorizontalAlignment="Center" Margin="0,20,0,0">About</TextBlock>
-        <StackPanel VerticalAlignment="Center" Spacing="-130" Margin="80,0,0,0" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal" Margin="100">
-                <!--<TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">Developers</TextBlock>-->
-                <StackPanel>
-                    <TextBlock TextWrapping="WrapWholeWords" Width="800" FontSize="30" Margin="0,0,0,25">This is a school project developed over 6 weeks by three students. The assignment was "Chinese checkers with a twist". We choose to do an RPG-inspired version.</TextBlock>
-                    <StackPanel Orientation="Horizontal" Spacing="50">
-                        <TextBlock TextWrapping="WrapWholeWords" FontSize="30" VerticalAlignment="Center">The source code can be found on github</TextBlock>
-                        <HyperlinkButton NavigateUri="https://github.com/robinferm/chinese-checkers" VerticalAlignment="Center">
-                            <HyperlinkButton.Background>
-                                <SolidColorBrush Color="White" Opacity=".2"/>
-                            </HyperlinkButton.Background>
-                            <Image Source="ms-appx:///Assets/Images/GitHub-logo.png" Height="70"/>
-                        </HyperlinkButton>
+        <Viewbox>
+            <Grid>
+                <StackPanel VerticalAlignment="Center" Spacing="-130" Margin="80,0,0,0" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Margin="100">
+                        <!--<TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">Developers</TextBlock>-->
+                        <StackPanel>
+                            <TextBlock TextWrapping="WrapWholeWords" Width="800" FontSize="30" Margin="0,0,0,25">This is a school project developed over 6 weeks by three students. The assignment was "Chinese checkers with a twist". We choose to do an RPG-inspired version.</TextBlock>
+                            <StackPanel Orientation="Horizontal" Spacing="50">
+                                <TextBlock TextWrapping="WrapWholeWords" FontSize="30" VerticalAlignment="Center">The source code can be found on github</TextBlock>
+                                <HyperlinkButton NavigateUri="https://github.com/robinferm/chinese-checkers" VerticalAlignment="Center">
+                                    <HyperlinkButton.Background>
+                                        <SolidColorBrush Color="White" Opacity=".2"/>
+                                    </HyperlinkButton.Background>
+                                    <Image Source="ms-appx:///Assets/Images/GitHub-logo.png" Height="70"/>
+                                </HyperlinkButton>
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </StackPanel>
-            <!--<StackPanel Orientation="Horizontal" Margin="100">
+                    <!--<StackPanel Orientation="Horizontal" Margin="100">
                 <TextBlock HorizontalAlignment="Left" FontSize="40" Width="300">Credits</TextBlock>
                 <StackPanel>
                     <TextBlock TextWrapping="WrapWholeWords" Width="800" FontSize="30">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lobortis risus ut congue aliquam. Curabitur ultrices ultrices nisi sit amet blandit. Sed quis est in eros posuere condimentum et et quam. Ut nibh quam, cursus vel vehicula a, iaculis a ligula. Maecenas at nulla in urna suscipit ornare.</TextBlock>
                 </StackPanel>
             </StackPanel>-->
-        </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Viewbox>
         <Button x:Name="backButton" Click="backButton_Click" FontSize="30" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Bottom" Width="200">Back</Button>
     </Grid>
 </Page>

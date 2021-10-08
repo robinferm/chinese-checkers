@@ -367,6 +367,8 @@
     <Content Include="Assets\Images\splash.png" />
     <Content Include="Assets\Sounds\priest.wav" />
     <Content Include="Assets\Sounds\PieceMove.wav" />
+    <Content Include="Assets\Splash44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\SplashScreen2.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
