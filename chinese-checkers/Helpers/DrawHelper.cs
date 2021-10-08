@@ -259,11 +259,30 @@ namespace chinese_checkers.Helpers
             }
         }
 
-        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, Vector2 vector, CanvasBitmap pieceImageRed)
+        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, Vector2 vector, CanvasBitmap pieceImageRed, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, Piece piece)
         {
             vector.X = ScalingHelper.CalculateX(vector.X, vector.Y);
             vector.Y = ScalingHelper.CalculateY(vector.Y);
             args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), vector.X, vector.Y);
+
+            switch (piece.Buff)
+            {
+
+                case Item.DoubleDamage:
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(DoubleDamage), vector.X, vector.Y);
+                    break;
+
+                case Item.HalfDamage:
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(HalfDamage), vector.X, vector.Y);
+                    break;
+
+                case Item.FreezeSelf:
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(FreezeSelf), vector.X, vector.Y);
+
+                    break;
+            }
+            if (piece.Thorns)
+                args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns), vector.X, vector.Y);
         }
 
 

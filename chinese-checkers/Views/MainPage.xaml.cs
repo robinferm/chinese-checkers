@@ -178,7 +178,7 @@ namespace chinese_checkers.Views
                         img = pieceImageBlack;
                         break;
                 }
-                DrawHelper.DrawAnimationPiece(sender, args, gs.Board, gs.AnimatedPiece, img);
+                DrawHelper.DrawAnimationPiece(sender, args, gs.Board, gs.AnimatedPiece, img, freezeSelf, halfDamage, doubleDamage, thorns, gs.Board.Pieces.Find(x => x.Point == gs.Path.Last.Value));
             }
 
                 DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility, highlightCharacter);
