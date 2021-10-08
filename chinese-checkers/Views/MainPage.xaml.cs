@@ -45,7 +45,8 @@ namespace chinese_checkers.Views {
         CanvasBitmap locationImageYellow;
         CanvasBitmap mysteriousPosition;
         CanvasBitmap pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow;
-        CanvasBitmap freezeSelf, halfDamage, doubleDamage, thorns,def;
+        CanvasBitmap cursedOverlay;
+        CanvasBitmap freezeSelf, halfDamage, doubleDamage, thorns;
 
         Dictionary<string, CanvasBitmap[]> characterAbilityAnimations;
         Dictionary<string, CanvasBitmap> characterFrames;
@@ -115,7 +116,7 @@ namespace chinese_checkers.Views {
             //UpdateScore();
             gs.AnimateMove();
             //Debug.WriteLine(AnimationHelper.FrameTime);
-            if (gs.CurrentlyPlaying.AbilitySelected)
+            if (gs.AnimatedAbility.X != -5000)
             {
                 GifHelper.RunGif(characterAbilityAnimations[gs.CurrentlyPlaying.Character.GetType().Name].Count());
             }
@@ -147,7 +148,7 @@ namespace chinese_checkers.Views {
             }
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow, mysteriousPosition);
 
-            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow, freezeSelf,halfDamage,doubleDamage, thorns,def);
+            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow, freezeSelf,halfDamage,doubleDamage, thorns, cursedOverlay);
 
             if (gs.AnimatedAbility.X == -5000)
             {
@@ -284,7 +285,7 @@ namespace chinese_checkers.Views {
             characterFrames.Add("Warrior", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warrior-Frame.png")));
             characterAbility.Add("Warrior", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/battleshout-ability.png")));
 
-            CanvasBitmap[] fireball = new CanvasBitmap[12];
+            CanvasBitmap[] fireball = new CanvasBitmap[27];
             for (int i = 0; i < fireball.Length; i++)
             {
                 fireball[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/fireball/fireball-" + i.ToString() + ".png"));
@@ -297,6 +298,38 @@ namespace chinese_checkers.Views {
                 heal[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/heal/heal-" + i.ToString() + ".png"));
             }
             characterAbilityAnimations.Add("Priest", heal);
+
+            CanvasBitmap[] curse = new CanvasBitmap[30];
+            for (int i = 0; i < curse.Length; i++)
+            {
+                curse[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/curse/curse-" + i.ToString() + ".png"));
+            }
+            characterAbilityAnimations.Add("Warlock", curse);
+            cursedOverlay = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/curse/curse-10.png"));
+
+            CanvasBitmap[] battleShout = new CanvasBitmap[100];
+            for (int i = 0; i < battleShout.Length; i++)
+            {
+                battleShout[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/battleshout/battleshout-" + i.ToString() + ".png"));
+            }
+            characterAbilityAnimations.Add("Warrior", battleShout);
+            
+            CanvasBitmap[] thorns = new CanvasBitmap[34];
+            for (int i = 0; i < thorns.Length; i++)
+            {
+                thorns[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/thorns/thorns-" + i.ToString() + ".png"));
+            }
+            characterAbilityAnimations.Add("Druid", thorns);
+
+            CanvasBitmap[] volley = new CanvasBitmap[26];
+            for (int i = 0; i < volley.Length; i++)
+            {
+                volley[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/volley/volley-" + i.ToString() + ".png"));
+            }
+            characterAbilityAnimations.Add("Hunter", thorns);
+
+
+
         }
 
         private void canvas_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -316,7 +349,7 @@ namespace chinese_checkers.Views {
                     {
                         if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
                         {
-                            gs.UseCharacterAbilityWithAnimation(ScalingHelper.CalculateFramePosition(gs.CurrentlyPlaying.NestColor)[1], new Point((int)ScalingHelper.CalculateX(L.Point.X, L.Point.Y), (int)ScalingHelper.CalculateY(L.Point.Y)), L);
+                            gs.UseCharacterAbilityWithAnimation(ScalingHelper.CalculateFramePosition(gs.CurrentlyPlaying.NestColor)[1], new Vector2((int)ScalingHelper.CalculateX(L.Point.X, L.Point.Y), (int)ScalingHelper.CalculateY(L.Point.Y)), L);
                         }
                         else
                         {
@@ -367,7 +400,9 @@ namespace chinese_checkers.Views {
                     gs.CurrentlyPlaying.SelectAbility(gs.Board);
                     if (gs.CurrentlyPlaying.Character.GetType().Name == "Hunter")
                     {
-                        //gs.UseCharacterAbilityWithAnimation();
+                        //TODO hunter ability
+                        // gs.UseCharacterAbilityWithAnimation(ScalingHelper.CalculateFramePosition(gs.CurrentlyPlaying.NestColor)[1], new Point((int)ScalingHelper.CalculateX(gs.CurrentlyPlaying.AvailableMoves[0].Point.X, gs.CurrentlyPlaying.AvailableMoves[0].Point.Y)));
+
                     }
                 }
             }

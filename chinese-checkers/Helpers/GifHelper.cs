@@ -17,15 +17,16 @@ namespace chinese_checkers.Helpers {
         public static void RunGif(int time)
         {
             GifCounter++;
-            if (GifCounter >= time * frameTime)
+            if (GifCounter >= time * 5)
             {
-                GifCounter -= time * frameTime;
+                GifCounter -= time * 5;
             }
         }
 
         public static CanvasBitmap Ability(Dictionary<string, CanvasBitmap[]> abilityAnimations, Player player)
         {
-            return abilityAnimations[player.Character.GetType().Name][GifCounter / frameTime];
+            Debug.WriteLine(GifCounter);
+            return abilityAnimations[player.Character.GetType().Name][GifCounter / 5];
         }
 
     }

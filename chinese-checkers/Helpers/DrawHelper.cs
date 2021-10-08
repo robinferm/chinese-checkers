@@ -67,7 +67,7 @@ namespace chinese_checkers.Helpers {
         ///</example>
         /// 
         /// </summary>
-        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, CanvasBitmap def)
+        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, CanvasBitmap cursed)
         {
             foreach (var P in board.Pieces)
             {
@@ -107,6 +107,15 @@ namespace chinese_checkers.Helpers {
                         break;
 
                 }
+                if (P.Cursed)
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(cursed, .5f), x, y);
+                }
+                if (P.Thorns)
+                {
+
+                }
+
                 
                 if (P.Buffs.Contains(Item.FreezeSelf))
                 {
@@ -122,12 +131,6 @@ namespace chinese_checkers.Helpers {
                 {
                     args.DrawingSession.DrawImage(ScalingHelper.Img(HalfDamage), x, y);
                 }
-
-                if (P.Thorns)
-                {
-                    args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns), x, y);
-                }
-
             }
         }
 
@@ -311,7 +314,7 @@ namespace chinese_checkers.Helpers {
             }
         }
 
-        public static void DrawAbility(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Player player, CanvasBitmap image, Point abilityLocation)
+        public static void DrawAbility(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Player player, CanvasBitmap image, Vector2 abilityLocation)
         {
             var pos = ScalingHelper.CalculateFramePosition(player.NestColor)[1];
             //args.DrawingSession.DrawImage(ScalingHelper.Img(image, .3f), pos.X - 20, pos.Y - 20);
@@ -323,7 +326,11 @@ namespace chinese_checkers.Helpers {
                 case "Priest":
                     args.DrawingSession.DrawImage(ScalingHelper.Img(image), abilityLocation.X - (64 * ScalingHelper.ScaleXY), abilityLocation.Y - (64 * ScalingHelper.ScaleXY));
                     break;
+                case "Warrior":
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(image, .75f), abilityLocation.X - (128 * .125f * ScalingHelper.ScaleXY), abilityLocation.Y - (128 * .1f * ScalingHelper.ScaleXY));
+                    break;
                 default:
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(image, .5f), abilityLocation.X, abilityLocation.Y);
                     break;
             }
         }
