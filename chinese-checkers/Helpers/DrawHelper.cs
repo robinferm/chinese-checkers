@@ -18,65 +18,56 @@ namespace chinese_checkers.Helpers {
     /// <summary>
     /// Helper function that is used to draw everything on the canvas
     /// </summary>
-    public static class DrawHelper {
-        //temp
-
+    public static class DrawHelper
+    {
         public static CanvasBitmap currentAbilityFrame { get; set; }
+
+
+        /// <summary>
+        /// It draws a board for the game and shows six randomized mysterious positions on the board by a proper icon.
+        ///
+        ///
+        ///<example>
+        /// For example:
+        ///     <code>
+        ///     args.DrawingSession.DrawImage(ScalingHelper.Img(mysteriousPosition), x, y);
+        ///     </code>
+        ///     <c>mysteriousPosition</c> is the name of an icon to show mysterious positions on the board.
+        ///</example>
+        ///
+        /// 
+        /// </summary>
 
         public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage, CanvasBitmap locationImageRed, CanvasBitmap locationImageGreen, CanvasBitmap locationImageBlue, CanvasBitmap locationImageBlack, CanvasBitmap locationImageWhite, CanvasBitmap locationImageYellow, CanvasBitmap mysteriousPosition)
         {
             foreach (var L in board.Locations)
-            {
-                //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
-                //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
+            {               
                 var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
                 var y = ScalingHelper.CalculateY(L.Point.Y);
 
-                //if (L.NestColorId != null)
-                //{
-                //    args.DrawingSession.DrawImage(locationImage, x, y);
-                //}
-
-                switch (L.NestColor)
+                args.DrawingSession.DrawImage(ScalingHelper.Img(locationImage), x, y);
+                if (L.ItemId != null)
                 {
-                    //case NestColor.Red:
-                    //    args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageRed), x, y);
-                    //    break;
-
-                    //case NestColor.Green:
-                    //    args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageGreen), x, y);
-                    //    break;
-
-                    //case NestColor.Blue:
-                    //    args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageBlue), x, y);
-                    //    break;
-
-                    //case NestColor.Black:
-                    //    args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageBlack), x, y);
-                    //    break;
-
-                    //case NestColor.White:
-                    //    args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageWhite), x, y);
-                    //    break;
-
-                    //case NestColor.Yellow:
-                    //    args.DrawingSession.DrawImage(ScalingHelper.Img(locationImageYellow), x, y);
-                    //    break;
-
-                    default:
-                        args.DrawingSession.DrawImage(ScalingHelper.Img(locationImage), x, y);
-                        //args.DrawingSession.DrawText(L.Point.X.ToString() + ", " + L.Point.Y, x, y, Colors.Black);
-                        if (L.ItemId != null)
-                        {
-                            args.DrawingSession.DrawImage(ScalingHelper.Img(mysteriousPosition), x, y);
-                        }
-                        break;
-
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(mysteriousPosition), x, y);
                 }
             }
         }
 
-        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow, CanvasBitmap cursed)
+        /// <summary>
+        /// It places all the images for the pieces on the board.
+        ///
+        ///
+        ///<example>
+        /// For example:
+        ///     <code>
+        ///      case NestColor.Red:
+        ///      args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), x, y);
+        ///     </code>
+        ///     <c>NestColor.Red</c> is an id color for a piece which is red 
+        ///</example>
+        /// 
+        /// </summary>
+        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, CanvasBitmap cursed)
         {
             foreach (var P in board.Pieces)
             {
@@ -84,12 +75,8 @@ namespace chinese_checkers.Helpers {
                 {
                     continue;
                 }
-                //var x = ((P.Point.X + 4) * ScalingHelper.ScalingValue + (P.Point.Y * (ScalingHelper.ScalingValue / 2)));
-                //var y = ((P.Point.Y + 4) * ScalingHelper.ScalingValue);
                 var x = ScalingHelper.CalculateX(P.Point.X, P.Point.Y);
                 var y = ScalingHelper.CalculateY(P.Point.Y);
-                //args.DrawingSession.DrawImage(P.Image, x+4, y+4);
-                //args.DrawingSession.DrawText(P.Id.ToString(), x, y, Colors.Black);
                 switch (P.NestColor)
                 {
                     case NestColor.Red:
@@ -128,10 +115,38 @@ namespace chinese_checkers.Helpers {
                 {
 
                 }
-                //args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImage), x + 1.5f, y + 1.5f);
+
+                
+                if (P.Buffs.Contains(Item.FreezeSelf))
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(FreezeSelf), x, y);
+                }
+
+                if (P.Buffs.Contains(Item.DoubleDamage))
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(DoubleDamage), x, y);
+                }
+
+                if (P.Buffs.Contains(Item.HalfDamage))
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(HalfDamage), x, y);
+                }
             }
         }
 
+        /// <summary>
+        /// This method place an image and an ability icon for each player and highlights a player's frame to show that it's turn to play.
+        /// 
+        ///<example>For example:
+        /// <code>
+        ///    args.DrawingSession.DrawImage(ScalingHelper.Img(frames[player.Character.GetType().Name], .4f), pos[0]);
+        ///    args.DrawingSession.DrawImage(ScalingHelper.Img(abilitys[player.Character.GetType().Name], .5f), pos[1]);
+        /// </code>
+        /// <c>frames[player.Character.GetType().Name</c> is the name of the image for the (selected)player.
+        /// <c>abilitys[player.Character.GetType().Name]</c> is the name of the icon for the (selected)player which shows the ability of the player.
+        /// </example>
+        /// 
+        /// </summary>
         public static void DrawCharacterAndAbility(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Player> players, Dictionary<string, CanvasBitmap> frames, Dictionary<string, CanvasBitmap> abilitys, CanvasBitmap highlight)
         {
             foreach (var player in players)
@@ -141,6 +156,7 @@ namespace chinese_checkers.Helpers {
                 bool isHighlighted = false;
 
                 Vector2 highlightPosition = new Vector2();
+
                 switch (player.NestColor)
                 {
                     case NestColor.Red:
@@ -149,6 +165,7 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (90 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-5));
                         }
+
                         break;
                     case NestColor.Black:
 
@@ -157,6 +174,7 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((120 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(-1) - (ScalingHelper.ScalingValue / 2));
                         }
+
                         break;
                     case NestColor.Blue:
                         if (player.Highlight == true)
@@ -164,6 +182,7 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((110 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(7));
                         }
+
                         break;
                     case NestColor.Green:
 
@@ -172,6 +191,7 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(1, 9) - (190 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(11) - (ScalingHelper.ScalingValue / 2));
                         }
+
                         break;
                     case NestColor.White:
                         if (player.Highlight == true)
@@ -179,6 +199,7 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(-5, 8) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(7));
                         }
+
                         break;
                     case NestColor.Yellow:
 
@@ -188,19 +209,25 @@ namespace chinese_checkers.Helpers {
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (210 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-1) - (ScalingHelper.ScalingValue / 2));
                         }
                         break;
-                    default:
-                        break;
                 }
               
                 if (isHighlighted)
                 {
                     args.DrawingSession.DrawImage(ScalingHelper.Img(highlight, .4f), highlightPosition);
                 }
+
                 args.DrawingSession.DrawImage(ScalingHelper.Img(frames[player.Character.GetType().Name], .4f), pos[0]);
                 args.DrawingSession.DrawImage(ScalingHelper.Img(abilitys[player.Character.GetType().Name], .5f), pos[1]);
+
             }
         }
 
+        /// <summary>
+        ///  This method helps the player to show the available positions to meve by drawing some circles
+        ///  
+        ///  <c>x</c> Calculated scailing point.
+        ///  <c>y</c> Calculated scailing point.
+        /// </summary>
         public static void DrawAvailableMoves(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Location> locations)
         {
             foreach (var L in locations)
@@ -211,6 +238,16 @@ namespace chinese_checkers.Helpers {
             }
         }
 
+        /// <summary>
+        /// This function draws a path to help the player see the availble movement's path on the board.
+        /// To have this feature, the player should enable Debug mode from options
+        ///
+        ///  <code>
+        ///  args.DrawingSession.DrawLine(p1, p2, Colors.Black);
+        /// </code>
+        ///  <c>p1</c> Calculated scailing point(x).
+        ///  <c>p2</c> Calculated scailing point(y).
+        /// </summary>
         public static void DrawPaths(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<LinkedList<Point>> paths, Location mouseover)
         {
             foreach (var P in paths)
@@ -233,13 +270,39 @@ namespace chinese_checkers.Helpers {
             }
         }
 
-        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Vector2 vector, CanvasBitmap pieceImageRed)
+        /// <summary>
+        /// It makes animation to show a moving piece on the board.
+        /// The piece with animation may have an icon on it to show that the piece has Buff or freezed state.
+        /// This function makes posibility for the pieces to animate even if they have an icon.
+        ///
+        /// </summary>
+        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, Vector2 vector, CanvasBitmap pieceImageRed, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, Piece piece)
         {
             vector.X = ScalingHelper.CalculateX(vector.X, vector.Y);
             vector.Y = ScalingHelper.CalculateY(vector.Y);
-
             args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), vector.X, vector.Y);
+
+            if (piece.Buffs.Contains(Item.FreezeSelf))
+            {
+                args.DrawingSession.DrawImage(ScalingHelper.Img(FreezeSelf), vector.X, vector.Y);
+            }
+
+            if (piece.Buffs.Contains(Item.DoubleDamage))
+            {
+                args.DrawingSession.DrawImage(ScalingHelper.Img(DoubleDamage), vector.X, vector.Y);
+            }
+
+            if (piece.Buffs.Contains(Item.HalfDamage))
+            {
+                args.DrawingSession.DrawImage(ScalingHelper.Img(HalfDamage), vector.X, vector.Y);
+            }
+
+            if (piece.Thorns)
+            {
+                args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns), vector.X, vector.Y);
+            }
         }
+
 
         public static void DrawScoreBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, ScoreBoard scoreBoard)
         {

@@ -42,8 +42,16 @@ namespace chinese_checkers.Core.Models {
         public GameSession(int numberOfAI, ICharacter playerCharacter)
         {
             this.Players = new List<Player>();
-            this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
-            //this.Players.Add(new Player(0, NestColor.Green));
+            if (numberOfAI == 6)
+            {
+                this.Players.Add(new Player(0, NestColor.Green));
+            }
+            else
+            {
+                this.Players.Add(new Player(0, playerCharacter, NestColor.Green));
+            }
+
+
             //this.PlayerScore = new Dictionary<Player, int>();
             this.GoalColor = new Dictionary<NestColor, NestColor>()
             {
@@ -90,6 +98,14 @@ namespace chinese_checkers.Core.Models {
                     break;
 
                 case 5:
+                    this.Players.Add(new Player(1, NestColor.White));
+                    this.Players.Add(new Player(2, NestColor.Yellow));
+                    this.Players.Add(new Player(3, NestColor.Red));
+                    this.Players.Add(new Player(4, NestColor.Black));
+                    this.Players.Add(new Player(5, NestColor.Blue));
+                    break;
+
+                case 6:
                     this.Players.Add(new Player(1, NestColor.White));
                     this.Players.Add(new Player(2, NestColor.Yellow));
                     this.Players.Add(new Player(3, NestColor.Red));
@@ -161,6 +177,8 @@ namespace chinese_checkers.Core.Models {
 
             }
             this.CurrentlyPlaying = nextPlayer;
+
+            Board.Pieces.Where(x => x.NestColor == CurrentlyPlaying.NestColor).ToList().ForEach(x => x.Buffs.Remove(Item.FreezeSelf));
 
             this.CurrentlyPlaying.Highlight = true;
 
@@ -348,6 +366,7 @@ namespace chinese_checkers.Core.Models {
                 selectedNode = Path.First;
                 CurrentlyPlaying.selectedPiece.ToggleHidden();
                 CurrentlyPlaying.DeSelectPiece();
+
             }
         }
 

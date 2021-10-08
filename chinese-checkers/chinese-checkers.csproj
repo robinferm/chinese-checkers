@@ -578,6 +578,11 @@
     <Content Include="Assets\Images\Abilities\heal-ability.png" />
     <Content Include="Assets\Images\Abilities\volly-ability.png" />
     <Content Include="Assets\Images\Abilities\battleshout-ability.png" />
+    <Content Include="Assets\Images\Buff\def.png" />
+    <Content Include="Assets\Images\Buff\thorns.png" />
+    <Content Include="Assets\Images\Buff\DoubleDamage.png" />
+    <Content Include="Assets\Images\Buff\Frozen.png" />
+    <Content Include="Assets\Images\Buff\HalfDamage.png" />
     <Content Include="Assets\Images\CharacterFrame\Druid-Frame.png" />
     <Content Include="Assets\Images\CharacterFrame\highlight.png" />
     <Content Include="Assets\Images\CharacterFrame\Hunter-Frame.png" />
@@ -605,6 +610,9 @@
     <Content Include="Assets\Images\Locations\red2.png" />
     <Content Include="Assets\Images\Locations\white.png" />
     <Content Include="Assets\Images\Locations\yellow.png" />
+    <Content Include="Assets\Images\Medals\medal-4.png" />
+    <Content Include="Assets\Images\Medals\medal-5.png" />
+    <Content Include="Assets\Images\Medals\medal-6.png" />
     <Content Include="Assets\Images\Medals\medal_04_bronze.png" />
     <Content Include="Assets\Images\Medals\medal_04_gold.png" />
     <Content Include="Assets\Images\Medals\medal_04_silver.png" />
@@ -622,6 +630,8 @@
     <Content Include="Assets\Sounds\PieceMove.wav" />
     <Content Include="Assets\Sounds\warlock.wav" />
     <Content Include="Assets\Sounds\warrior.wav" />
+    <Content Include="Assets\Splash44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\SplashScreen2.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

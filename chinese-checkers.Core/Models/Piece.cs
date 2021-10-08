@@ -16,7 +16,7 @@ namespace chinese_checkers.Core.Models
         public int Damage { get; set; }
         public Point Point { get; set; }
         public NestColor NestColor { get; set; }
-        public Item? Buff { get; set; }
+        public List<Item> Buffs { get; set; }
         public CanvasBitmap Image { get; set; }
         public bool Thorns { get; set; }
         public bool Cursed { get; set; }
@@ -33,20 +33,22 @@ namespace chinese_checkers.Core.Models
             this.Health = _maxHealth;
             this.Damage = _defaultDamage;
             this.Hidden = false;
-            this.Buff = null;
+            this.Buffs = new List<Item>();
             this.Thorns = false;
             this.Cursed = false;
         }
 
         public void PickUpItem(Item item)
         {
-            this.Buff = item;
+            this.Buffs.Add(item);
             switch (item)
             {
                 case Item.DoubleDamage:
+                    Buffs.Remove(Item.HalfDamage);
                     Damage = _defaultDamage * 2;
                     break;
                 case Item.HalfDamage:
+                    Buffs.Remove(Item.DoubleDamage);
                     Damage = _defaultDamage / 2;
                     break;
                 case Item.Heal:
@@ -75,7 +77,7 @@ namespace chinese_checkers.Core.Models
 
         public void Reset()
         {
-            this.Buff = null;
+            this.Buffs = new List<Item>();
             this.Health = 100;
             this.Damage = 20;
             this.Thorns = false;

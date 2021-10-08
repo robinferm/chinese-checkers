@@ -46,6 +46,7 @@ namespace chinese_checkers.Views {
         CanvasBitmap mysteriousPosition;
         CanvasBitmap pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow;
         CanvasBitmap cursedOverlay;
+        CanvasBitmap freezeSelf, halfDamage, doubleDamage, thorns;
 
         Dictionary<string, CanvasBitmap[]> characterAbilityAnimations;
         Dictionary<string, CanvasBitmap> characterFrames;
@@ -146,11 +147,14 @@ namespace chinese_checkers.Views {
                 args.DrawingSession.DrawText(selPiece.Id.ToString(), 0, 40, Colors.Black);
             }
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow, mysteriousPosition);
-            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow, cursedOverlay);
+
+            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow, freezeSelf,halfDamage,doubleDamage, thorns, cursedOverlay);
+
             if (gs.AnimatedAbility.X == -5000)
             {
                 DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
             }
+
             args.DrawingSession.DrawText(((int)currentPoint.X).ToString() + ", " + ((int)currentPoint.Y).ToString(), 0, 0, Colors.Black);
 
             if (gs.CurrentlyPlaying.Paths != null && DebugHelper.DebugEnabled)
@@ -160,8 +164,12 @@ namespace chinese_checkers.Views {
 
             if (gs.AnimatedPiece.X != -5000)
             {
+                
                 var color = gs.CurrentlyPlaying.NestColor;
+                var selectedPiece = gs.CurrentlyPlaying;
+                             
                 CanvasBitmap img = pieceImageRed;
+               
                 switch (color)
                 {
                     case NestColor.Red:
@@ -183,13 +191,14 @@ namespace chinese_checkers.Views {
                     case NestColor.White:
                         img = pieceImageWhite;
                         break;
-
+                        
                     case NestColor.Black:
                         img = pieceImageBlack;
                         break;
                 }
-                DrawHelper.DrawAnimationPiece(sender, args, gs.AnimatedPiece, img);
+                DrawHelper.DrawAnimationPiece(sender, args, gs.Board, gs.AnimatedPiece, img, freezeSelf, halfDamage, doubleDamage, thorns, gs.Board.Pieces.Find(x => x.Point == gs.Path.Last.Value));
             }
+
                 DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility, highlightCharacter);
             //DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
 
@@ -249,6 +258,12 @@ namespace chinese_checkers.Views {
             pieceImageWhite = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/white.png"));
             pieceImageYellow = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/yellow.png"));
 
+
+            freezeSelf= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/Frozen.png"));
+            halfDamage= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/HalfDamage.png"));
+            doubleDamage= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/DoubleDamage.png"));
+            thorns= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/thorns.png"));
+            def= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/def.png"));
 
             mysteriousPosition = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/icon/mysterious.png"));
 

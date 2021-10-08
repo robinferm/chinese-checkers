@@ -6,29 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="Game Ended"
     PrimaryButtonText="Main menu"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
-
-    <!--<ListView x:Name="test" ItemsSource="{x:Bind ScoreBoard.ScoreBoardEntries}">
-        <ListView.ItemTemplate>
-            <DataTemplate>-->
-                <Grid x:Name="testgrid" Loaded="testgrid_Loaded">
-                    <!--<Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" x:Name="medalCol" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                    </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="ms-appx:///Assets/Images/Medals/medal_04_bronze.png" Width="30" Height="30"></Image>
-                    <TextBlock Grid.Row="0" Grid.Column="1"><Run Text="{Binding Player.NestColor}" /></TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="2"><Run Text="{Binding Player.Score}" /></TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="3"><Run Text="{Binding Player.Placement}" /></TextBlock>-->
-                </Grid>
-            <!--</DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>-->
+    <StackPanel>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="40" Margin="0,0,0,50">Game Ended</TextBlock>
+        <Grid x:Name="testgrid" Loaded="testgrid_Loaded" RowSpacing="10"/>
+    </StackPanel>
 </ContentDialog>
