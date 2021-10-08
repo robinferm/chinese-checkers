@@ -360,6 +360,9 @@
     <Content Include="Assets\Images\Locations\red2.png" />
     <Content Include="Assets\Images\Locations\white.png" />
     <Content Include="Assets\Images\Locations\yellow.png" />
+    <Content Include="Assets\Images\Medals\medal-4.png" />
+    <Content Include="Assets\Images\Medals\medal-5.png" />
+    <Content Include="Assets\Images\Medals\medal-6.png" />
     <Content Include="Assets\Images\Medals\medal_04_bronze.png" />
     <Content Include="Assets\Images\Medals\medal_04_gold.png" />
     <Content Include="Assets\Images\Medals\medal_04_silver.png" />

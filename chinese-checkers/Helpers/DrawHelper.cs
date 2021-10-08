@@ -208,7 +208,7 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (210 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-1) - (ScalingHelper.ScalingValue / 2));
                         }
-
+                        break;
                 }
               
                 if (isHighlighted)
