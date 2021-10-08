@@ -80,8 +80,6 @@ namespace chinese_checkers.Helpers
         {
             foreach (var P in board.Pieces)
             {
-                
-                
                 if (P.Hidden)
                 {
                     continue;
@@ -263,14 +261,9 @@ namespace chinese_checkers.Helpers
 
         public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, Vector2 vector, CanvasBitmap pieceImageRed)
         {
-            
             vector.X = ScalingHelper.CalculateX(vector.X, vector.Y);
             vector.Y = ScalingHelper.CalculateY(vector.Y);
-           
-           
             args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), vector.X, vector.Y);
-
-          
         }
 
 
