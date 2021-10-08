@@ -37,7 +37,7 @@ namespace chinese_checkers.Views.Menu.Dialogs
         {
             var ordered = ScoreBoard.ScoreBoardEntries.OrderBy(x => x.Player.Placement).ToList();
             var colDef = new ColumnDefinition();
-            colDef.Width = GridLength.Auto;
+            //colDef.Width = GridLength.Auto;
             testgrid.ColumnDefinitions.Add(colDef);
 
             foreach (var item in ordered)
@@ -49,6 +49,7 @@ namespace chinese_checkers.Views.Menu.Dialogs
                 Image img = new Image();
                 img.Width = 50.0;
                 img.Height = 50.0;
+                img.VerticalAlignment = VerticalAlignment.Center;
                 switch (item.Player.Placement)
                 {
                     case 1:
@@ -60,6 +61,15 @@ namespace chinese_checkers.Views.Menu.Dialogs
                     case 3:
                         img.Source = new BitmapImage(new Uri("ms-appx:///Assets/Images/Medals/medal_04_bronze.png"));
                         break;
+                    case 4:
+                        img.Source = new BitmapImage(new Uri("ms-appx:///Assets/Images/Medals/medal-4.png"));
+                        break;
+                    case 5:
+                        img.Source = new BitmapImage(new Uri("ms-appx:///Assets/Images/Medals/medal-5.png"));
+                        break;
+                    case 6:
+                        img.Source = new BitmapImage(new Uri("ms-appx:///Assets/Images/Medals/medal-6.png"));
+                        break;
                     default:
                         break;
                 }
@@ -67,19 +77,20 @@ namespace chinese_checkers.Views.Menu.Dialogs
                 
 
                 TextBlock txt = new TextBlock();
-
+                txt.FontSize = 30;
+                txt.VerticalAlignment = VerticalAlignment.Center;
                 testgrid.Children.Add(img);
                 testgrid.Children.Add(txt);
                 
 
-                Grid.SetRow(txt, ordered.IndexOf(item));
                 Grid.SetRow(img, ordered.IndexOf(item));
+                Grid.SetRow(txt, ordered.IndexOf(item));
 
-                Grid.SetColumn(img, 0);
-                Grid.SetColumn(txt, 1);
+                Grid.SetColumn(img, 1);
+                Grid.SetColumn(txt, 0);
                 
 
-                txt.Text = item.Player.ToString();
+                txt.Text = item.Player.NestColor.ToString();
                 
 
             }
