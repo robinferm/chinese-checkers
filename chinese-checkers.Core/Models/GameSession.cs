@@ -164,6 +164,8 @@ namespace chinese_checkers.Core.Models
             }
             this.CurrentlyPlaying = nextPlayer;
 
+            Board.Pieces.Where(x => x.NestColor == CurrentlyPlaying.NestColor).ToList().ForEach(x => x.Buffs.Remove(Item.FreezeSelf));
+
             this.CurrentlyPlaying.Highlight = true;
 
             if (this.CurrentlyPlaying.Placement == null)
@@ -352,6 +354,7 @@ namespace chinese_checkers.Core.Models
                 selectedNode = Path.First;
                 CurrentlyPlaying.selectedPiece.ToggleHidden();
                 CurrentlyPlaying.DeSelectPiece();
+                
             }
         }
 

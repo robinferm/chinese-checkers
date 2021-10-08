@@ -18,7 +18,8 @@ namespace chinese_checkers.Helpers {
     /// <summary>
     /// Helper function that is used to draw everything on the canvas
     /// </summary>
-    public static class DrawHelper {
+    public static class DrawHelper
+    {
         //temp
 
         public static CanvasBitmap currentAbilityFrame { get; set; }
@@ -27,6 +28,7 @@ namespace chinese_checkers.Helpers {
         {
             foreach (var L in board.Locations)
             {
+
                 //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
                 //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
                 var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
@@ -76,7 +78,7 @@ namespace chinese_checkers.Helpers {
             }
         }
 
-        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow)
+        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, CanvasBitmap def)
         {
             foreach (var P in board.Pieces)
             {
@@ -121,6 +123,27 @@ namespace chinese_checkers.Helpers {
 
                 }
                 //args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImage), x + 1.5f, y + 1.5f);
+
+                if (P.Buffs.Contains(Item.FreezeSelf))
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(FreezeSelf), x, y);
+                }
+
+                if (P.Buffs.Contains(Item.DoubleDamage))
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(DoubleDamage), x, y);
+                }
+
+                if (P.Buffs.Contains(Item.HalfDamage))
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(HalfDamage), x, y);
+                }
+
+                if (P.Thorns)
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns), x, y);
+                }
+
             }
         }
 
@@ -133,6 +156,7 @@ namespace chinese_checkers.Helpers {
                 bool isHighlighted = false;
 
                 Vector2 highlightPosition = new Vector2();
+
                 switch (player.NestColor)
                 {
                     case NestColor.Red:
@@ -141,6 +165,7 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(8, -4) + (90 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-5));
                         }
+
                         break;
                     case NestColor.Black:
 
@@ -149,6 +174,7 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(12, 0) + ((120 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(-1) - (ScalingHelper.ScalingValue / 2));
                         }
+
                         break;
                     case NestColor.Blue:
                         if (player.Highlight == true)
@@ -156,6 +182,7 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(8, 8) + ((110 * ScalingHelper.ScaleXY) - ScalingHelper.ScalingValue), ScalingHelper.CalculateY(7));
                         }
+
                         break;
                     case NestColor.Green:
 
@@ -164,6 +191,7 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(1, 9) - (190 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(11) - (ScalingHelper.ScalingValue / 2));
                         }
+
                         break;
                     case NestColor.White:
                         if (player.Highlight == true)
@@ -171,6 +199,7 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(-5, 8) - (150 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(7));
                         }
+
                         break;
                     case NestColor.Yellow:
 
@@ -179,17 +208,17 @@ namespace chinese_checkers.Helpers {
                             isHighlighted = true;
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (210 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-1) - (ScalingHelper.ScalingValue / 2));
                         }
-                        break;
-                    default:
-                        break;
+
                 }
               
                 if (isHighlighted)
                 {
                     args.DrawingSession.DrawImage(ScalingHelper.Img(highlight, .4f), highlightPosition);
                 }
+
                 args.DrawingSession.DrawImage(ScalingHelper.Img(frames[player.Character.GetType().Name], .4f), pos[0]);
                 args.DrawingSession.DrawImage(ScalingHelper.Img(abilitys[player.Character.GetType().Name], .5f), pos[1]);
+
             }
         }
 
@@ -225,13 +254,33 @@ namespace chinese_checkers.Helpers {
             }
         }
 
-        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Vector2 vector, CanvasBitmap pieceImageRed)
+        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, Vector2 vector, CanvasBitmap pieceImageRed, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, Piece piece)
         {
             vector.X = ScalingHelper.CalculateX(vector.X, vector.Y);
             vector.Y = ScalingHelper.CalculateY(vector.Y);
-
             args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), vector.X, vector.Y);
+
+            if (piece.Buffs.Contains(Item.FreezeSelf))
+            {
+                args.DrawingSession.DrawImage(ScalingHelper.Img(FreezeSelf), vector.X, vector.Y);
+            }
+
+            if (piece.Buffs.Contains(Item.DoubleDamage))
+            {
+                args.DrawingSession.DrawImage(ScalingHelper.Img(DoubleDamage), vector.X, vector.Y);
+            }
+
+            if (piece.Buffs.Contains(Item.HalfDamage))
+            {
+                args.DrawingSession.DrawImage(ScalingHelper.Img(HalfDamage), vector.X, vector.Y);
+            }
+
+            if (piece.Thorns)
+            {
+                args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns), vector.X, vector.Y);
+            }
         }
+
 
         public static void DrawScoreBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, ScoreBoard scoreBoard)
         {

@@ -328,6 +328,11 @@
     <Content Include="Assets\Images\Abilities\heal-ability.png" />
     <Content Include="Assets\Images\Abilities\volly-ability.png" />
     <Content Include="Assets\Images\Abilities\battleshout-ability.png" />
+    <Content Include="Assets\Images\Buff\def.png" />
+    <Content Include="Assets\Images\Buff\thorns.png" />
+    <Content Include="Assets\Images\Buff\DoubleDamage.png" />
+    <Content Include="Assets\Images\Buff\Frozen.png" />
+    <Content Include="Assets\Images\Buff\HalfDamage.png" />
     <Content Include="Assets\Images\CharacterFrame\Druid-Frame.png" />
     <Content Include="Assets\Images\CharacterFrame\highlight.png" />
     <Content Include="Assets\Images\CharacterFrame\Hunter-Frame.png" />
