@@ -14,13 +14,11 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
-namespace chinese_checkers.Core.Models
-{
+namespace chinese_checkers.Core.Models {
     /// <summary>
     /// This is used when a new game is created
     /// </summary>
-    public class GameSession
-    {
+    public class GameSession {
         public Board Board { get; set; }
         public List<Player> Players { get; set; }
         //public Dictionary<Player, int> PlayerScore { get; set; }
@@ -296,7 +294,7 @@ namespace chinese_checkers.Core.Models
             {
                 //if (counter <= AnimationHelper.FrameTime * 2)
                 //Debug.WriteLine(SoundHelper.mediaPlayer.PlaybackSession.PlaybackState);
-                if(SoundHelper.mediaPlayer.PlaybackSession.PlaybackState == Windows.Media.Playback.MediaPlaybackState.Paused)
+                if (SoundHelper.mediaPlayer.PlaybackSession.PlaybackState == Windows.Media.Playback.MediaPlaybackState.Paused)
                 {
                     PausedCount++;
                 }
@@ -307,11 +305,8 @@ namespace chinese_checkers.Core.Models
                         case "Mage":
                             AnimatedAbility = AnimationHelper.MoveFireBall(AnimatedAbilityStart, AnimatedAbility, AnimatedAbilityEnd);
                             break;
-                        case "Priest":
-                            AnimatedAbility = AnimatedAbilityEnd;
-
-                            break;
                         default:
+                            AnimatedAbility = AnimatedAbilityEnd;
                             break;
                     }
                     counter++;
@@ -358,12 +353,36 @@ namespace chinese_checkers.Core.Models
         public void UseCharacterAbilityWithAnimation(Vector2 start, Point end, Location location = null)
         {
             PlayAnimation = true;
-            SoundHelper.Play(Sound.Priest);
-            Point startPoint = new Point((int)start.X, (int)start.Y);
             if (location != null)
             {
                 CurrentlyPlaying.selectedPiece = Board.Pieces.Find(x => x.Id == location.PieceId);
             }
+            switch (CurrentlyPlaying.Character.GetType().Name)
+            {
+                case "Priest":
+                    SoundHelper.Play(Sound.Priest);
+                    break;
+                case "Warlock":
+                    SoundHelper.Play(Sound.Warlock);
+                    break;
+                case "Warrior":
+                    SoundHelper.Play(Sound.Warrior);
+                    break;
+                case "Druid":
+                    SoundHelper.Play(Sound.Druid);
+                    break;
+                case "Hunter":
+                    SoundHelper.Play(Sound.Hunter);
+                    break;
+                case "Mage":
+                    SoundHelper.Play(Sound.Mage);
+                    break;
+
+                default:
+                    break;
+            }
+            Point startPoint = new Point((int)start.X, (int)start.Y);
+            
             AnimatedAbilityStart = startPoint;
             AnimatedAbility = startPoint;
             AnimatedAbilityEnd = end;

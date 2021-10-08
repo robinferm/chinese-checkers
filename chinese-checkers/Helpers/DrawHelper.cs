@@ -76,7 +76,7 @@ namespace chinese_checkers.Helpers {
             }
         }
 
-        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow)
+        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow, CanvasBitmap cursed)
         {
             foreach (var P in board.Pieces)
             {
@@ -118,6 +118,14 @@ namespace chinese_checkers.Helpers {
 
                     default:
                         break;
+
+                }
+                if (P.Cursed)
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(cursed, .5f), x, y);
+                }
+                if (P.Thorns)
+                {
 
                 }
                 //args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImage), x + 1.5f, y + 1.5f);
@@ -255,7 +263,11 @@ namespace chinese_checkers.Helpers {
                 case "Priest":
                     args.DrawingSession.DrawImage(ScalingHelper.Img(image), abilityLocation.X - (64 * ScalingHelper.ScaleXY), abilityLocation.Y - (64 * ScalingHelper.ScaleXY));
                     break;
+                case "Warrior":
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(image, .75f), abilityLocation.X - (128 * .125f * ScalingHelper.ScaleXY), abilityLocation.Y - (128 * .1f * ScalingHelper.ScaleXY));
+                    break;
                 default:
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(image, .5f), abilityLocation.X, abilityLocation.Y);
                     break;
             }
         }
