@@ -29,10 +29,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.ViewManagement;
 using chinese_checkers.Views.Menu.Dialogs;
 
-namespace chinese_checkers.Views
-{
-    public sealed partial class MainPage : Page
-    {
+namespace chinese_checkers.Views {
+    public sealed partial class MainPage : Page {
         public MainViewModel ViewModel { get; } = new MainViewModel();
       //  public DrawHelper CharacterTurn { get; set; }
 
@@ -48,10 +46,14 @@ namespace chinese_checkers.Views
         CanvasBitmap mysteriousPosition;
         CanvasBitmap pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow;
         CanvasBitmap freezeSelf, halfDamage, doubleDamage, thorns,def;
+
+        Dictionary<string, CanvasBitmap[]> characterAbilityAnimations;
         Dictionary<string, CanvasBitmap> characterFrames;
         Dictionary<string, CanvasBitmap> characterAbility;
         Windows.Foundation.Point currentPoint;
         Location mouseover = null;
+
+        int abilityAnimtionCounter = 0;
 
         public bool IsPaused { get; set; } = false;
         public ICharacter PlayerCharacter { get; set; }
@@ -61,6 +63,7 @@ namespace chinese_checkers.Views
         {
             characterFrames = new Dictionary<string, CanvasBitmap>();
             characterAbility = new Dictionary<string, CanvasBitmap>();
+            characterAbilityAnimations = new Dictionary<string, CanvasBitmap[]>();
             InitializeComponent();
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             canvas.IsFixedTimeStep = true;
@@ -112,6 +115,14 @@ namespace chinese_checkers.Views
             //UpdateScore();
             gs.AnimateMove();
             //Debug.WriteLine(AnimationHelper.FrameTime);
+            if (gs.CurrentlyPlaying.AbilitySelected)
+            {
+                GifHelper.RunGif(characterAbilityAnimations[gs.CurrentlyPlaying.Character.GetType().Name].Count());
+            }
+            else
+            {
+                GifHelper.GifCounter = 0;
+            }
         }
 
         public async void UpdateScore()
@@ -135,8 +146,14 @@ namespace chinese_checkers.Views
                 args.DrawingSession.DrawText(selPiece.Id.ToString(), 0, 40, Colors.Black);
             }
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow, mysteriousPosition);
+
             DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow, freezeSelf,halfDamage,doubleDamage, thorns,def);
-            DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
+
+            if (gs.AnimatedAbility.X == -5000)
+            {
+                DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
+            }
+
             args.DrawingSession.DrawText(((int)currentPoint.X).ToString() + ", " + ((int)currentPoint.Y).ToString(), 0, 0, Colors.Black);
 
             if (gs.CurrentlyPlaying.Paths != null && DebugHelper.DebugEnabled)
@@ -187,6 +204,13 @@ namespace chinese_checkers.Views
             if (ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth > 1200) // Hide scoreboard if window gets too small
             {
                 DrawHelper.DrawScoreBoard(sender, args, gs.ScoreBoard);
+            }
+            //args.DrawingSession.DrawImage(GifHelper.Ability(characterAbilityAnimations, gs.Players[0]));
+            if (gs.CurrentlyPlaying.AbilitySelected && gs.AnimatedAbility.X != -5000)
+            {
+
+                DrawHelper.DrawAbility(sender, args, gs.CurrentlyPlaying, GifHelper.Ability(characterAbilityAnimations, gs.Players[0]), gs.AnimatedAbility);
+                //Debug.WriteLine((AnimationHelper.AbilityCounter / 5).ToString());
             }
 
             if (gs.GameEnded)
@@ -259,6 +283,20 @@ namespace chinese_checkers.Views
 
             characterFrames.Add("Warrior", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warrior-Frame.png")));
             characterAbility.Add("Warrior", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/battleshout-ability.png")));
+
+            CanvasBitmap[] fireball = new CanvasBitmap[12];
+            for (int i = 0; i < fireball.Length; i++)
+            {
+                fireball[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/fireball/fireball-" + i.ToString() + ".png"));
+            }
+            characterAbilityAnimations.Add("Mage", fireball);
+
+            CanvasBitmap[] heal = new CanvasBitmap[25];
+            for (int i = 0; i < heal.Length; i++)
+            {
+                heal[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/heal/heal-" + i.ToString() + ".png"));
+            }
+            characterAbilityAnimations.Add("Priest", heal);
         }
 
         private void canvas_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -278,7 +316,11 @@ namespace chinese_checkers.Views
                     {
                         if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
                         {
-                            gs.UseCharacterAbilityWithAnimation(L);
+                            gs.UseCharacterAbilityWithAnimation(ScalingHelper.CalculateFramePosition(gs.CurrentlyPlaying.NestColor)[1], new Point((int)ScalingHelper.CalculateX(L.Point.X, L.Point.Y), (int)ScalingHelper.CalculateY(L.Point.Y)), L);
+                        }
+                        else
+                        {
+                            gs.CurrentlyPlaying.DeSelectAbility();
                         }
                     }
                     // If a piece is selected
@@ -325,7 +367,7 @@ namespace chinese_checkers.Views
                     gs.CurrentlyPlaying.SelectAbility(gs.Board);
                     if (gs.CurrentlyPlaying.Character.GetType().Name == "Hunter")
                     {
-                        gs.UseCharacterAbilityWithAnimation();
+                        //gs.UseCharacterAbilityWithAnimation();
                     }
                 }
             }
@@ -333,7 +375,7 @@ namespace chinese_checkers.Views
             {
                 if (gs.CurrentlyPlaying.AbilitySelected)
                 {
-                    gs.CurrentlyPlaying.DeSelectAbility();
+                    //gs.CurrentlyPlaying.DeSelectAbility();
                 }
             }
         }

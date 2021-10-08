@@ -12,10 +12,10 @@
 
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Image x:Name="fireballImage" Source="ms-appx:///Assets/Images/Abilities/fireball.png" Width="50" Height="50" Margin="0,0,20,0"></Image>
+            <Image x:Name="fireballImage" Source="ms-appx:///Assets/Images/Abilities/fireball-ability.png" Width="50" Height="50" Margin="0,0,20,0"></Image>
             <StackPanel>
                 <TextBlock>Character Ability: Fireball</TextBlock>
-                <TextBlock>Choose an enemy piece to cast a fireball that deals 1 damage</TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords" Width="400">Choose an enemy piece to cast a fireball that deals damage.</TextBlock>
             </StackPanel>
         </StackPanel>
     </Grid>

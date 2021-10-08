@@ -12,10 +12,10 @@
 
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Image x:Name="curseImage" Source="ms-appx:///Assets/Images/Abilities/curse.png" Width="50" Height="50" Margin="0,0,20,0"></Image>
+            <Image x:Name="curseImage" Source="ms-appx:///Assets/Images/Abilities/curse-ability.png" Width="50" Height="50" Margin="0,0,20,0"></Image>
             <StackPanel>
                 <TextBlock>Character Ability: Curse</TextBlock>
-                <TextBlock>Choose an enemy piece to cast a curse that ???</TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords" Width="400">Choose an enemy piece to cast a curse that cause the piece to take damage when it moves.</TextBlock>
             </StackPanel>
         </StackPanel>
     </Grid>
