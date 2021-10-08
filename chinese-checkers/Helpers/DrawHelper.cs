@@ -20,11 +20,13 @@ namespace chinese_checkers.Helpers
     /// </summary>
     public static class DrawHelper
     {
+        
         //temp
         public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage, CanvasBitmap locationImageRed, CanvasBitmap locationImageGreen, CanvasBitmap locationImageBlue, CanvasBitmap locationImageBlack, CanvasBitmap locationImageWhite, CanvasBitmap locationImageYellow, CanvasBitmap mysteriousPosition)
         {
             foreach (var L in board.Locations)
             {
+                
                 //var x = (L.Point.X + 4) * ScalingHelper.ScalingValue + (L.Point.Y * (ScalingHelper.ScalingValue / 2));
                 //var y = (L.Point.Y + 4) * ScalingHelper.ScalingValue;
                 var x = ScalingHelper.CalculateX(L.Point.X, L.Point.Y);
@@ -74,10 +76,12 @@ namespace chinese_checkers.Helpers
             }
         }
 
-        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow)
+        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow,CanvasBitmap FreezeSelf,CanvasBitmap DoubleDamage,CanvasBitmap HalfDamage,CanvasBitmap Thorns,CanvasBitmap def)
         {
             foreach (var P in board.Pieces)
             {
+                
+                
                 if (P.Hidden)
                 {
                     continue;
@@ -119,6 +123,25 @@ namespace chinese_checkers.Helpers
 
                 }
                 //args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImage), x + 1.5f, y + 1.5f);
+                switch(P.Buff)
+                {
+                    
+                    case Item.DoubleDamage:
+                        args.DrawingSession.DrawImage(ScalingHelper.Img(DoubleDamage), x, y);
+                        break;
+
+                    case Item.HalfDamage:
+                        args.DrawingSession.DrawImage(ScalingHelper.Img(HalfDamage), x, y);
+                        break;
+                    
+                    case Item.FreezeSelf:
+                        args.DrawingSession.DrawImage(ScalingHelper.Img(FreezeSelf), x, y);
+
+                        break;
+                }
+                if (P.Thorns)
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns), x, y);
+
             }
         }
 
@@ -237,14 +260,19 @@ namespace chinese_checkers.Helpers
                 }
             }
         }
-            
-        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Vector2 vector, CanvasBitmap pieceImageRed)
+
+        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, Vector2 vector, CanvasBitmap pieceImageRed)
         {
+            
             vector.X = ScalingHelper.CalculateX(vector.X, vector.Y);
             vector.Y = ScalingHelper.CalculateY(vector.Y);
-
+           
+           
             args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), vector.X, vector.Y);
+
+          
         }
+
 
         public static void DrawScoreBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, ScoreBoard scoreBoard)
         {
