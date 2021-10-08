@@ -108,6 +108,22 @@ namespace chinese_checkers.Core.Models
             L.PieceId = selectedPiece.Id;
         }
 
+        /// <summary>
+        /// This method finds all the neutral positions on the board and 
+        /// returns a random position of them.
+        /// 
+        /// <example>
+        /// For example:
+        /// <code>
+        ///     Random rndNeutralPoint = new Random();
+        ///     int rndPoint = rndNeutralPoint.Next(neutralPoints.Count);
+        ///     return neutralPoints[rndPoint]; 
+        /// </code>
+        /// results in <c> neutralPoints[rndPoint] </c> is a random position from the neutral positions of the board.
+        /// </example>
+        ///  
+        /// </summary>
+
         public Point GetRandomNeutralPosition()
         {
             List<Point> neutralPoints = new List<Point>();
@@ -120,9 +136,18 @@ namespace chinese_checkers.Core.Models
             }
             Random rndNeutralPoint = new Random();
             int rndPoint = rndNeutralPoint.Next(neutralPoints.Count);
-            return neutralPoints[rndPoint]; // Randomized position of neutral positions
+            // Randomized position of neutral positions
+            return neutralPoints[rndPoint]; 
         }
-      
+
+        /// <summary>
+        /// This method takes a random point from the GetRandomNeutralPosition() method and 
+        /// checks if the point is free.
+        /// A free point is a location on the board which has not any piece, Buff or Debuff on it.
+        /// 
+        /// results in <c>rndPosition</c>'s having a free randomized position on the board.
+        /// 
+        /// </summary>
         public Point GetRandomFreeNeutralPosition()
         {
             var rndPosition = GetRandomNeutralPosition();
@@ -132,6 +157,17 @@ namespace chinese_checkers.Core.Models
             }
             return rndPosition;
         }
+
+        /// <summary>
+        /// This method make a list of six randomized free positions which are found by the help of the GetRandomNeutralPosition()
+        /// method. The method sets six randomized item to six randomized free neutral positions of the board.
+        /// Items are:  DoubleDamage, HalfDamage, Heal, TakeDamage, FreezeSelf and FreezeOther
+        /// 
+        /// The result of the method is six randomized positions on the board where each position has a 
+        /// random Item
+        /// 
+        /// 
+        /// </summary>
 
         public void Buff_Debuff() 
         {
@@ -156,9 +192,7 @@ namespace chinese_checkers.Core.Models
         public List<LinkedList<Point>> GetPaths(Point start, List<Location> endLocations)
         {
             List<LinkedList<Point>> paths = new List<LinkedList<Point>>();
-
             endLocations.ForEach(x => paths.Add(CalculatePath(start, x.Point)));
-
             return paths;
         }
 
@@ -231,7 +265,6 @@ namespace chinese_checkers.Core.Models
                                 }
                             }
                         }
-                        //}
                     }
                 }
             }
@@ -246,12 +279,10 @@ namespace chinese_checkers.Core.Models
                 Random rnd = new Random();
                 MovePiece(freeHomeLocations[rnd.Next(freeHomeLocations.Count)], Pieces[piece.Id]);
                 Pieces[piece.Id].Reset();
-
             }
             else
             {
                 // If all home locations are occupied
-
             }
         }
     }
