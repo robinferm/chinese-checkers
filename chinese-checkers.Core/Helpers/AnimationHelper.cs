@@ -9,6 +9,7 @@ namespace chinese_checkers.Core.Helpers {
     public static class AnimationHelper {
 
         public static double FrameTime { get; set; } = 24;
+        public static int FireBallCounter { get; set; } = 0;
 
         public static Vector2 MovePiece(Point start, Vector2 current, Point target)
         {
@@ -34,19 +35,18 @@ namespace chinese_checkers.Core.Helpers {
             return current;
         }
 
-        public static Point MoveFireBall(Point start, Point current, Point target)
+        public static Vector2 MoveFireBall(Vector2 start, Vector2 current, Vector2 target)
         {
 
-            double xSpeed = ((target.X - (start.X)) / (FrameTime * 2));
-            double ySpeed = ((target.Y - (start.Y)) / (FrameTime * 2));
+            float xSpeed = ((target.X - (start.X)) / 60);
+            float ySpeed = ((target.Y - (start.Y)) / 60);
 
-            Debug.WriteLine($"x: {xSpeed}, y: {ySpeed}");
-            if (current.X != target.X && current.Y != target.Y)
+            if (current.X != target.X && current.Y != target.Y  && FireBallCounter <= 60)
             {
-                current.X += (int)xSpeed;
-                current.Y += (int)ySpeed;
+                current.X += xSpeed;
+                current.Y += ySpeed;
             }
-
+            FireBallCounter++;
             return current;
         }
     }

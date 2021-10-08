@@ -26,9 +26,9 @@ namespace chinese_checkers.Core.Models {
         public Dictionary<NestColor, Point> GoalLocation { get; set; }
         public Player CurrentlyPlaying { get; set; }
         public Vector2 AnimatedPiece { get; set; }
-        public Point AnimatedAbility { get; set; }
-        public Point AnimatedAbilityStart { get; set; }
-        public Point AnimatedAbilityEnd { get; set; }
+        public Vector2 AnimatedAbility { get; set; }
+        public Vector2 AnimatedAbilityStart { get; set; }
+        public Vector2 AnimatedAbilityEnd { get; set; }
         public LinkedListNode<Point> selectedNode { get; set; }
         public LinkedList<Point> Path { get; set; }
         private int counter = 0;
@@ -102,7 +102,7 @@ namespace chinese_checkers.Core.Models {
             this.Board = new Board(locations, this.Players);
             this.CurrentlyPlaying = Players.First();
             this.AnimatedPiece = new Vector2(-5000, -5000);
-            this.AnimatedAbility = new Point(-5000, -5000);
+            this.AnimatedAbility = new Vector2(-5000, -5000);
             ScoreBoard = new ScoreBoard(Players);
         }
 
@@ -318,8 +318,9 @@ namespace chinese_checkers.Core.Models {
                 else
                 {
                     PausedCount = 0;
+                    AnimationHelper.FireBallCounter = 0;
                     CurrentlyPlaying.UseCharaterAbility(this.Board, this.Board.Locations.Find(x => x.Point == CurrentlyPlaying.selectedPiece.Point));
-                    AnimatedAbility = new Point(-5000, -5000);
+                    AnimatedAbility = new Vector2(-5000, -5000);
                     ChangeTurn();
                     counter = 0;
                 }
@@ -350,7 +351,7 @@ namespace chinese_checkers.Core.Models {
             }
         }
 
-        public void UseCharacterAbilityWithAnimation(Vector2 start, Point end, Location location = null)
+        public void UseCharacterAbilityWithAnimation(Vector2 start, Vector2 end, Location location = null)
         {
             PlayAnimation = true;
             if (location != null)
@@ -381,7 +382,7 @@ namespace chinese_checkers.Core.Models {
                 default:
                     break;
             }
-            Point startPoint = new Point((int)start.X, (int)start.Y);
+            Vector2 startPoint = new Vector2(start.X, start.Y);
             
             AnimatedAbilityStart = startPoint;
             AnimatedAbility = startPoint;

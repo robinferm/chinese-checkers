@@ -115,7 +115,7 @@ namespace chinese_checkers.Views {
             //UpdateScore();
             gs.AnimateMove();
             //Debug.WriteLine(AnimationHelper.FrameTime);
-            if (gs.CurrentlyPlaying.AbilitySelected)
+            if (gs.AnimatedAbility.X != -5000)
             {
                 GifHelper.RunGif(characterAbilityAnimations[gs.CurrentlyPlaying.Character.GetType().Name].Count());
             }
@@ -270,7 +270,7 @@ namespace chinese_checkers.Views {
             characterFrames.Add("Warrior", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/Warrior-Frame.png")));
             characterAbility.Add("Warrior", await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Abilities/battleshout-ability.png")));
 
-            CanvasBitmap[] fireball = new CanvasBitmap[12];
+            CanvasBitmap[] fireball = new CanvasBitmap[27];
             for (int i = 0; i < fireball.Length; i++)
             {
                 fireball[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/fireball/fireball-" + i.ToString() + ".png"));
@@ -334,7 +334,7 @@ namespace chinese_checkers.Views {
                     {
                         if (gs.CurrentlyPlaying.AvailableMoves.Contains(L))
                         {
-                            gs.UseCharacterAbilityWithAnimation(ScalingHelper.CalculateFramePosition(gs.CurrentlyPlaying.NestColor)[1], new Point((int)ScalingHelper.CalculateX(L.Point.X, L.Point.Y), (int)ScalingHelper.CalculateY(L.Point.Y)), L);
+                            gs.UseCharacterAbilityWithAnimation(ScalingHelper.CalculateFramePosition(gs.CurrentlyPlaying.NestColor)[1], new Vector2((int)ScalingHelper.CalculateX(L.Point.X, L.Point.Y), (int)ScalingHelper.CalculateY(L.Point.Y)), L);
                         }
                         else
                         {

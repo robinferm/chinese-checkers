@@ -251,7 +251,7 @@ namespace chinese_checkers.Helpers {
             }
         }
 
-        public static void DrawAbility(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Player player, CanvasBitmap image, Point abilityLocation)
+        public static void DrawAbility(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Player player, CanvasBitmap image, Vector2 abilityLocation)
         {
             var pos = ScalingHelper.CalculateFramePosition(player.NestColor)[1];
             //args.DrawingSession.DrawImage(ScalingHelper.Img(image, .3f), pos.X - 20, pos.Y - 20);
