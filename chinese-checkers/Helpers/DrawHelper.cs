@@ -206,7 +206,6 @@ namespace chinese_checkers.Helpers {
                             highlightPosition = new Vector2(ScalingHelper.CalculateX(0, 0) - (210 * ScalingHelper.ScaleXY), ScalingHelper.CalculateY(-1) - (ScalingHelper.ScalingValue / 2));
                         }
                         break;
-
                 }
               
                 if (isHighlighted)
@@ -235,7 +234,6 @@ namespace chinese_checkers.Helpers {
                 args.DrawingSession.FillCircle(x + (32 * ScalingHelper.ScaleXY), y + (32 * ScalingHelper.ScaleXY), 32 * ScalingHelper.ScaleXY, Windows.UI.Color.FromArgb((byte)126, (byte)255, (byte)255, (byte)0));
             }
         }
-
 
         /// <summary>
         /// This function draws a path to help the player see the availble movement's path on the board.
