@@ -152,6 +152,7 @@ namespace chinese_checkers.Core.Models
                
             }
             this.CurrentlyPlaying = nextPlayer;
+            Board.Pieces.Where(x => x.NestColor == CurrentlyPlaying.NestColor).ToList().ForEach(x => x.Buffs.Remove(Item.FreezeSelf));
            
             this.CurrentlyPlaying.Highlight = true;
                         
