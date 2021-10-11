@@ -32,7 +32,7 @@ using chinese_checkers.Views.Menu.Dialogs;
 namespace chinese_checkers.Views {
     public sealed partial class MainPage : Page {
         public MainViewModel ViewModel { get; } = new MainViewModel();
-      //  public DrawHelper CharacterTurn { get; set; }
+        //  public DrawHelper CharacterTurn { get; set; }
 
         GameSession gs;
         CanvasBitmap highlightCharacter;
@@ -76,7 +76,7 @@ namespace chinese_checkers.Views {
         {
             ScalingHelper.SetScale();
         }
-        
+
 
         // This happens when pressing start game from the start game view
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -102,7 +102,7 @@ namespace chinese_checkers.Views {
         }
 
         public void CreateGameSession()
-        {        
+        {
 
             gs = new GameSession(NumberOfAI, PlayerCharacter);
             gs.CurrentlyPlaying.Highlight = true; // It highlights the first player when a new game starts.
@@ -130,7 +130,7 @@ namespace chinese_checkers.Views {
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                gs.CheckForWin(); 
+                gs.CheckForWin();
             });
         }
 
@@ -148,7 +148,7 @@ namespace chinese_checkers.Views {
             }
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow, mysteriousPosition);
 
-            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow, freezeSelf,halfDamage,doubleDamage, thorns, cursedOverlay);
+            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow, freezeSelf, halfDamage, doubleDamage, thorns, cursedOverlay);
 
             if (gs.AnimatedAbility.X == -5000)
             {
@@ -164,12 +164,12 @@ namespace chinese_checkers.Views {
 
             if (gs.AnimatedPiece.X != -5000)
             {
-                
+
                 var color = gs.CurrentlyPlaying.NestColor;
                 var selectedPiece = gs.CurrentlyPlaying;
-                             
+
                 CanvasBitmap img = pieceImageRed;
-               
+
                 switch (color)
                 {
                     case NestColor.Red:
@@ -191,7 +191,7 @@ namespace chinese_checkers.Views {
                     case NestColor.White:
                         img = pieceImageWhite;
                         break;
-                        
+
                     case NestColor.Black:
                         img = pieceImageBlack;
                         break;
@@ -199,7 +199,7 @@ namespace chinese_checkers.Views {
                 DrawHelper.DrawAnimationPiece(sender, args, gs.Board, gs.AnimatedPiece, img, freezeSelf, halfDamage, doubleDamage, thorns, gs.Board.Pieces.Find(x => x.Point == gs.Path.Last.Value));
             }
 
-                DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility, highlightCharacter);
+            DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility, highlightCharacter);
             //DrawHelper.DrawAvailableMoves(sender, args, gs.CurrentlyPlaying.AvailableMoves);
 
             if (ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth > 1200) // Hide scoreboard if window gets too small
@@ -241,7 +241,7 @@ namespace chinese_checkers.Views {
 
         async Task CreateResourcesAsync(CanvasAnimatedControl sender)
         {
-            highlightCharacter= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/highlight.png"));
+            highlightCharacter = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/CharacterFrame/highlight.png"));
 
             locationImage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/default.png"));
             locationImageRed = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Locations/red.png"));
@@ -259,11 +259,9 @@ namespace chinese_checkers.Views {
             pieceImageYellow = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/yellow.png"));
 
 
-            freezeSelf= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/Frozen.png"));
-            halfDamage= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/HalfDamage.png"));
-            doubleDamage= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/DoubleDamage.png"));
-            thorns= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/thorns.png"));
-            def= await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/def.png"));
+            freezeSelf = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/Frozen.png"));
+            halfDamage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/HalfDamage.png"));
+            doubleDamage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/DoubleDamage.png"));
 
             mysteriousPosition = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/icon/mysterious.png"));
 
@@ -313,20 +311,21 @@ namespace chinese_checkers.Views {
                 battleShout[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/battleshout/battleshout-" + i.ToString() + ".png"));
             }
             characterAbilityAnimations.Add("Warrior", battleShout);
-            
-            CanvasBitmap[] thorns = new CanvasBitmap[34];
-            for (int i = 0; i < thorns.Length; i++)
+
+            CanvasBitmap[] thorns_ani = new CanvasBitmap[34];
+            for (int i = 0; i < thorns_ani.Length; i++)
             {
-                thorns[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/thorns/thorns-" + i.ToString() + ".png"));
+                thorns_ani[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/thorns/thorns-" + i.ToString() + ".png"));
             }
-            characterAbilityAnimations.Add("Druid", thorns);
+            characterAbilityAnimations.Add("Druid", thorns_ani);
+            thorns = thorns_ani.Last();
 
             CanvasBitmap[] volley = new CanvasBitmap[26];
             for (int i = 0; i < volley.Length; i++)
             {
                 volley[i] = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/gifs/volley/volley-" + i.ToString() + ".png"));
             }
-            characterAbilityAnimations.Add("Hunter", thorns);
+            characterAbilityAnimations.Add("Hunter", volley);
 
 
 
@@ -368,7 +367,7 @@ namespace chinese_checkers.Views {
                         else
                         {
                             gs.CurrentlyPlaying.DeSelectPiece();
-                            
+
                             canvas_PointerPressed(sender, e);
                         }
                     }
