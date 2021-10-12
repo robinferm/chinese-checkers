@@ -597,6 +597,8 @@
     <Content Include="Assets\Images\Characters\priest.png" />
     <Content Include="Assets\Images\Characters\warlock.png" />
     <Content Include="Assets\Images\Characters\warrior.png" />
+    <Content Include="Assets\Images\cracks1.png" />
+    <Content Include="Assets\Images\cracks2.png" />
     <Content Include="Assets\Images\GitHub-logo.png" />
     <Content Include="Assets\Images\Icon\heal.png" />
     <Content Include="Assets\Images\Icon\ItemDamage.png" />
