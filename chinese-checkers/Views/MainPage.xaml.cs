@@ -47,6 +47,7 @@ namespace chinese_checkers.Views {
         CanvasBitmap pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow;
         CanvasBitmap cursedOverlay;
         CanvasBitmap freezeSelf, halfDamage, doubleDamage, thorns;
+        CanvasBitmap cracks1, cracks2;
 
         Dictionary<string, CanvasBitmap[]> characterAbilityAnimations;
         Dictionary<string, CanvasBitmap> characterFrames;
@@ -148,7 +149,7 @@ namespace chinese_checkers.Views {
             }
             DrawHelper.DrawBoard(sender, args, gs.Board, locationImage, locationImageRed, locationImageGreen, locationImageBlue, locationImageBlack, locationImageWhite, locationImageYellow, mysteriousPosition);
 
-            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow, freezeSelf, doubleDamage, halfDamage, thorns, cursedOverlay);
+            DrawHelper.DrawPieces(sender, args, gs.Board, pieceImageRed, pieceImageGreen, pieceImageBlack, pieceImageWhite, pieceImageBlue, pieceImageYellow, freezeSelf, halfDamage, doubleDamage, thorns, cursedOverlay, cracks1, cracks2);
 
             if (gs.AnimatedAbility.X == -5000)
             {
@@ -196,7 +197,7 @@ namespace chinese_checkers.Views {
                         img = pieceImageBlack;
                         break;
                 }
-                DrawHelper.DrawAnimationPiece(sender, args, gs.Board, gs.AnimatedPiece, img, freezeSelf, doubleDamage, halfDamage, thorns, gs.Board.Pieces.Find(x => x.Point == gs.Path.Last.Value));
+                DrawHelper.DrawAnimationPiece(sender, args, gs.Board, gs.AnimatedPiece, img, freezeSelf, halfDamage, doubleDamage, thorns, gs.Board.Pieces.Find(x => x.Point == gs.Path.Last.Value), cracks1, cracks2);
             }
 
             DrawHelper.DrawCharacterAndAbility(sender, args, gs.Players, characterFrames, characterAbility, highlightCharacter);
@@ -258,6 +259,8 @@ namespace chinese_checkers.Views {
             pieceImageWhite = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/white.png"));
             pieceImageYellow = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/Pieces/yellow.png"));
 
+            cracks1 = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/cracks1.png"));
+            cracks2 = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/cracks2.png"));
 
             freezeSelf = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/Frozen.png"));
             halfDamage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Assets/Images/buff/HalfDamage.png"));

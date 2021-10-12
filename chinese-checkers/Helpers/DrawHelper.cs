@@ -67,7 +67,7 @@ namespace chinese_checkers.Helpers {
         ///</example>
         /// 
         /// </summary>
-        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, CanvasBitmap cursed)
+        public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, CanvasBitmap cursed, CanvasBitmap cracks1, CanvasBitmap cracks2)
         {
             foreach (var P in board.Pieces)
             {
@@ -107,6 +107,16 @@ namespace chinese_checkers.Helpers {
                         break;
 
                 }
+
+                if (P.Health < 30)
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(cracks2), x, y);
+                }
+                else if (P.Health < 70)
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(cracks1), x, y);
+                }
+
                 if (P.Cursed)
                 {
                     args.DrawingSession.DrawImage(ScalingHelper.Img(cursed, .5f), x, y);
@@ -276,12 +286,20 @@ namespace chinese_checkers.Helpers {
         /// This function makes posibility for the pieces to animate even if they have an icon.
         ///
         /// </summary>
-        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, Vector2 vector, CanvasBitmap pieceImageRed, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, Piece piece)
+        public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, Vector2 vector, CanvasBitmap pieceImageRed, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, Piece piece, CanvasBitmap cracks1, CanvasBitmap cracks2)
         {
             vector.X = ScalingHelper.CalculateX(vector.X, vector.Y);
             vector.Y = ScalingHelper.CalculateY(vector.Y);
             args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), vector.X, vector.Y);
 
+            if (piece.Health < 30)
+            {
+                args.DrawingSession.DrawImage(ScalingHelper.Img(cracks2), vector.X, vector.Y);
+            }
+            else if (piece.Health < 70)
+            {
+                args.DrawingSession.DrawImage(ScalingHelper.Img(cracks1), vector.X, vector.Y);
+            }
             if (piece.Thorns)
             {
                 args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns, .5f), vector.X, vector.Y);
