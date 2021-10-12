@@ -123,10 +123,10 @@ namespace chinese_checkers.Helpers {
                 }
                 if (P.Thorns)
                 {
-
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns, .5f), x, y);
                 }
 
-                
+
                 if (P.Buffs.Contains(Item.FreezeSelf))
                 {
                     args.DrawingSession.DrawImage(ScalingHelper.Img(FreezeSelf), x, y);
@@ -300,7 +300,10 @@ namespace chinese_checkers.Helpers {
             {
                 args.DrawingSession.DrawImage(ScalingHelper.Img(cracks1), vector.X, vector.Y);
             }
-
+            if (piece.Thorns)
+            {
+                args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns, .5f), vector.X, vector.Y);
+            }
             if (piece.Buffs.Contains(Item.FreezeSelf))
             {
                 args.DrawingSession.DrawImage(ScalingHelper.Img(FreezeSelf), vector.X, vector.Y);
@@ -316,10 +319,6 @@ namespace chinese_checkers.Helpers {
                 args.DrawingSession.DrawImage(ScalingHelper.Img(HalfDamage), vector.X, vector.Y);
             }
 
-            if (piece.Thorns)
-            {
-                args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns), vector.X, vector.Y);
-            }
         }
 
 
