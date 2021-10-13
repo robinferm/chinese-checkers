@@ -25,7 +25,7 @@ namespace chinese_checkers.Core.Helpers
         /// It plays a sound and sets duration for the sound.
         /// </summary>
         /// <param name="sound"></param>
-        /// <returns>availableMoves</returns> 
+        /// <returns></returns> 
         public static void Play(Sound sound)
         {
             
