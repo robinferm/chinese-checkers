@@ -34,10 +34,18 @@ namespace chinese_checkers.Helpers {
         ///     </code>
         ///     <c>mysteriousPosition</c> is the name of an icon to show mysterious positions on the board.
         ///</example>
-        ///
-        /// 
         /// </summary>
-
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        /// <param name="board"></param>
+        /// <param name="locationImage"></param>
+        /// <param name="locationImageRed"></param>
+        /// <param name="locationImageGreen"></param>
+        /// <param name="locationImageBlue"></param>
+        /// <param name="locationImageBlack"></param>
+        /// <param name="locationImageWhite"></param>
+        /// <param name="locationImageYellow"></param>
+        /// <param name="mysteriousPosition"></param>
         public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage, CanvasBitmap locationImageRed, CanvasBitmap locationImageGreen, CanvasBitmap locationImageBlue, CanvasBitmap locationImageBlack, CanvasBitmap locationImageWhite, CanvasBitmap locationImageYellow, CanvasBitmap mysteriousPosition)
         {
             foreach (var L in board.Locations)
@@ -52,7 +60,6 @@ namespace chinese_checkers.Helpers {
                 }
             }
         }
-
         /// <summary>
         /// It places all the images for the pieces on the board.
         ///
@@ -65,8 +72,21 @@ namespace chinese_checkers.Helpers {
         ///     </code>
         ///     <c>NestColor.Red</c> is an id color for a piece which is red 
         ///</example>
-        /// 
         /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        /// <param name="board"></param>
+        /// <param name="pieceImageRed"></param>
+        /// <param name="pieceImageGreen"></param>
+        /// <param name="pieceImageBlack"></param>
+        /// <param name="pieceImageWhite"></param>
+        /// <param name="pieceImageBlue"></param>
+        /// <param name="pieceImageYellow"></param>
+        /// <param name="FreezeSelf"></param>
+        /// <param name="DoubleDamage"></param>
+        /// <param name="HalfDamage"></param>
+        /// <param name="Thorns"></param>
+        /// <param name="cursed"></param>
         public static void DrawPieces(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap pieceImageRed, CanvasBitmap pieceImageGreen, CanvasBitmap pieceImageBlack, CanvasBitmap pieceImageWhite, CanvasBitmap pieceImageBlue, CanvasBitmap pieceImageYellow, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, CanvasBitmap cursed)
         {
             foreach (var P in board.Pieces)
@@ -137,7 +157,7 @@ namespace chinese_checkers.Helpers {
         /// <summary>
         /// This method place an image and an ability icon for each player and highlights a player's frame to show that it's turn to play.
         /// 
-        ///<example>For example:
+        /// <example>For example:
         /// <code>
         ///    args.DrawingSession.DrawImage(ScalingHelper.Img(frames[player.Character.GetType().Name], .4f), pos[0]);
         ///    args.DrawingSession.DrawImage(ScalingHelper.Img(abilitys[player.Character.GetType().Name], .5f), pos[1]);
@@ -145,8 +165,13 @@ namespace chinese_checkers.Helpers {
         /// <c>frames[player.Character.GetType().Name</c> is the name of the image for the (selected)player.
         /// <c>abilitys[player.Character.GetType().Name]</c> is the name of the icon for the (selected)player which shows the ability of the player.
         /// </example>
-        /// 
         /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        /// <param name="players"></param>
+        /// <param name="frames"></param>
+        /// <param name="abilitys"></param>
+        /// <param name="highlight"></param>
         public static void DrawCharacterAndAbility(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Player> players, Dictionary<string, CanvasBitmap> frames, Dictionary<string, CanvasBitmap> abilitys, CanvasBitmap highlight)
         {
             foreach (var player in players)
@@ -221,13 +246,15 @@ namespace chinese_checkers.Helpers {
 
             }
         }
-
         /// <summary>
-        ///  This method helps the player to show the available positions to meve by drawing some circles
+        /// This method helps the player to show the available positions to meve by drawing some circles
         ///  
         ///  <c>x</c> Calculated scailing point.
         ///  <c>y</c> Calculated scailing point.
         /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        /// <param name="locations"></param>
         public static void DrawAvailableMoves(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<Location> locations)
         {
             foreach (var L in locations)
@@ -248,6 +275,10 @@ namespace chinese_checkers.Helpers {
         ///  <c>p1</c> Calculated scailing point(x).
         ///  <c>p2</c> Calculated scailing point(y).
         /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        /// <param name="paths"></param>
+        /// <param name="mouseover"></param>
         public static void DrawPaths(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, List<LinkedList<Point>> paths, Location mouseover)
         {
             foreach (var P in paths)
@@ -274,8 +305,17 @@ namespace chinese_checkers.Helpers {
         /// It makes animation to show a moving piece on the board.
         /// The piece with animation may have an icon on it to show that the piece has Buff or freezed state.
         /// This function makes posibility for the pieces to animate even if they have an icon.
-        ///
         /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        /// <param name="board"></param>
+        /// <param name="vector"></param>
+        /// <param name="pieceImageRed"></param>
+        /// <param name="FreezeSelf"></param>
+        /// <param name="DoubleDamage"></param>
+        /// <param name="HalfDamage"></param>
+        /// <param name="Thorns"></param>
+        /// <param name="piece"></param>
         public static void DrawAnimationPiece(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, Vector2 vector, CanvasBitmap pieceImageRed, CanvasBitmap FreezeSelf, CanvasBitmap DoubleDamage, CanvasBitmap HalfDamage, CanvasBitmap Thorns, Piece piece)
         {
             vector.X = ScalingHelper.CalculateX(vector.X, vector.Y);
@@ -303,7 +343,12 @@ namespace chinese_checkers.Helpers {
             }
         }
 
-
+        /// <summary>
+        /// It draws a score board.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        /// <param name="scoreBoard"></param>
         public static void DrawScoreBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, ScoreBoard scoreBoard)
         {
             args.DrawingSession.FillRectangle(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 350, ((ScalingHelper.DesginHeight * ScalingHelper.ScaleHeight) / 2) - 25, 350, scoreBoard.ScoreBoardEntries.Last().Position * 30 + 70, Windows.UI.Color.FromArgb((byte)50, (byte)255, (byte)255, (byte)255));
@@ -313,7 +358,14 @@ namespace chinese_checkers.Helpers {
                 args.DrawingSession.DrawText(item.Player.ToString(), ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 320, (ScalingHelper.DesginHeight * ScalingHelper.ScaleHeight) / 2 + 30 * item.Position, color, new CanvasTextFormat() { FontSize = 20, FontFamily = "Bookman Old Style" });
             }
         }
-
+        /// <summary>
+        /// It draws a score board.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        /// <param name="player"></param>
+        /// <param name="image"></param>
+        /// <param name="abilityLocation"></param>
         public static void DrawAbility(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Player player, CanvasBitmap image, Vector2 abilityLocation)
         {
             var pos = ScalingHelper.CalculateFramePosition(player.NestColor)[1];

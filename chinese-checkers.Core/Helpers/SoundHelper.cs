@@ -21,6 +21,11 @@ namespace chinese_checkers.Core.Helpers
         private static MediaSource warriorSound = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Sounds/warrior.wav", UriKind.RelativeOrAbsolute));
 
         public static double Volume { get; set; } = 0.5;
+        /// <summary>
+        /// It plays a sound and sets duration for the sound.
+        /// </summary>
+        /// <param name="sound"></param>
+        /// <returns>availableMoves</returns> 
         public static void Play(Sound sound)
         {
             

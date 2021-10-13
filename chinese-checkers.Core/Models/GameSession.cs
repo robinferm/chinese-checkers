@@ -39,6 +39,12 @@ namespace chinese_checkers.Core.Models {
 
         public readonly List<Location> locations = LocationHelper.CreateLocations();
 
+        /// <summary>
+        /// It prepares a game to play. It sets color for all of the players, determines goal positions for each player, 
+        /// draws a board for the game, shows a score board on the screen.
+        /// </summary>
+        /// <param name="numberOfAI"></param>
+        /// <param name="playerCharacter"></param>
         public GameSession(int numberOfAI, ICharacter playerCharacter)
         {
             this.Players = new List<Player>();
@@ -114,7 +120,6 @@ namespace chinese_checkers.Core.Models {
                     break;
             }
 
-            //this.Players.ForEach(x => this.PlayerScore.Add(x, 0));
             this.Board = new Board(locations, this.Players);
             this.CurrentlyPlaying = Players.First();
             this.AnimatedPiece = new Vector2(-5000, -5000);
@@ -122,7 +127,10 @@ namespace chinese_checkers.Core.Models {
             ScoreBoard = new ScoreBoard(Players);
         }
 
-
+        /// <summary>
+        /// It prepares a game to play. It sets color for all of the players, determines goal positions for each player, 
+        /// draws a board for the game and shows a score board on the screen.
+        /// </summary>
         public void CheckForWin()
         {
 
@@ -154,7 +162,9 @@ namespace chinese_checkers.Core.Models {
             }
         }
 
-
+        /// <summary>
+        /// It changes turn for each player to play, deselect ablility and piece for current player and updates the score board.
+        /// </summary>
         public void ChangeTurn()
         {
             if (SoundHelper.mediaPlayer.PlaybackSession.PlaybackState == Windows.Media.Playback.MediaPlaybackState.Playing)
@@ -198,7 +208,9 @@ namespace chinese_checkers.Core.Models {
             }
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void AnimateMove()
         {
             if (this.AnimatedPiece != null && this.Path != null)
@@ -305,7 +317,9 @@ namespace chinese_checkers.Core.Models {
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void AnimateAbility()
         {
             if (AnimatedAbility.X != -5000)
@@ -355,7 +369,10 @@ namespace chinese_checkers.Core.Models {
                 }
             }
         }
-
+        /// <summary>
+        /// This method moves a piece with animation. 
+        /// </summary>
+        /// <param name="L"></param>
         public void MovePieceWithAnimation(Location L)
         {
             if (this.AnimatedPiece.X == -5000 && CurrentlyPlaying.Paths != null)
@@ -369,7 +386,13 @@ namespace chinese_checkers.Core.Models {
 
             }
         }
-
+        /// <summary>
+        /// It uses an ability for the current player and plays a soound according to the playe's name.
+        /// 
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="location"></param>
         public void UseCharacterAbilityWithAnimation(Vector2 start, Vector2 end, Location location = null)
         {
             PlayAnimation = true;
@@ -408,7 +431,10 @@ namespace chinese_checkers.Core.Models {
             AnimatedAbilityEnd = end;
             counter = 0;
         }
-
+        /// <summary>
+        /// This method moves an AI player
+        /// 
+        /// </summary>   
         public void MovePieceAI()
         {
             //Thread.Sleep(100);
@@ -433,7 +459,11 @@ namespace chinese_checkers.Core.Models {
             this.Path = Board.CalculatePath(longestMove.Key.Point, longestMove.Value.Point);
             MovePieceWithAnimation(longestMove.Value);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="availableMoves"></param>
+        /// <returns></returns>
         private KeyValuePair<Piece, Location> GetLongestMove(Dictionary<Piece, List<Location>> availableMoves)
         {
             Random rnd = new Random();
@@ -491,7 +521,12 @@ namespace chinese_checkers.Core.Models {
             }
             return longestMove;
         }
-
+        /// <summary>
+        /// It calculates distance between two points 
+        /// </summary>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <returns></returns>
         private double GetDistance(Point P1, Point P2)
         {
             double xDistance = Math.Abs(P2.X - P1.X);
