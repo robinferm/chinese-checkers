@@ -21,7 +21,10 @@ namespace chinese_checkers.Core.Models
             this.PieceId = pieceId;
             this.ItemId = itemId;
         }
-
+        /// <summary>
+        /// It checks if id for a piece and for an item is null. 
+        /// </summary>
+        /// <returns></returns>
         public bool IsFree()
         {
             return PieceId is null && ItemId is null;
