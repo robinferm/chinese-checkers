@@ -324,7 +324,7 @@ namespace chinese_checkers.Helpers {
 
         public static void DrawScoreBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, ScoreBoard scoreBoard)
         {
-            args.DrawingSession.FillRectangle(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 350, ((ScalingHelper.DesginHeight * ScalingHelper.ScaleHeight) / 2) - 25, 350, scoreBoard.ScoreBoardEntries.Last().Position * 30 + 70, Windows.UI.Color.FromArgb((byte)50, (byte)255, (byte)255, (byte)255));
+            args.DrawingSession.FillRectangle(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 350, ((ScalingHelper.DesginHeight * ScalingHelper.ScaleHeight) / 2) - 25, 350, (scoreBoard.ScoreBoardEntries.Count() -1) * 30 + 70, Windows.UI.Color.FromArgb((byte)50, (byte)255, (byte)255, (byte)255));
             foreach (var item in scoreBoard.ScoreBoardEntries)
             {
                 var color = Colors.White;
