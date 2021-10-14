@@ -165,6 +165,7 @@ namespace chinese_checkers.Core.Models
         /// results in <c>rndPosition</c>'s having a free randomized position on the board.
         /// 
         /// </summary>
+        ///<returns>rndPosition</returns>
         public Point GetRandomFreeNeutralPosition()
         {
             var rndPosition = GetRandomNeutralPosition();
