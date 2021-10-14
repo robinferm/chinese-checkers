@@ -523,14 +523,7 @@ namespace chinese_checkers.Core.Models {
             }
             return longestMove;
         }
-        /// <summary>
-        /// It calculates distance between two points 
-        /// </summary>
-        /// <param name="P1"></param>
-        /// <param name="P2"></param>
-        /// <returns>
-        ///   Distance between two points
-        /// </returns>
+       
         private double GetDistance(Point P1, Point P2)
         {
             double xDistance = Math.Abs(P2.X - P1.X);
