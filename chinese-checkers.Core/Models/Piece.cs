@@ -92,9 +92,7 @@ namespace chinese_checkers.Core.Models
             this.Cursed = false;
             this.Hidden = false;
         }
-        /// <summary>
-        /// it toggles the piece's status to unhide if it is hidden.
-        /// </summary>
+      
         public void ToggleHidden()
         {
             this.Hidden = !this.Hidden;
