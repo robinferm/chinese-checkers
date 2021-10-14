@@ -465,7 +465,7 @@ namespace chinese_checkers.Core.Models {
         /// 
         /// </summary>
         /// <param name="availableMoves"></param>
-        /// <returns>longestMove</returns>
+        /// <returns>longest move destination</returns>
         private KeyValuePair<Piece, Location> GetLongestMove(Dictionary<Piece, List<Location>> availableMoves)
         {
             Random rnd = new Random();
@@ -529,7 +529,7 @@ namespace chinese_checkers.Core.Models {
         /// <param name="P1"></param>
         /// <param name="P2"></param>
         /// <returns>
-        ///   Math.Sqrt(Math.Pow(xDistance, 2) + Math.Pow(yDistance, 2))
+        ///   Distance between two points
         /// </returns>
         private double GetDistance(Point P1, Point P2)
         {
