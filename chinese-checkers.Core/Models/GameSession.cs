@@ -128,8 +128,8 @@ namespace chinese_checkers.Core.Models {
         }
 
         /// <summary>
-        /// It prepares a game to play. It sets color for all of the players, determines goal positions for each player, 
-        /// draws a board for the game and shows a score board on the screen.
+        /// 
+        ///
         /// </summary>
         public void CheckForWin()
         {
@@ -358,7 +358,9 @@ namespace chinese_checkers.Core.Models {
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void AnimateScoreBoard()
         {
             if (counter < AnimationHelper.FrameTime)
@@ -463,7 +465,7 @@ namespace chinese_checkers.Core.Models {
         /// 
         /// </summary>
         /// <param name="availableMoves"></param>
-        /// <returns></returns>
+        /// <returns>longestMove</returns>
         private KeyValuePair<Piece, Location> GetLongestMove(Dictionary<Piece, List<Location>> availableMoves)
         {
             Random rnd = new Random();
@@ -526,7 +528,9 @@ namespace chinese_checkers.Core.Models {
         /// </summary>
         /// <param name="P1"></param>
         /// <param name="P2"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///   Math.Sqrt(Math.Pow(xDistance, 2) + Math.Pow(yDistance, 2))
+        /// </returns>
         private double GetDistance(Point P1, Point P2)
         {
             double xDistance = Math.Abs(P2.X - P1.X);
