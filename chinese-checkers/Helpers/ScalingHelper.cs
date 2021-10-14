@@ -12,6 +12,9 @@ using Windows.UI.ViewManagement;
 
 namespace chinese_checkers.Helpers
 {
+    /// <summary>
+    /// Provides methods to scale objects
+    /// </summary>
     static class ScalingHelper
     {
         public static float ScalingValue { get; private set; } = 64;
