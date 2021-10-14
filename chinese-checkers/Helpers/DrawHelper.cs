@@ -37,7 +37,6 @@ namespace chinese_checkers.Helpers {
         ///
         /// 
         /// </summary>
-
         public static void DrawBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Board board, CanvasBitmap locationImage, CanvasBitmap locationImageRed, CanvasBitmap locationImageGreen, CanvasBitmap locationImageBlue, CanvasBitmap locationImageBlack, CanvasBitmap locationImageWhite, CanvasBitmap locationImageYellow, CanvasBitmap mysteriousPosition)
         {
             foreach (var L in board.Locations)
@@ -54,8 +53,7 @@ namespace chinese_checkers.Helpers {
         }
 
         /// <summary>
-        /// It places all the images for the pieces on the board.
-        ///
+        /// This method prints all the locations where pieces and items are able to be at.
         ///
         ///<example>
         /// For example:
@@ -145,7 +143,7 @@ namespace chinese_checkers.Helpers {
         }
 
         /// <summary>
-        /// This method place an image and an ability icon for each player and highlights a player's frame to show that it's turn to play.
+        /// This method prints an character icon and an ability icon for each player and highlights a player's frame to show that it's turn to play.
         /// 
         ///<example>For example:
         /// <code>
@@ -233,7 +231,7 @@ namespace chinese_checkers.Helpers {
         }
 
         /// <summary>
-        ///  This method helps the player to show the available positions to meve by drawing some circles
+        ///  This method prints all the locatoins where the player selected piece is able to walk to with a filled lower oppacity circle.
         ///  
         ///  <c>x</c> Calculated scailing point.
         ///  <c>y</c> Calculated scailing point.
@@ -324,7 +322,9 @@ namespace chinese_checkers.Helpers {
 
         }
 
-
+        /// <summary>
+        /// This method prints the scoreboard onto the canvas this is called from.
+        /// </summary>
         public static void DrawScoreBoard(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, ScoreBoard scoreBoard)
         {
             args.DrawingSession.FillRectangle(ScalingHelper.DesginWidth * ScalingHelper.ScaleWidth - 350, ((ScalingHelper.DesginHeight * ScalingHelper.ScaleHeight) / 2) - 25, 350, (scoreBoard.ScoreBoardEntries.Count() -1) * 30 + 70, Windows.UI.Color.FromArgb((byte)50, (byte)255, (byte)255, (byte)255));
@@ -335,10 +335,11 @@ namespace chinese_checkers.Helpers {
             }
         }
 
+        /// <summary>
+        /// This method prints the animated ability onto the canvas it is called from.
+        /// </summary>
         public static void DrawAbility(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args, Player player, CanvasBitmap image, Vector2 abilityLocation)
         {
-            var pos = ScalingHelper.CalculateFramePosition(player.NestColor)[1];
-            //args.DrawingSession.DrawImage(ScalingHelper.Img(image, .3f), pos.X - 20, pos.Y - 20);
             switch (player.Character.GetType().Name)
             {
                 case "Mage":
