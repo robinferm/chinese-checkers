@@ -26,7 +26,6 @@ namespace chinese_checkers.Helpers {
         /// <summary>
         /// It draws a board for the game and shows six randomized mysterious positions on the board by a proper icon.
         ///
-        ///
         ///<example>
         /// For example:
         ///     <code>
