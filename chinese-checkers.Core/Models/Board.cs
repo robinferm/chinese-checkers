@@ -16,6 +16,7 @@ namespace chinese_checkers.Core.Models
         public List<Location> Locations { get; private set; }
         public List<Piece> Pieces { get; private set; }
         public List<Item> Items { get; set; }
+        
         public Board(List<Location> locations, List<Player> players)
         {
             this.Locations = locations;
@@ -23,10 +24,12 @@ namespace chinese_checkers.Core.Models
             PopulateLocations(players);
             Buff_Debuff();
         }
+        /// <summary>
+        /// It sets amount and location of pieces based on number of Players
+        /// </summary>
+        /// <param name="players"></param>
         private void PopulateLocations(List<Player> players)
         {
-            //Set amount and location of pieces based of length of Players
-
             foreach (var L in Locations)
             {
                 if (L.NestColor != null && players.Contains(players.Find(x => x.NestColor == L.NestColor)))
@@ -37,7 +40,11 @@ namespace chinese_checkers.Core.Models
                 }
             }
         }
-
+        /// <summary>
+        /// It finds and returns all the available moves for a piece.
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <returns>Available possible places(points) for a piece to move</returns>
         public List<Location> GetAvailableMoves(Piece piece)
         {
             if (piece.Buffs.Contains(Item.FreezeSelf))
@@ -49,6 +56,13 @@ namespace chinese_checkers.Core.Models
             return availableMoves;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="availableMoves"></param>
+        /// <param name="hasJumped"></param>
+        /// <returns>Available possible places for a piece to move</returns>
         private List<Location> CalculateAvailableMoves(Point point, List<Location> availableMoves = null, bool hasJumped = false)
         {
 
@@ -100,7 +114,11 @@ namespace chinese_checkers.Core.Models
             }
             return availableMoves;
         }
-
+        /// <summary>
+        /// It moves a piece.
+        /// </summary>
+        /// <param name="L"></param>
+        /// <param name="selectedPiece"></param>
         public void MovePiece(Location L, Piece selectedPiece)
         {
             this.Locations.Find(Loc => selectedPiece.Id == Loc.PieceId).PieceId = null;
@@ -108,8 +126,9 @@ namespace chinese_checkers.Core.Models
             L.PieceId = selectedPiece.Id;
         }
 
+
         /// <summary>
-        /// This method finds all the neutral positions on the board and 
+        ///  /// This method finds all the neutral positions on the board and 
         /// returns a random position of them.
         /// 
         /// <example>
@@ -120,10 +139,8 @@ namespace chinese_checkers.Core.Models
         ///     return neutralPoints[rndPoint]; 
         /// </code>
         /// results in <c> neutralPoints[rndPoint] </c> is a random position from the neutral positions of the board.
-        /// </example>
-        ///  
         /// </summary>
-
+        /// <returns>A random neutral position</returns>
         public Point GetRandomNeutralPosition()
         {
             List<Point> neutralPoints = new List<Point>();
@@ -148,6 +165,7 @@ namespace chinese_checkers.Core.Models
         /// results in <c>rndPosition</c>'s having a free randomized position on the board.
         /// 
         /// </summary>
+        ///<returns>A free randomized position</returns>
         public Point GetRandomFreeNeutralPosition()
         {
             var rndPosition = GetRandomNeutralPosition();
@@ -168,7 +186,6 @@ namespace chinese_checkers.Core.Models
         /// 
         /// 
         /// </summary>
-
         public void Buff_Debuff() 
         {
             List<Point> randomNeutralPoints = new List<Point>();
@@ -195,7 +212,14 @@ namespace chinese_checkers.Core.Models
             endLocations.ForEach(x => paths.Add(CalculatePath(start, x.Point)));
             return paths;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="path"></param>
+        /// <param name="hasJumped"></param>
+        /// <returns>A path for a piece to move</returns>
         public LinkedList<Point> CalculatePath(Point start, Point end, LinkedList<Point> path = null, bool hasJumped = false)
         {
             if (path == null)
@@ -271,6 +295,10 @@ namespace chinese_checkers.Core.Models
             return path;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="piece"></param>
         public void RespawnPiece(Piece piece)
         {
             var freeHomeLocations = Locations.Where(x => x.NestColor == piece.NestColor && x.PieceId == null).ToList();

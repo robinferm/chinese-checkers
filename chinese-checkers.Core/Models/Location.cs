@@ -21,7 +21,6 @@ namespace chinese_checkers.Core.Models
             this.PieceId = pieceId;
             this.ItemId = itemId;
         }
-
         public bool IsFree()
         {
             return PieceId is null && ItemId is null;

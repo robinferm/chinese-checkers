@@ -37,7 +37,10 @@ namespace chinese_checkers.Core.Models
             this.Thorns = false;
             this.Cursed = false;
         }
-
+        /// <summary>
+        /// It sets different buffs for a piece according to the item
+        /// </summary>
+        /// <param name="item"></param>
         public void PickUpItem(Item item)
         {
             this.Buffs.Add(item);
@@ -65,7 +68,10 @@ namespace chinese_checkers.Core.Models
                     break;
             }
         }
-
+        /// <summary>
+        /// It sets heal for a piece
+        /// </summary>
+        /// <param name="healAmount"></param>
         public void Heal(int healAmount)
         {
             this.Health += healAmount;
@@ -74,7 +80,9 @@ namespace chinese_checkers.Core.Models
                 this.Health = _maxHealth;
             }
         }
-
+        /// <summary>
+        /// This method resets buffs for a piece and sets 100 to a piece's health
+        /// </summary>
         public void Reset()
         {
             this.Buffs = new List<Item>();
@@ -84,7 +92,7 @@ namespace chinese_checkers.Core.Models
             this.Cursed = false;
             this.Hidden = false;
         }
-
+      
         public void ToggleHidden()
         {
             this.Hidden = !this.Hidden;
