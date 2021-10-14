@@ -292,31 +292,34 @@ namespace chinese_checkers.Helpers {
             vector.Y = ScalingHelper.CalculateY(vector.Y);
             args.DrawingSession.DrawImage(ScalingHelper.Img(pieceImageRed), vector.X, vector.Y);
 
-            if (piece.Health < 30)
+            if (piece != null)
             {
-                args.DrawingSession.DrawImage(ScalingHelper.Img(cracks2), vector.X, vector.Y);
-            }
-            else if (piece.Health < 70)
-            {
-                args.DrawingSession.DrawImage(ScalingHelper.Img(cracks1), vector.X, vector.Y);
-            }
-            if (piece.Thorns)
-            {
-                args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns, .5f), vector.X, vector.Y);
-            }
-            if (piece.Buffs.Contains(Item.FreezeSelf))
-            {
-                args.DrawingSession.DrawImage(ScalingHelper.Img(FreezeSelf), vector.X, vector.Y);
-            }
+                if (piece.Health < 30)
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(cracks2), vector.X, vector.Y);
+                }
+                else if (piece.Health < 70)
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(cracks1), vector.X, vector.Y);
+                }
+                if (piece.Thorns)
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(Thorns, .5f), vector.X, vector.Y);
+                }
+                if (piece.Buffs.Contains(Item.FreezeSelf))
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(FreezeSelf), vector.X, vector.Y);
+                }
 
-            if (piece.Buffs.Contains(Item.DoubleDamage))
-            {
-                args.DrawingSession.DrawImage(ScalingHelper.Img(DoubleDamage), vector.X, vector.Y);
-            }
+                if (piece.Buffs.Contains(Item.DoubleDamage))
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(DoubleDamage), vector.X, vector.Y);
+                }
 
-            if (piece.Buffs.Contains(Item.HalfDamage))
-            {
-                args.DrawingSession.DrawImage(ScalingHelper.Img(HalfDamage), vector.X, vector.Y);
+                if (piece.Buffs.Contains(Item.HalfDamage))
+                {
+                    args.DrawingSession.DrawImage(ScalingHelper.Img(HalfDamage), vector.X, vector.Y);
+                }
             }
 
         }
