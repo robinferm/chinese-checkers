@@ -44,7 +44,7 @@ namespace chinese_checkers.Core.Models
         /// It finds and returns all the available moves for a piece.
         /// </summary>
         /// <param name="piece"></param>
-        /// <returns>availableMoves</returns>
+        /// <returns>Available possible places(points) for a piece to move</returns>
         public List<Location> GetAvailableMoves(Piece piece)
         {
             if (piece.Buffs.Contains(Item.FreezeSelf))
@@ -62,7 +62,7 @@ namespace chinese_checkers.Core.Models
         /// <param name="point"></param>
         /// <param name="availableMoves"></param>
         /// <param name="hasJumped"></param>
-        /// <returns>availableMoves</returns>
+        /// <returns>Available possible places for a piece to move</returns>
         private List<Location> CalculateAvailableMoves(Point point, List<Location> availableMoves = null, bool hasJumped = false)
         {
 
@@ -140,7 +140,7 @@ namespace chinese_checkers.Core.Models
         /// </code>
         /// results in <c> neutralPoints[rndPoint] </c> is a random position from the neutral positions of the board.
         /// </summary>
-        /// <returns>a random position</returns>
+        /// <returns>A random neutral position</returns>
         public Point GetRandomNeutralPosition()
         {
             List<Point> neutralPoints = new List<Point>();
@@ -165,7 +165,7 @@ namespace chinese_checkers.Core.Models
         /// results in <c>rndPosition</c>'s having a free randomized position on the board.
         /// 
         /// </summary>
-        ///<returns>rndPosition</returns>
+        ///<returns>A free randomized position</returns>
         public Point GetRandomFreeNeutralPosition()
         {
             var rndPosition = GetRandomNeutralPosition();
@@ -219,7 +219,7 @@ namespace chinese_checkers.Core.Models
         /// <param name="end"></param>
         /// <param name="path"></param>
         /// <param name="hasJumped"></param>
-        /// <returns>path</returns>
+        /// <returns>A path for a piece to move</returns>
         public LinkedList<Point> CalculatePath(Point start, Point end, LinkedList<Point> path = null, bool hasJumped = false)
         {
             if (path == null)
