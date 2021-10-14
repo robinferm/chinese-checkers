@@ -12,6 +12,9 @@ using Windows.UI.ViewManagement;
 
 namespace chinese_checkers.Helpers
 {
+    /// <summary>
+    /// Provides methods to scale objects
+    /// </summary>
     static class ScalingHelper
     {
         public static float ScalingValue { get; private set; } = 64;
@@ -59,6 +62,10 @@ namespace chinese_checkers.Helpers
             return (float)(y * ScaleHeight);
         }
 
+        /// <summary>
+        /// Inputs a logical x and y position to return a graphical x position.
+        /// </summary>
+        /// <returns>Returns a graphical x position</returns>
         public static float CalculateX(float x, float y)
         {
             float positioning = (x + 4) * ScalingValue + (y - 8) * (ScalingValue / 2);
@@ -68,6 +75,10 @@ namespace chinese_checkers.Helpers
            return positioning + centering;
         }
 
+        /// <summary>
+        /// Inputs a logical y position to return a graphical y position.
+        /// </summary>
+        /// <returns>Returns a graphical y position</returns>
         public static float CalculateY(float y)
         {
             return (y + 4) * ScalingHelper.ScalingValue + 40;

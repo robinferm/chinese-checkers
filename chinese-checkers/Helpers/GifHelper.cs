@@ -14,6 +14,15 @@ namespace chinese_checkers.Helpers {
 
         private static int frameTime = 6;
 
+        /// <summary>
+        /// This return what index from a "gif array" to display, displays each frame in the gif for 5 frames
+        /// <example>
+        ///   <code>
+        ///     GifHelper.RunGif(characterAbilityAnimations[gs.CurrentlyPlaying.Character.GetType().Name].Count());
+        ///   </code>
+        ///   <c>characterAbilityAnimations[gs.CurrentlyPlaying.Character.GetType().Name].Count()</c> is the amount of frames in that gif.
+        /// </example>
+        /// </summary>
         public static void RunGif(int time)
         {
             GifCounter++;
@@ -23,6 +32,10 @@ namespace chinese_checkers.Helpers {
             }
         }
 
+        /// <summary>
+        /// Uses local variable <c>GifCounter</c> to determine which frame from the collection inputed to use
+        /// </summary>
+        /// <returns>Returns <c>CanvasBitmap</c> from an array of <c>CanvasBitmap</c></returns>
         public static CanvasBitmap Ability(Dictionary<string, CanvasBitmap[]> abilityAnimations, Player player)
         {
             Debug.WriteLine(GifCounter);
